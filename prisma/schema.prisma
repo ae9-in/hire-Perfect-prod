@@ -1,0 +1,299 @@
+// Prisma Schema for HirePerfect
+// PostgreSQL database with Supabase
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Model
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(CANDIDATE)
+  phone     String?
+  
+  resetPasswordToken   String?
+  resetPasswordExpires DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  attempts     Attempt[]
+  violations   Violation[]
+  purchases    Purchase[]
+  transactions Transaction[]
+  
+  @@index([email])
+  @@index([role])
+}
+
+enum Role {
+  ADMIN
+  CANDIDATE
+}
+
+// Category Model
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  slug        String   @unique
+  description String
+  icon        String?
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  assessments Assessment[]
+  purchases   Purchase[]
+  
+  @@index([slug])
+  @@index([isActive])
+}
+
+// Assessment Model
+model Assessment {
+  id             String     @id @default(uuid())
+  title          String
+  slug           String     @unique
+  description    String
+  categoryId     String
+  duration       Int        @default(30) // minutes
+  price          Int        @default(500)
+  totalQuestions Int        @default(20)
+  passingScore   Int        @default(60) // percentage
+  difficulty     Difficulty @default(MEDIUM)
+  tags           String[]
+  isActive       Boolean    @default(true)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  category  Category   @relation(fields: [categoryId], references: [id])
+  questions Question[]
+  attempts  Attempt[]
+  purchases Purchase[]
+  
+  @@index([categoryId, isActive])
+  @@index([slug])
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+// Question Model
+model Question {
+  id           String     @id @default(uuid())
+  assessmentId String
+  type         QuestionType
+  question     String
+  options      String[] // For MCQ
+  correctAnswer String   // JSON string for flexibility
+  explanation  String?
+  points       Int        @default(1)
+  difficulty   Difficulty @default(MEDIUM)
+  tags         String[]
+  codeTemplate String?    // For coding questions
+  testCases    Json?      // JSONB for coding test cases
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  answers    Answer[]
+  
+  @@index([assessmentId])
+}
+
+enum QuestionType {
+  MCQ
+  SCENARIO
+  CODING
+}
+
+// Attempt Model
+model Attempt {
+  id             String        @id @default(uuid())
+  userId         String
+  assessmentId   String
+  status         AttemptStatus @default(IN_PROGRESS)
+  score          Int           @default(0)
+  percentage     Float         @default(0)
+  totalQuestions Int           @default(0)
+  correctAnswers Int           @default(0)
+  startedAt      DateTime      @default(now())
+  completedAt    DateTime?
+  timeSpent      Int           @default(0) // seconds
+  violationCount Int           @default(0)
+  ipAddress      String?
+  userAgent      String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  user       User        @relation(fields: [userId], references: [id])
+  assessment Assessment  @relation(fields: [assessmentId], references: [id])
+  answers    Answer[]
+  violations Violation[]
+  
+  @@index([userId, assessmentId])
+  @@index([status])
+}
+
+enum AttemptStatus {
+  IN_PROGRESS
+  COMPLETED
+  TERMINATED
+}
+
+// Answer Model (separate table for attempt answers)
+model Answer {
+  id         String   @id @default(uuid())
+  attemptId  String
+  questionId String
+  answer     String   // JSON string for flexibility
+  isCorrect  Boolean?
+  points     Int?
+  
+  createdAt DateTime @default(now())
+  
+  // Relations
+  attempt  Attempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question Question @relation(fields: [questionId], references: [id])
+  
+  @@unique([attemptId, questionId])
+  @@index([attemptId])
+}
+
+// Violation Model
+model Violation {
+  id          String           @id @default(uuid())
+  attemptId   String
+  userId      String
+  type        ViolationType
+  severity    ViolationSeverity @default(MEDIUM)
+  description String
+  timestamp   DateTime         @default(now())
+  metadata    Json?            // JSONB for additional data
+  
+  createdAt DateTime @default(now())
+  
+  // Relations
+  attempt Attempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id])
+  
+  @@index([attemptId, timestamp])
+  @@index([userId])
+  @@index([type, severity])
+}
+
+enum ViolationType {
+  FACE_NOT_DETECTED
+  MULTIPLE_FACES
+  LOOKING_AWAY
+  TAB_SWITCH
+  SCREEN_MINIMIZE
+  FULLSCREEN_EXIT
+}
+
+enum ViolationSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+// Purchase Model
+model Purchase {
+  id           String       @id @default(uuid())
+  userId       String
+  purchaseType PurchaseType
+  assessmentId String?      // For individual purchase
+  categoryId   String?      // For category combo
+  amount       Int
+  currency     String       @default("INR")
+  paymentId    String
+  orderId      String
+  status       PurchaseStatus @default(PENDING)
+  purchasedAt  DateTime     @default(now())
+  expiresAt    DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  user        User         @relation(fields: [userId], references: [id])
+  assessment  Assessment?  @relation(fields: [assessmentId], references: [id])
+  category    Category?    @relation(fields: [categoryId], references: [id])
+  transactions Transaction[]
+  
+  @@index([userId, status])
+  @@index([assessmentId])
+  @@index([categoryId])
+}
+
+enum PurchaseType {
+  INDIVIDUAL
+  CATEGORY
+  BUNDLE
+}
+
+enum PurchaseStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+// Transaction Model
+model Transaction {
+  id                 String            @id @default(uuid())
+  userId             String
+  purchaseId         String
+  razorpayOrderId    String            @unique
+  razorpayPaymentId  String?
+  razorpaySignature  String?
+  amount             Int
+  currency           String            @default("INR")
+  status             TransactionStatus @default(CREATED)
+  method             String?
+  email              String?
+  contact            String?
+  errorCode          String?
+  errorDescription   String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  user     User     @relation(fields: [userId], references: [id])
+  purchase Purchase @relation(fields: [purchaseId], references: [id])
+  
+  @@index([userId])
+  @@index([razorpayOrderId])
+  @@index([status])
+}
+
+enum TransactionStatus {
+  CREATED
+  AUTHORIZED
+  CAPTURED
+  FAILED
+  REFUNDED
+}

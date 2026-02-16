@@ -1,0 +1,45 @@
+{
+  "name": "hireperfect",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "seed": "tsx scripts/seed.ts"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "^0.10.32",
+    "@prisma/client": "^5.22.0",
+    "@tensorflow/tfjs": "^4.22.0",
+    "bcryptjs": "^3.0.3",
+    "dns-packet": "^5.6.1",
+    "dotenv": "^16.6.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongodb": "^7.1.0",
+    "mongoose": "^9.2.1",
+    "nanoid": "^5.1.6",
+    "next": "16.1.6",
+    "nodemailer": "^8.0.1",
+    "prisma": "^5.22.0",
+    "razorpay": "^2.9.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^20",
+    "@types/nodemailer": "^7.0.9",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5"
+  }
+}
