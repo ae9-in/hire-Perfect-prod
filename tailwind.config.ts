@@ -14,49 +14,62 @@ export default {
             },
             colors: {
                 primary: {
-                    50: '#e6f2ff',
-                    100: '#cce5ff',
-                    200: '#99ccff',
-                    300: '#66b3ff',
-                    400: '#3399ff',
-                    500: '#0066CC',  // Main primary color
-                    600: '#0052a3',
-                    700: '#003d7a',
-                    800: '#002952',
-                    900: '#001429',
+                    50: '#f0f5ff',
+                    100: '#e0eaff',
+                    200: '#c7d7fe',
+                    300: '#a4bcfd',
+                    400: '#8194f9',
+                    500: '#6366f1',  // Indigo
+                    600: '#4f46e5',
+                    700: '#4338ca',
+                    800: '#3730a3',
+                    900: '#312e81',
                 },
                 accent: {
-                    50: '#fff5f0',
-                    100: '#ffe6d9',
-                    200: '#ffccb3',
-                    300: '#ffb38c',
-                    400: '#ff9966',
-                    500: '#FF6B35',  // Main accent color
-                    600: '#cc562a',
-                    700: '#99401f',
-                    800: '#662b15',
-                    900: '#33150a',
+                    50: '#faf5ff',
+                    100: '#f3e8ff',
+                    200: '#e9d5ff',
+                    300: '#d8b4fe',
+                    400: '#c084fc',
+                    500: '#a855f7',  // Purple
+                    600: '#9333ea',
+                    700: '#7e22ce',
+                    800: '#6b21a8',
+                    900: '#581c87',
                 },
-                gray: {
-                    50: '#f8f9fa',
-                    100: '#f1f3f5',
-                    200: '#e9ecef',
-                    300: '#dee2e6',
-                    400: '#ced4da',
-                    500: '#adb5bd',
-                    600: '#6c757d',
-                    700: '#495057',
-                    800: '#343a40',
-                    900: '#212529',
-                },
+                slate: {
+                    950: '#020617',
+                }
             },
             boxShadow: {
-                'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-                'DEFAULT': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-                'md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-                'lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+                'glass-sm': '0 4px 16px 0 rgba(31, 38, 135, 0.05)',
+                'premium': '0 20px 25px -5px rgba(0, 0, 0, 0.03), 0 10px 10px -5px rgba(0, 0, 0, 0.02)',
             },
+            animation: {
+                'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+                'fade-in': 'fadeIn 0.5s ease-out forwards',
+                'scale-in': 'scaleIn 0.3s ease-out forwards',
+                'float': 'float 6s ease-in-out infinite',
+            },
+            keyframes: {
+                fadeInUp: {
+                    '0%': { opacity: '0', transform: 'translateY(20px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                },
+                fadeIn: {
+                    '0%': { opacity: '0' },
+                    '100%': { opacity: '1' },
+                },
+                scaleIn: {
+                    '0%': { opacity: '0', transform: 'scale(0.95)' },
+                    '100%': { opacity: '1', transform: 'scale(1)' },
+                },
+                float: {
+                    '0%, 100%': { transform: 'translateY(0)' },
+                    '50%': { transform: 'translateY(-10px)' },
+                }
+            }
         },
     },
     plugins: [],

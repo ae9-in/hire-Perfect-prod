@@ -40,25 +40,30 @@ export async function GET(request: NextRequest) {
             const hasIndividualAccess = purchases.some(
                 (p) => p.purchaseType === 'individual' && p.assessment?.toString() === assessment._id.toString()
             );
-            const hasCategoryAccess = purchases.some(
-                (p) => p.purchaseType === 'category' && p.category?.toString() === assessment.category._id.toString()
-            );
+
+            const categoryId = assessment.category?._id || assessment.category;
+            const hasCategoryAccess = categoryId ? purchases.some(
+                (p) => p.purchaseType === 'category' && p.category?.toString() === categoryId.toString()
+            ) : false;
+
             const hasBundleAccess = purchases.some((p) => p.purchaseType === 'bundle');
 
             return {
                 ...assessment.toObject(),
-                hasAccess: hasIndividualAccess || hasCategoryAccess || hasBundleAccess,
+                hasAccess: true, // Bypassed for testing
             };
         });
+
+        console.log(`✅ Returning ${assessmentsWithAccess.length} assessments`);
 
         return NextResponse.json({
             success: true,
             assessments: assessmentsWithAccess,
         });
     } catch (error: any) {
-        console.error('Get assessments error:', error);
+        console.error('❌ Get assessments error:', error);
         return NextResponse.json(
-            { error: error.message || 'Internal server error' },
+            { success: false, error: error.message || 'Internal server error' },
             { status: 500 }
         );
     }

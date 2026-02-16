@@ -1,24 +1,21 @@
-import React, { ReactNode } from 'react';
+'use client';
+
+import React from 'react';
 
 interface CardProps {
     children: React.ReactNode;
     className?: string;
     hover?: boolean;
-    style?: React.CSSProperties;
 }
 
-export default function Card({
-    children,
-    className = '',
-    hover = false,
-    style,
-}: CardProps) {
-    const baseStyles = 'bg-white rounded-lg border border-gray-200 transition-all duration-200';
-    const hoverStyles = hover ? 'hover:shadow-md hover:border-gray-300' : '';
-
+const Card: React.FC<CardProps> = ({ children, className = '', hover = true }) => {
     return (
-        <div className={`${baseStyles} ${hoverStyles} ${className}`} style={style}>
-            {children}
+        <div className={`bg-white rounded-2xl border border-slate-100 p-1 shadow-sm transition-all duration-300 ${hover ? 'card-hover' : ''} ${className}`}>
+            <div className="h-full w-full rounded-[14px]">
+                {children}
+            </div>
         </div>
     );
-}
+};
+
+export default Card;

@@ -6,11 +6,13 @@ import Link from 'next/link';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Loading from '@/components/ui/Loading';
+import Navbar from '@/components/ui/Navbar';
 
 export default function DashboardPage() {
     const router = useRouter();
     const [user, setUser] = useState<any>(null);
     const [assessments, setAssessments] = useState<any[]>([]);
+    const [attempts, setAttempts] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -20,8 +22,14 @@ export default function DashboardPage() {
             return;
         }
         setUser(JSON.parse(userData));
-        loadAssessments();
+        loadData();
     }, []);
+
+    const loadData = async () => {
+        setLoading(true);
+        await Promise.all([loadAssessments(), loadAttempts()]);
+        setLoading(false);
+    };
 
     const loadAssessments = async () => {
         try {
@@ -35,201 +43,196 @@ export default function DashboardPage() {
             }
         } catch (error) {
             console.error('Failed to load assessments:', error);
-        } finally {
-            setLoading(false);
         }
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        router.push('/');
+    const loadAttempts = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const res = await fetch('/api/attempts', {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            const data = await res.json();
+            if (data.success) {
+                setAttempts(data.attempts || []);
+            }
+        } catch (error) {
+            console.error('Failed to load attempts:', error);
+        }
     };
 
     if (loading) {
-        return (
-            <div className="min-h-screen bg-white">
-                <Loading variant="spinner" size="lg" fullScreen text="Loading your dashboard..." />
-            </div>
-        );
+        return <Loading variant="spinner" fullScreen text="Syncing Dashboard..." />;
     }
 
+    const completedAttempts = attempts.filter(a => a.status === 'completed');
+    const avgScore = completedAttempts.length > 0
+        ? Math.round(completedAttempts.reduce((acc, curr) => acc + curr.percentage, 0) / completedAttempts.length)
+        : 0;
+
     return (
-        <div className="min-h-screen bg-gray-50">
-            {/* Navigation */}
-            <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
-                <div className="container mx-auto px-6 py-4">
-                    <div className="flex items-center justify-between">
-                        <Link href="/" className="flex items-center space-x-2">
-                            <div className="w-10 h-10 bg-primary-500 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-xl">H</span>
-                            </div>
-                            <span className="text-2xl font-bold text-gray-900">HirePerfect</span>
-                        </Link>
-                        <div className="flex items-center space-x-4">
-                            <div className="flex items-center gap-3 px-4 py-2 bg-gray-100 rounded-lg">
-                                <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
-                                    <span className="text-white font-semibold text-sm">
-                                        {user?.name?.charAt(0).toUpperCase()}
-                                    </span>
-                                </div>
-                                <span className="text-sm font-semibold text-gray-900">{user?.name}</span>
-                            </div>
-                            <Button variant="outline" size="sm" onClick={handleLogout}>
-                                Logout
-                            </Button>
+        <div className="min-h-screen bg-slate-50 bg-grid">
+            <Navbar />
+
+            <main className="container mx-auto px-6 py-24 lg:py-32 page-container">
+                {/* Header Section */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+                    <div>
+                        <div className="inline-block px-3 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase tracking-[0.2em] rounded-lg mb-4">
+                            User Terminal
                         </div>
+                        <h1 className="text-5xl font-black text-slate-900 tracking-tighter uppercase leading-none">
+                            Welcome, <span className="text-indigo-600">{user?.name?.split(' ')[0]}</span>
+                        </h1>
+                        <p className="text-lg text-slate-500 font-medium mt-2">
+                            Overview of your performance and active tracks.
+                        </p>
                     </div>
-                </div>
-            </nav>
-
-            {/* Main Content */}
-            <div className="container mx-auto px-6 py-12">
-                {/* Welcome Section */}
-                <div className="mb-12">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-2">
-                        Welcome back, {user?.name?.split(' ')[0]}!
-                    </h1>
-                    <p className="text-lg text-gray-600">
-                        Track your progress and continue your learning journey
-                    </p>
+                    <Link href="/assessments">
+                        <Button variant="primary" className="shadow-lg shadow-indigo-100 px-8 py-4 uppercase tracking-widest text-xs">New Assessment</Button>
+                    </Link>
                 </div>
 
-                {/* Stats */}
-                <div className="grid md:grid-cols-3 gap-6 mb-12">
-                    <Card className="p-6">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm font-medium text-gray-600 mb-1">Purchased</p>
-                                <p className="text-4xl font-bold text-gray-900">0</p>
-                            </div>
-                            <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center">
-                                <svg className="w-6 h-6 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
+                {/* Analytical Stats Bento */}
+                <div className="grid md:grid-cols-3 gap-6 mb-16">
+                    <Card className="p-8 bg-white overflow-hidden relative group">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-full translate-x-12 -translate-y-12 transition-transform group-hover:scale-110"></div>
+                        <div className="relative z-10">
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Unlocked Tracks</p>
+                            <div className="flex items-end space-x-2">
+                                <span className="text-5xl font-black text-slate-900 leading-none">
+                                    {assessments.filter(a => a.hasAccess).length}
+                                </span>
+                                <span className="text-sm font-bold text-slate-400 pb-1">Units</span>
                             </div>
                         </div>
                     </Card>
 
-                    <Card className="p-6">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm font-medium text-gray-600 mb-1">Completed</p>
-                                <p className="text-4xl font-bold text-gray-900">0</p>
-                            </div>
-                            <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center">
-                                <svg className="w-6 h-6 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                </svg>
+                    <Card className="p-8 bg-white overflow-hidden relative group">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-purple-50 rounded-full translate-x-12 -translate-y-12 transition-transform group-hover:scale-110"></div>
+                        <div className="relative z-10">
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Completed Units</p>
+                            <div className="flex items-end space-x-2">
+                                <span className="text-5xl font-black text-slate-900 leading-none">
+                                    {completedAttempts.length}
+                                </span>
+                                <span className="text-sm font-bold text-slate-400 pb-1">Total</span>
                             </div>
                         </div>
                     </Card>
 
-                    <Card className="p-6">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm font-medium text-gray-600 mb-1">Average Score</p>
-                                <p className="text-4xl font-bold text-gray-900">--</p>
-                            </div>
-                            <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center">
-                                <svg className="w-6 h-6 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                                </svg>
+                    <Card className="p-8 bg-slate-900 text-white overflow-hidden relative group border-0">
+                        <div className="absolute inset-0 bg-grid opacity-10"></div>
+                        <div className="relative z-10">
+                            <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-6">Global Average</p>
+                            <div className="flex items-end space-x-2">
+                                <span className="text-5xl font-black text-white leading-none">
+                                    {completedAttempts.length > 0 ? `${avgScore}%` : '--'}
+                                </span>
+                                <span className="text-sm font-bold text-indigo-400 pb-1 uppercase tracking-tighter">Performance</span>
                             </div>
                         </div>
                     </Card>
                 </div>
 
-                {/* Available Assessments */}
-                <div className="mb-12">
-                    <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-2xl font-bold text-gray-900">Available Assessments</h2>
-                        <Link href="/">
-                            <Button variant="outline" size="sm">Browse All</Button>
-                        </Link>
-                    </div>
-
-                    {assessments.length === 0 ? (
-                        <Card className="text-center py-16 px-6">
-                            <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                                <svg className="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                            </div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-2">No Assessments Yet</h3>
-                            <p className="text-gray-600 mb-6 max-w-md mx-auto">
-                                Purchase an assessment to get started with your learning journey
-                            </p>
-                            <Link href="/">
-                                <Button variant="primary">Browse Assessments</Button>
-                            </Link>
-                        </Card>
-                    ) : (
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {assessments.slice(0, 6).map((assessment) => (
-                                <Card key={assessment._id} hover className="p-6">
-                                    <div className="flex items-start justify-between mb-4">
-                                        <span className="text-sm font-semibold text-primary-500">{assessment.category}</span>
-                                        <span className="text-sm text-gray-500">{assessment.duration} min</span>
-                                    </div>
-                                    <h3 className="font-bold text-lg mb-2 text-gray-900">{assessment.title}</h3>
-                                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                                        {assessment.description}
-                                    </p>
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-2xl font-bold text-gray-900">₹{assessment.price}</span>
-                                        {assessment.hasAccess ? (
-                                            <Button variant="primary" size="sm">Start Exam</Button>
-                                        ) : (
-                                            <Button variant="outline" size="sm">Purchase</Button>
-                                        )}
-                                    </div>
-                                </Card>
-                            ))}
+                {/* Activity Feed and Quick Actions */}
+                <div className="grid lg:grid-cols-3 gap-12">
+                    {/* Activity Feed */}
+                    <div className="lg:col-span-2">
+                        <div className="flex items-center justify-between mb-8">
+                            <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tighter">Activity Feed</h2>
+                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{attempts.length} Records</span>
                         </div>
-                    )}
-                </div>
 
-                {/* Quick Actions */}
-                <div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Quick Actions</h2>
-                    <div className="grid md:grid-cols-2 gap-6">
-                        <Link href="/">
-                            <Card hover className="p-6 cursor-pointer">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                                        <svg className="w-6 h-6 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        <Card className="overflow-hidden border-slate-100 bg-white">
+                            {attempts.length === 0 ? (
+                                <div className="p-20 text-center flex flex-col items-center">
+                                    <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-6 text-slate-300">
+                                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
                                     </div>
-                                    <div className="flex-1">
-                                        <h3 className="font-bold text-lg mb-1 text-gray-900">Browse Assessments</h3>
-                                        <p className="text-sm text-gray-600">
-                                            Explore all available assessments
-                                        </p>
-                                    </div>
+                                    <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">No activity log found.</p>
                                 </div>
-                            </Card>
-                        </Link>
+                            ) : (
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-left">
+                                        <thead>
+                                            <tr className="bg-slate-50/50 border-b border-slate-100">
+                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Assessment Detail</th>
+                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Metric</th>
+                                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Operation</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-slate-50">
+                                            {attempts.map((attempt) => (
+                                                <tr key={attempt._id} className="group hover:bg-slate-50/50 transition-colors">
+                                                    <td className="px-8 py-6">
+                                                        <div className="flex flex-col">
+                                                            <span className="text-sm font-black text-slate-900 uppercase tracking-tight group-hover:text-indigo-600 transition-colors">{attempt.assessment?.title}</span>
+                                                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter mt-0.5">
+                                                                {new Date(attempt.startedAt).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-8 py-6">
+                                                        {attempt.status === 'completed' ? (
+                                                            <div className="flex items-center space-x-3">
+                                                                <div className="flex-1 bg-slate-100 h-1.5 w-16 rounded-full overflow-hidden">
+                                                                    <div
+                                                                        className={`h-full rounded-full ${attempt.percentage >= 60 ? 'bg-indigo-500' : 'bg-rose-500'}`}
+                                                                        style={{ width: `${attempt.percentage}%` }}
+                                                                    ></div>
+                                                                </div>
+                                                                <span className={`text-sm font-black ${attempt.percentage >= 60 ? 'text-indigo-600' : 'text-rose-600'}`}>
+                                                                    {Math.round(attempt.percentage)}%
+                                                                </span>
+                                                            </div>
+                                                        ) : (
+                                                            <span className="text-[10px] font-black uppercase text-indigo-500 bg-indigo-50 px-2 py-1 rounded">In Progress</span>
+                                                        )}
+                                                    </td>
+                                                    <td className="px-8 py-6 text-right">
+                                                        {attempt.status === 'completed' ? (
+                                                            <Link href={`/results/${attempt._id}`}>
+                                                                <Button variant="ghost" size="sm" className="text-[10px] uppercase font-black tracking-widest text-indigo-600 hover:bg-indigo-50">Report</Button>
+                                                            </Link>
+                                                        ) : (
+                                                            <Link href={`/exam/${attempt._id}`}>
+                                                                <Button variant="primary" size="sm" className="text-[10px] uppercase font-black tracking-widest shadow-lg shadow-indigo-100">Resume</Button>
+                                                            </Link>
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+                        </Card>
+                    </div>
 
-                        <Card hover className="p-6 cursor-pointer">
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                                    <svg className="w-6 h-6 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                                    </svg>
-                                </div>
-                                <div className="flex-1">
-                                    <h3 className="font-bold text-lg mb-1 text-gray-900">View Results</h3>
-                                    <p className="text-sm text-gray-600">
-                                        Check your past performance
-                                    </p>
-                                </div>
-                            </div>
+                    {/* Quick Access Sidebar */}
+                    <div className="space-y-8">
+                        <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tighter">Terminal Access</h2>
+
+                        <Card className="p-8 bg-indigo-600 text-white relative overflow-hidden group border-0 shadow-2xl shadow-indigo-200">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full translate-x-12 -translate-y-12"></div>
+                            <h3 className="text-xl font-black uppercase tracking-tight mb-4 relative z-10">Certification</h3>
+                            <p className="text-indigo-100 text-sm font-medium mb-8 relative z-10 leading-relaxed">View and share your verified achievement certificates.</p>
+                            <Link href="/dashboard" className="relative z-10">
+                                <Button variant="primary" className="bg-white text-indigo-600 hover:bg-slate-100 w-full py-4 text-xs uppercase tracking-widest font-black">Archive Access</Button>
+                            </Link>
+                        </Card>
+
+                        <Card className="p-8 bg-white border-slate-100 hover:border-indigo-200 group">
+                            <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">Support Ops</h3>
+                            <p className="text-slate-500 text-sm font-medium mb-8 leading-relaxed">Need assistance with an assessment or your results?</p>
+                            <Button variant="outline" className="w-full py-4 text-xs uppercase tracking-widest font-black border-slate-200 group-hover:border-indigo-600 group-hover:text-indigo-600">Open Ticket</Button>
                         </Card>
                     </div>
                 </div>
-            </div>
+            </main>
         </div>
     );
 }

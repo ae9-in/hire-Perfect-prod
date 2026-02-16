@@ -31,24 +31,26 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
         ? (showPassword ? 'text' : 'password')
         : type;
 
-    const baseStyles = 'w-full px-4 py-3 rounded-lg border transition-all duration-200 outline-none bg-white dark:bg-gray-800';
+    const baseStyles = 'w-full px-5 py-4 rounded-xl border-2 transition-all duration-300 outline-none bg-white font-medium text-slate-900 placeholder:text-slate-300';
 
     const stateStyles = error
-        ? 'border-red-500 focus:ring-2 focus:ring-red-500 animate-shake'
+        ? 'border-rose-100 bg-rose-50/30 focus:border-rose-500 shadow-sm'
         : success
-            ? 'border-green-500 focus:ring-2 focus:ring-green-500'
-            : 'border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-primary-500 focus:border-primary-500';
+            ? 'border-green-100 bg-green-50/30 focus:border-green-500 shadow-sm'
+            : isFocused
+                ? 'border-indigo-500 shadow-xl shadow-indigo-100 ring-4 ring-indigo-50'
+                : 'border-slate-100 hover:border-slate-200 shadow-sm';
 
-    const iconPaddingLeft = icon && iconPosition === 'left' ? 'pl-12' : '';
-    const iconPaddingRight = icon && iconPosition === 'right' || showPasswordToggle ? 'pr-12' : '';
+    const iconPaddingLeft = icon && iconPosition === 'left' ? 'pl-14' : '';
+    const iconPaddingRight = (icon && iconPosition === 'right') || showPasswordToggle ? 'pr-14' : '';
 
     return (
-        <div className="w-full">
+        <div className="w-full group">
             {label && (
-                <label className={`block text-sm font-medium mb-2 transition-colors duration-200 ${error ? 'text-red-600 dark:text-red-400' :
-                        success ? 'text-green-600 dark:text-green-400' :
-                            isFocused ? 'text-primary-600 dark:text-primary-400' :
-                                'text-gray-700 dark:text-gray-300'
+                <label className={`block text-[10px] font-black uppercase tracking-[0.2em] mb-2 transition-colors duration-300 ${error ? 'text-rose-500' :
+                        success ? 'text-green-600' :
+                            isFocused ? 'text-indigo-600' :
+                                'text-slate-400'
                     }`}>
                     {label}
                 </label>
@@ -57,7 +59,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
             <div className="relative">
                 {/* Left Icon */}
                 {icon && iconPosition === 'left' && (
-                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <div className={`absolute left-5 top-1/2 -translate-y-1/2 transition-colors duration-300 ${isFocused ? 'text-indigo-500' : 'text-slate-300'}`}>
                         {icon}
                     </div>
                 )}
@@ -73,17 +75,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
                 />
 
                 {/* Right Icon or Password Toggle */}
-                {icon && iconPosition === 'right' && !showPasswordToggle && (
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
-                        {icon}
-                    </div>
-                )}
-
-                {showPasswordToggle && type === 'password' && (
+                {(showPasswordToggle && type === 'password') ? (
                     <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                        className={`absolute right-5 top-1/2 -translate-y-1/2 transition-colors duration-300 ${isFocused ? 'text-indigo-500' : 'text-slate-300'} hover:text-slate-600`}
                     >
                         {showPassword ? (
                             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -96,22 +92,16 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
                             </svg>
                         )}
                     </button>
-                )}
-
-                {/* Success Checkmark */}
-                {success && (
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 text-green-500">
-                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
+                ) : icon && iconPosition === 'right' && (
+                    <div className={`absolute right-5 top-1/2 -translate-y-1/2 transition-colors duration-300 ${isFocused ? 'text-indigo-500' : 'text-slate-300'}`}>
+                        {icon}
                     </div>
                 )}
             </div>
 
             {/* Helper Text or Error Message */}
             {(error || helperText) && (
-                <p className={`mt-2 text-sm ${error ? 'text-red-600 dark:text-red-400' : 'text-gray-500 dark:text-gray-400'
-                    }`}>
+                <p className={`mt-2 text-xs font-bold uppercase tracking-tight ${error ? 'text-rose-500' : 'text-slate-400'}`}>
                     {error || helperText}
                 </p>
             )}

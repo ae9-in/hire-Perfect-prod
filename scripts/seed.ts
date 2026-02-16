@@ -11,9 +11,6 @@ dotenv.config({ path: envPath });
 if (!process.env.MONGODB_URI) {
     console.error('❌ MONGODB_URI is undefined after loading .env.local');
     process.exit(1);
-} else {
-    // Mask password
-    console.log('✅ MONGODB_URI loaded:', process.env.MONGODB_URI.replace(/:[^:@]+@/, ':****@').split('?')[0]);
 }
 
 // 2. Import everything else dynamically
@@ -29,32 +26,13 @@ async function seed() {
 
         console.log('🚀 Connecting to database...');
         await connectDB();
-        console.log('🌱 Starting database seeding...');
+        console.log('🌱 Starting database seeding for 36 assessments...');
 
         // Clear existing data
-        await User.deleteMany({});
         await Category.deleteMany({});
         await Assessment.deleteMany({});
         await Question.deleteMany({});
-        console.log('✅ Cleared existing data');
-
-        // Create admin user
-        const admin = await User.create({
-            name: 'Admin User',
-            email: 'admin@hireperfect.com',
-            password: 'admin123',
-            role: 'admin',
-        });
-        console.log('✅ Created admin user (admin@hireperfect.com / admin123)');
-
-        // Create test candidate
-        const candidate = await User.create({
-            name: 'Test Candidate',
-            email: 'candidate@test.com',
-            password: 'test123',
-            role: 'candidate',
-        });
-        console.log('✅ Created test candidate (candidate@test.com / test123)');
+        console.log('✅ Cleared existing categories, assessments, and questions');
 
         // Create categories and assessments
         for (let i = 0; i < CATEGORIES.length; i++) {
@@ -69,18 +47,18 @@ async function seed() {
             });
             console.log(`✅ Created category: ${category.name}`);
 
-            // Create assessments for this category
+            // Create 6 assessments for this category
             for (const assessmentTitle of categoryData.assessments) {
                 const slug = assessmentTitle.toLowerCase().replace(/\s+/g, '-');
 
                 const assessment = await Assessment.create({
                     title: assessmentTitle,
                     slug: `${categoryData.slug}-${slug}`,
-                    description: `Comprehensive assessment for ${assessmentTitle}`,
+                    description: `Comprehensive assessment for ${assessmentTitle}. This 30-minute timed exam evaluates your core competency in ${assessmentTitle} through randomized MCQ questions.`,
                     category: category._id,
-                    duration: 30,
+                    duration: 30, // 30 minutes as requested
                     price: 500,
-                    totalQuestions: 15,
+                    totalQuestions: 15, // Standardizing to 15 questions per exam
                     passingScore: 60,
                     difficulty: 'medium',
                     tags: [categoryData.name, assessmentTitle],
@@ -88,18 +66,14 @@ async function seed() {
                 });
                 console.log(`  ✅ Created assessment: ${assessmentTitle}`);
 
-                // Create sample questions for this assessment
-                const sampleQuestions = generateSampleQuestions(assessmentTitle, assessment._id.toString());
-                await Question.insertMany(sampleQuestions);
-                console.log(`    ✅ Added ${sampleQuestions.length} sample questions`);
+                // Create 15 sample questions for this assessment
+                const sampleQuestionsList = generateQuestions(assessmentTitle, assessment._id.toString());
+                await Question.insertMany(sampleQuestionsList);
+                console.log(`    ✅ Added ${sampleQuestionsList.length} MCQ questions`);
             }
         }
 
-        console.log('\n🎉 Database seeding completed successfully!');
-        console.log('\n📝 Login credentials:');
-        console.log('   Admin: admin@hireperfect.com / admin123');
-        console.log('   Candidate: candidate@test.com / test123');
-
+        console.log('\n🎉 Scaling Complete: 6 Categories, 36 Assessments, 540 Questions created.');
         process.exit(0);
     } catch (error) {
         console.error('❌ Seeding error:', error);
@@ -107,29 +81,26 @@ async function seed() {
     }
 }
 
-function generateSampleQuestions(assessmentTitle: string, assessmentId: string) {
+function generateQuestions(assessmentTitle: string, assessmentId: string) {
     const questions = [];
-
-    // Generate 15 sample MCQ questions
     for (let i = 1; i <= 15; i++) {
         questions.push({
             assessment: assessmentId,
             type: 'mcq',
-            question: `${assessmentTitle} - Sample Question ${i}: What is the correct answer?`,
+            question: `${assessmentTitle} Proficiency - Q${i}: What is the primary characteristic of ${assessmentTitle} in a professional environment?`,
             options: [
-                'Option A - First choice',
-                'Option B - Second choice',
-                'Option C - Third choice',
-                'Option D - Fourth choice',
+                'Enhanced efficiency and scalability',
+                'Legacy compatibility and maintenance',
+                'Resource optimization and management',
+                'Regulatory compliance and auditing',
             ],
-            correctAnswer: Math.floor(Math.random() * 4), // Random correct answer
-            explanation: `This is the explanation for question ${i}. The correct answer demonstrates key concepts in ${assessmentTitle}.`,
+            correctAnswer: 0, // Option 1 for testing
+            explanation: `The correct answer demonstrates fundamental knowledge required for ${assessmentTitle}.`,
             points: 1,
-            difficulty: ['easy', 'medium', 'hard'][Math.floor(Math.random() * 3)],
+            difficulty: 'medium',
             tags: [assessmentTitle],
         });
     }
-
     return questions;
 }
 

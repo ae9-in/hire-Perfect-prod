@@ -14,6 +14,8 @@ export interface IAttempt extends Document {
     percentage: number;
     totalQuestions: number;
     correctAnswers: number;
+    questions: mongoose.Types.ObjectId[]; // Store the randomized set
+    duration: number; // Duration in seconds for this attempt
     startedAt: Date;
     completedAt?: Date;
     timeSpent: number; // in seconds
@@ -68,6 +70,16 @@ const AttemptSchema = new Schema<IAttempt>(
         correctAnswers: {
             type: Number,
             default: 0,
+        },
+        questions: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Question',
+            },
+        ],
+        duration: {
+            type: Number,
+            required: true,
         },
         startedAt: {
             type: Date,
