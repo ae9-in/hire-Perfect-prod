@@ -1,420 +1,544 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import Button from '@/components/ui/Button';
-import Modal from '@/components/ui/Modal';
-import Loading from '@/components/ui/Loading';
-import { EXAM_CONFIG, VIOLATION_TYPES } from '@/lib/constants';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import { CameraManager } from '@/lib/cameraManager';
-import CriticalError from '@/components/ui/CriticalError';
+import { EXAM_CONFIG, VIOLATION_TYPES } from '@/lib/constants';
 
-interface ExamPageProps {
-    params: Promise<{ attemptId: string }>;
+interface ExamQuestion {
+    _id: string;
+    question: string;
+    options: string[];
 }
 
-export default function ExamPage({ params: paramsPromise }: ExamPageProps) {
-    const params = React.use(paramsPromise);
+type CameraStatus = 'idle' | 'requesting' | 'ready' | 'error';
+
+interface WarningState {
+    show: boolean;
+    message: string;
+}
+
+interface FaceLandmarkerInstance {
+    detectForVideo: (video: HTMLVideoElement, timestampMs: number) => { faceLandmarks?: Array<Array<{ x: number; y: number }>> };
+    close?: () => void;
+}
+
+export default function ExamPage() {
+    const params = useParams<{ attemptId: string }>();
     const router = useRouter();
-    const [loading, setLoading] = useState(true);
-    const [questions, setQuestions] = useState<any[]>([]);
-    const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [answers, setAnswers] = useState<Record<string, any>>({});
-    const [timeLeft, setTimeLeft] = useState(30 * 60);
-    const [violations, setViolations] = useState(0);
-    const [showWarning, setShowWarning] = useState(false);
-    const [warningMessage, setWarningMessage] = useState('');
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const attemptId = Array.isArray(params?.attemptId) ? params.attemptId[0] : params?.attemptId;
+
+    const isMountedRef = useRef(true);
+    const originalConsoleErrorRef = useRef<typeof console.error | null>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
     const streamRef = useRef<MediaStream | null>(null);
-    const isMounted = useRef(true);
-    const [proctoringActive, setProctoringActive] = useState(false);
-    const [isHalted, setIsHalted] = useState(false);
-    const [haltReason, setHaltReason] = useState('');
 
-    const [faceLandmarker, setFaceLandmarker] = useState<any>(null);
-    const faceLandmarkerRef = useRef<any>(null);
+    const faceLandmarkerRef = useRef<FaceLandmarkerInstance | null>(null);
+    const isProctoringActiveRef = useRef(false);
+    const isInitializingProctoringRef = useRef(false);
+    const animationRef = useRef<number | null>(null);
     const lastVideoTimeRef = useRef(-1);
-    const requestRef = useRef<number | null>(null);
-    const lastViolationLogRef = useRef<Record<string, number>>({});
-    const isInitializing = useRef(false);
-    const loadingRef = useRef(loading);
-    const violationsRef = useRef(violations);
-    const lastNosePosRef = useRef<{ x: number, y: number } | null>(null);
-    const lastMovementLoggedRef = useRef<number>(0);
+    const violationCooldownRef = useRef<Record<string, number>>({});
+    const previousNoseRef = useRef<{ x: number; y: number } | null>(null);
+    const isDetectingRef = useRef(false);
 
-    // Sync refs with state
-    useEffect(() => { loadingRef.current = loading; }, [loading]);
-    useEffect(() => { violationsRef.current = violations; }, [violations]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [questions, setQuestions] = useState<ExamQuestion[]>([]);
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [answers, setAnswers] = useState<Record<string, number>>({});
+    const [timeLeft, setTimeLeft] = useState(0);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [terminated, setTerminated] = useState(false);
 
-    const throttlingLogViolation = async (type: string, description: string, severity = 'high') => {
-        const now = Date.now();
-        const lastLog = lastViolationLogRef.current[type] || 0;
+    const [cameraStatus, setCameraStatus] = useState<CameraStatus>('idle');
+    const [cameraError, setCameraError] = useState<string | null>(null);
+    const [proctoringReady, setProctoringReady] = useState(false);
+    const [violationCount, setViolationCount] = useState(0);
+    const [warning, setWarning] = useState<WarningState>({ show: false, message: '' });
 
-        // Cooldown: 3 seconds (tuned for responsiveness)
-        if (now - lastLog < 3000 && (type === VIOLATION_TYPES.LOOKING_AWAY || type === VIOLATION_TYPES.FACE_NOT_DETECTED || type === VIOLATION_TYPES.MULTIPLE_FACES)) {
-            return;
+    const activeQuestion = questions[currentQuestion];
+    const progress = useMemo(() => (
+        questions.length ? ((currentQuestion + 1) / questions.length) * 100 : 0
+    ), [currentQuestion, questions.length]);
+
+    const showWarning = useCallback((message: string) => {
+        setWarning({ show: true, message });
+        window.setTimeout(() => {
+            if (isMountedRef.current) {
+                setWarning({ show: false, message: '' });
+            }
+        }, 2500);
+    }, []);
+
+    const cleanupProctoring = useCallback(() => {
+        isProctoringActiveRef.current = false;
+        if (animationRef.current) {
+            cancelAnimationFrame(animationRef.current);
+            animationRef.current = null;
         }
 
-        lastViolationLogRef.current[type] = now;
-        await logViolation(type, description, severity);
-    };
+        faceLandmarkerRef.current = null;
+        setProctoringReady(false);
+        previousNoseRef.current = null;
+        isInitializingProctoringRef.current = false;
+    }, []);
 
-    useEffect(() => {
-        isMounted.current = true;
-        enterFullscreen();
-        loadExam();
+    const installConsoleFilter = useCallback(() => {
+        if (originalConsoleErrorRef.current) return;
 
-        const handleBlur = () => {
-            logViolation(VIOLATION_TYPES.TAB_SWITCH, 'Session focus blurred (Possible window switch).', 'critical');
-            setHaltReason('FOCUS LOST: UNAUTHORIZED WINDOW SWITCHING DETECTED. SESSION TERMINATED.');
-            setIsHalted(true);
-            stopProctoring();
-        };
-
-        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-            const token = localStorage.getItem('token');
-            const url = '/api/violations/log';
-            const data = JSON.stringify({
-                attemptId: params.attemptId,
-                type: VIOLATION_TYPES.SESSION_EXIT,
-                severity: 'critical',
-                description: 'User attempted to navigate away or close the terminal.'
-            });
-
-            if (token) {
-                const blob = new Blob([data], { type: 'application/json' });
-                navigator.sendBeacon(url, blob);
+        originalConsoleErrorRef.current = console.error;
+        console.error = (...args: unknown[]) => {
+            const combined = args.map((arg) => String(arg)).join(' ');
+            if (combined.includes('Created TensorFlow Lite XNNPACK delegate for CPU')) {
+                return;
             }
-        };
-
-        const handleFullscreenChange = () => {
-            if (!document.fullscreenElement && !loadingRef.current) {
-                logViolation(VIOLATION_TYPES.FULLSCREEN_EXIT, 'Strict Fullscreen Protocol Breach. Session Terminated.', 'critical');
-                setHaltReason('STRICT FULLSCREEN PROTOCOL BREACH. SESSION TERMINATED. HARDWARE ACCESS REVOKED.');
-                setIsHalted(true);
-                stopProctoring();
-            }
-        };
-
-        const handleResize = () => {
-            if (!loading && (window.innerWidth < 1000 || window.innerHeight < 600)) {
-                throttlingLogViolation(VIOLATION_TYPES.SCREEN_MINIMIZE, 'Terminal dimensions below operational threshold. Possible window resize/minimize breach.');
-            }
-        };
-
-        const handleSecurityViolation = (e: ClipboardEvent) => {
-            e.preventDefault();
-            const type = e.type === 'cut' ? VIOLATION_TYPES.CONTENT_CUT : VIOLATION_TYPES.COPY_PASTE;
-            logViolation(type, `Unauthorized ${e.type} operation detected.`, 'high');
-            showWarningModal(`Security Breach: Unauthorized ${e.type} detected.`);
-        };
-
-        document.addEventListener('contextmenu', preventContextMenu);
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-        document.addEventListener('keydown', preventKeyboardShortcuts);
-        document.addEventListener('fullscreenchange', handleFullscreenChange);
-        document.addEventListener('copy', handleSecurityViolation);
-        document.addEventListener('paste', handleSecurityViolation);
-        document.addEventListener('cut', handleSecurityViolation);
-        window.addEventListener('blur', handleBlur);
-        window.addEventListener('beforeunload', handleBeforeUnload);
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            document.removeEventListener('contextmenu', preventContextMenu);
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-            document.removeEventListener('keydown', preventKeyboardShortcuts);
-            document.removeEventListener('fullscreenchange', handleFullscreenChange);
-            document.removeEventListener('copy', handleSecurityViolation);
-            document.removeEventListener('paste', handleSecurityViolation);
-            document.removeEventListener('cut', handleSecurityViolation);
-            window.removeEventListener('blur', handleBlur);
-            window.removeEventListener('beforeunload', handleBeforeUnload);
-            window.removeEventListener('resize', handleResize);
-            window.removeEventListener('resize', handleResize);
-            isMounted.current = false;
-            stopProctoring();
-            if (faceLandmarkerRef.current) {
-                faceLandmarkerRef.current.close();
-                faceLandmarkerRef.current = null;
-            }
+            originalConsoleErrorRef.current?.(...args);
         };
     }, []);
 
-    // Initialize proctoring only after exam is loaded and videoRef is available
-    useEffect(() => {
-        if (!loading && isMounted.current) {
-            initProctoring();
-        }
-    }, [loading]);
+    const removeConsoleFilter = useCallback(() => {
+        if (!originalConsoleErrorRef.current) return;
+        console.error = originalConsoleErrorRef.current;
+        originalConsoleErrorRef.current = null;
+    }, []);
 
-    useEffect(() => {
-        if (timeLeft <= 0 && !loading) {
-            handleSubmit(true);
-            return;
-        }
-        const timer = setInterval(() => {
-            if (!loading && !isHalted) setTimeLeft((prev) => prev - 1);
-        }, 1000);
-        return () => clearInterval(timer);
-    }, [timeLeft, loading, isHalted]);
+    const logViolation = useCallback(async (
+        type: string,
+        description: string,
+        severity: 'low' | 'medium' | 'high' | 'critical' = 'high'
+    ) => {
+        const now = Date.now();
+        const last = violationCooldownRef.current[type] || 0;
+        if (now - last < 3500) return;
+        violationCooldownRef.current[type] = now;
 
-    const loadExam = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const res = await fetch(`/api/attempts/${params.attemptId}`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            const data = await res.json();
+        const currentCount = violationCount + 1;
+        setViolationCount(currentCount);
+        showWarning(description);
 
-            if (data.success) {
-                setQuestions(data.questions);
-                setTimeLeft(data.attempt.timeLeft);
-                if (data.attempt.status !== 'in_progress') {
-                    setHaltReason('PROTOCOL VIOLATION: ASSESSMENT SESSION FOR THIS IDENTITY IS ALREADY COMPLETED. ACCESS PERMANENTLY REVOKED.');
-                    setIsHalted(true);
-                    setLoading(false);
-                    return;
-                }
-            } else {
-                router.push('/dashboard');
-            }
-            setLoading(false);
-        } catch (error) {
-            console.error('Failed to load exam:', error);
-            setLoading(false);
-        }
-    };
-
-    const enterFullscreen = () => {
-        const elem = document.documentElement;
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen().catch(() => { });
-        }
-    };
-
-    const initProctoring = async () => {
-        if (isInitializing.current || streamRef.current) return;
-        isInitializing.current = true;
-
-        try {
-            const { FaceLandmarker, FilesetResolver } = await import('@mediapipe/tasks-vision');
-            const filesetResolver = await FilesetResolver.forVisionTasks(
-                "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm"
-            );
-            const landmarker = await FaceLandmarker.createFromOptions(filesetResolver, {
-                baseOptions: {
-                    modelAssetPath: `https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task`,
-                    delegate: "GPU"
-                },
-                outputFaceBlendshapes: true,
-                runningMode: "VIDEO",
-                numFaces: 2
-            });
-
-            if (!isMounted.current) {
-                landmarker.close();
-                return;
-            }
-            faceLandmarkerRef.current = landmarker;
-            setFaceLandmarker(landmarker);
-
-            const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
-
-            if (!isMounted.current) {
-                stream.getTracks().forEach(track => track.stop());
-                landmarker.close();
-                return;
-            }
-
-            streamRef.current = stream;
-            CameraManager.register(stream, landmarker);
-            if (videoRef.current) {
-                videoRef.current.srcObject = stream;
-                videoRef.current.play().catch(e => console.error("Video secondary play error:", e));
-                videoRef.current.onloadedmetadata = () => {
-                    if (isMounted.current) {
-                        setProctoringActive(true);
-                        requestRef.current = requestAnimationFrame(detectFrame);
-                    }
-                };
-            }
-        } catch (error) {
-            console.error('Proctoring init error:', error);
-        } finally {
-            isInitializing.current = false;
-        }
-    };
-
-    const detectFrame = async () => {
-        if (!videoRef.current || !faceLandmarker || !proctoringActive) return;
-
-        if (videoRef.current.currentTime !== lastVideoTimeRef.current) {
-            lastVideoTimeRef.current = videoRef.current.currentTime;
-            const result = faceLandmarker.detectForVideo(videoRef.current, performance.now());
-
-            if (result.faceLandmarks) {
-                if (result.faceLandmarks.length > 1) {
-                    throttlingLogViolation(VIOLATION_TYPES.MULTIPLE_FACES, 'Multiple operative presence detected.');
-                }
-                if (result.faceLandmarks.length === 0) {
-                    setHaltReason('Optical sensor data lost. Please ensure your face is clearly visible.');
-                    setIsHalted(true);
-                    throttlingLogViolation(VIOLATION_TYPES.FACE_NOT_DETECTED, 'Operative facial scan lost.');
-                } else {
-                    if (result.faceLandmarks[0]) {
-                        const nose = result.faceLandmarks[0][1];
-                        if (lastNosePosRef.current && nose) {
-                            const dist = Math.sqrt(
-                                Math.pow(nose.x - lastNosePosRef.current.x, 2) +
-                                Math.pow(nose.y - lastNosePosRef.current.y, 2)
-                            );
-
-                            // Sudden movement threshold: 0.15 (empirical tuning)
-                            const now = Date.now();
-                            if (dist > 0.15 && now - lastMovementLoggedRef.current > 5000) {
-                                throttlingLogViolation(VIOLATION_TYPES.SUDDEN_MOVEMENT as any, 'Uncontrolled sudden movement detected.');
-                                showWarningModal('Protocol Alert: Sudden movement detected. Maintain focus.');
-                                lastMovementLoggedRef.current = now;
-                            }
-                        }
-                        if (nose) lastNosePosRef.current = { x: nose.x, y: nose.y };
-
-                        const headRotation = calculateHeadRotation(result.faceLandmarks[0]);
-                        if (Math.abs(headRotation.y) > 0.35) {
-                            throttlingLogViolation(VIOLATION_TYPES.LOOKING_AWAY, 'Gaze deviation detected.');
-                        }
-                    }
-                }
-            }
-        }
-
-        if (proctoringActive) {
-            requestRef.current = requestAnimationFrame(detectFrame);
-        }
-    };
-
-    const calculateHeadRotation = (landmarks: any) => {
-        const nose = landmarks[1];
-        const leftEye = landmarks[33];
-        const rightEye = landmarks[263];
-        if (!nose || !leftEye || !rightEye) return { x: 0, y: 0 };
-        const centerX = (leftEye.x + rightEye.x) / 2;
-        const headYaw = (nose.x - centerX) / (rightEye.x - leftEye.x);
-        return { y: headYaw, x: 0 };
-    };
-
-    const stopProctoring = () => {
-        CameraManager.stopAll();
-        setProctoringActive(false);
-        if (requestRef.current) {
-            cancelAnimationFrame(requestRef.current);
-            requestRef.current = null;
-        }
-        if (streamRef.current) {
-            streamRef.current.getTracks().forEach((track) => {
-                track.stop();
-                track.enabled = false;
-            });
-            streamRef.current = null;
-        }
-        if (videoRef.current) {
-            videoRef.current.pause();
-            videoRef.current.srcObject = null;
-            videoRef.current.load(); // Force clearing the buffer
-        }
-    };
-
-    const preventContextMenu = (e: MouseEvent) => e.preventDefault();
-
-    const handleVisibilityChange = () => {
-        if (document.hidden) {
-            logViolation(VIOLATION_TYPES.TAB_SWITCH, 'Session focus lost (Tab switch detected).', 'critical');
-            setHaltReason('TAB SWITCH: UNAUTHORIZED BACKGROUND NAVIGATION. SESSION TERMINATED.');
-            setIsHalted(true);
-            stopProctoring();
-        }
-    };
-
-    const preventKeyboardShortcuts = (e: KeyboardEvent) => {
-        const key = e.key.toLowerCase();
-        if (key === 'f12' || (e.ctrlKey && e.shiftKey && (key === 'i' || key === 'c' || key === 'j')) || (e.ctrlKey && key === 'u')) {
-            e.preventDefault();
-            logViolation(VIOLATION_TYPES.TAB_SWITCH, 'Attempted terminal inspection (DevTools).');
-        }
-        if (e.ctrlKey && (key === 'c' || key === 'v' || key === 'x')) {
-            e.preventDefault();
-            const type = key === 'x' ? VIOLATION_TYPES.CONTENT_CUT : VIOLATION_TYPES.COPY_PASTE;
-            logViolation(type, `Keyboard shortcut Ctrl+${key.toUpperCase()} blocked.`, 'high');
-            showWarningModal(`Security Breach: Unauthorized Ctrl+${key.toUpperCase()} detected.`);
-        }
-    };
-
-    const logViolation = async (type: string, description: string, severity = 'high') => {
-        // Atomic UI update and Ref sync
-        const newViolCount = violationsRef.current + 1;
-        setViolations(prev => prev + 1);
-        violationsRef.current = newViolCount;
-
-        if (newViolCount >= EXAM_CONFIG.MAX_VIOLATIONS) {
-            setHaltReason(`CRITICAL PROTOCOL LIMIT REACHED (${newViolCount}/${EXAM_CONFIG.MAX_VIOLATIONS} VIOLATIONS). ACCESS REVOKED.`);
-            setIsHalted(true);
-            stopProctoring();
+        if (currentCount >= EXAM_CONFIG.MAX_VIOLATIONS) {
+            setTerminated(true);
+            cleanupProctoring();
+            CameraManager.stop();
         }
 
         try {
             const token = localStorage.getItem('token');
             const res = await fetch('/api/violations/log', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-                body: JSON.stringify({ attemptId: params.attemptId, type, description, severity }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    attemptId,
+                    type,
+                    severity,
+                    description,
+                }),
             });
-
             const data = await res.json();
-            if (data.success) {
-                setViolations(data.violationCount || 0);
+
+            if (typeof data.violationCount === 'number') {
+                setViolationCount(data.violationCount);
             }
 
             if (data.terminated) {
-                router.push('/dashboard');
+                setTerminated(true);
+                cleanupProctoring();
+                CameraManager.stop();
             }
-        } catch (error) {
-            console.error('Failed to log violation:', error);
+        } catch (logError) {
+            console.error('Failed to log violation:', logError);
         }
-    };
+    }, [attemptId, cleanupProctoring, showWarning, violationCount]);
 
-    const showWarningModal = (message: string) => {
-        setWarningMessage(message);
-        setShowWarning(true);
-        setTimeout(() => setShowWarning(false), 3000);
-    };
+    const detectFrame = useCallback(async () => {
+        if (!isMountedRef.current || !isProctoringActiveRef.current || !faceLandmarkerRef.current || !videoRef.current) return;
+        if (isDetectingRef.current) {
+            animationRef.current = requestAnimationFrame(() => { void detectFrame(); });
+            return;
+        }
 
-    const handleAnswerChange = (questionId: string, answer: any) => {
-        setAnswers({ ...answers, [questionId]: answer });
-    };
+        isDetectingRef.current = true;
+        try {
+            const video = videoRef.current;
+            if (video.readyState < 2) {
+                animationRef.current = requestAnimationFrame(() => { void detectFrame(); });
+                return;
+            }
+            if (video.videoWidth === 0 || video.videoHeight === 0) {
+                animationRef.current = requestAnimationFrame(() => { void detectFrame(); });
+                return;
+            }
 
-    const handleSubmit = async (autoSubmit = false) => {
-        if (isSubmitting) return;
+            if (video.currentTime === lastVideoTimeRef.current) {
+                animationRef.current = requestAnimationFrame(() => { void detectFrame(); });
+                return;
+            }
+            lastVideoTimeRef.current = video.currentTime;
+
+            const landmarker = faceLandmarkerRef.current;
+            if (!landmarker) return;
+            let result: { faceLandmarks?: Array<Array<{ x: number; y: number }>> } | null = null;
+
+            try {
+                result = landmarker.detectForVideo(video, performance.now());
+            } catch (detectError) {
+                const detectMessage = detectError instanceof Error ? detectError.message.toLowerCase() : String(detectError).toLowerCase();
+                const transientDetectError =
+                    detectMessage.includes('xnnpack') ||
+                    detectMessage.includes('delegate') ||
+                    detectMessage.includes('not ready');
+
+                if (!transientDetectError) {
+                    throw detectError;
+                }
+            }
+
+            if (!result) {
+                animationRef.current = requestAnimationFrame(() => { void detectFrame(); });
+                return;
+            }
+            const faces = result.faceLandmarks || [];
+
+            if (faces.length === 0) {
+                await logViolation(VIOLATION_TYPES.FACE_NOT_DETECTED, 'Face not detected in camera frame.');
+            } else if (faces.length > 1) {
+                await logViolation(VIOLATION_TYPES.MULTIPLE_FACES, 'Multiple faces detected.');
+            } else {
+                const landmarks = faces[0];
+                const nose = landmarks?.[1];
+                const leftEye = landmarks?.[33];
+                const rightEye = landmarks?.[263];
+
+                if (nose && leftEye && rightEye) {
+                    const eyeCenterX = (leftEye.x + rightEye.x) / 2;
+                    const eyeDistance = Math.max(Math.abs(rightEye.x - leftEye.x), 0.0001);
+                    const yaw = (nose.x - eyeCenterX) / eyeDistance;
+
+                    // Eye direction + head yaw approximation
+                    if (Math.abs(yaw) > 0.35) {
+                        await logViolation(
+                            VIOLATION_TYPES.LOOKING_AWAY,
+                            'Please look at the screen and keep your head centered.'
+                        );
+                    }
+
+                    // Sudden head movement approximation via nose displacement
+                    const previousNose = previousNoseRef.current;
+                    if (previousNose) {
+                        const dx = Math.abs(nose.x - previousNose.x);
+                        const dy = Math.abs(nose.y - previousNose.y);
+                        if (dx > 0.09 || dy > 0.09) {
+                            await logViolation(
+                                VIOLATION_TYPES.LOOKING_AWAY,
+                                'Excessive head movement detected. Keep stable posture.'
+                            );
+                        }
+                    }
+                    previousNoseRef.current = { x: nose.x, y: nose.y };
+                }
+            }
+        } catch (detectionError) {
+            const message = detectionError instanceof Error ? detectionError.message : String(detectionError);
+            const benignShutdown =
+                message.toLowerCase().includes('closed') ||
+                message.toLowerCase().includes('disposed') ||
+                message.toLowerCase().includes('not initialized') ||
+                message.toLowerCase().includes('xnnpack delegate') ||
+                !isProctoringActiveRef.current;
+
+            if (!benignShutdown) {
+                console.warn('Detection loop warning:', detectionError);
+            }
+        } finally {
+            isDetectingRef.current = false;
+            if (isMountedRef.current && !terminated && isProctoringActiveRef.current) {
+                animationRef.current = requestAnimationFrame(() => { void detectFrame(); });
+            }
+        }
+    }, [logViolation, terminated]);
+
+    const initializeProctoring = useCallback(async () => {
+        if (isInitializingProctoringRef.current || faceLandmarkerRef.current) return;
+        isInitializingProctoringRef.current = true;
+        try {
+            const { FaceLandmarker, FilesetResolver } = await import('@mediapipe/tasks-vision');
+            const resolver = await FilesetResolver.forVisionTasks(
+                'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.32/wasm'
+            );
+            const modelAssetPath = 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task';
+
+            let landmarker: FaceLandmarkerInstance | null = null;
+            try {
+                landmarker = await FaceLandmarker.createFromOptions(resolver, {
+                    baseOptions: {
+                        modelAssetPath,
+                        delegate: 'GPU',
+                    },
+                    runningMode: 'VIDEO',
+                    numFaces: 2,
+                    outputFaceBlendshapes: false,
+                });
+            } catch (gpuError) {
+                console.warn('GPU delegate unavailable, falling back to CPU delegate.', gpuError);
+                landmarker = await FaceLandmarker.createFromOptions(resolver, {
+                    baseOptions: {
+                        modelAssetPath,
+                        delegate: 'CPU',
+                    },
+                    runningMode: 'VIDEO',
+                    numFaces: 2,
+                    outputFaceBlendshapes: false,
+                });
+            }
+
+            if (!isMountedRef.current) {
+                isInitializingProctoringRef.current = false;
+                return;
+            }
+
+            faceLandmarkerRef.current = landmarker;
+            isProctoringActiveRef.current = true;
+            setProctoringReady(true);
+            if (!animationRef.current) {
+                animationRef.current = requestAnimationFrame(() => { void detectFrame(); });
+            }
+        } catch (setupError) {
+            console.error('Failed to initialize MediaPipe:', setupError);
+            setCameraError('Camera is active but face detection engine failed to load.');
+        } finally {
+            isInitializingProctoringRef.current = false;
+        }
+    }, [detectFrame]);
+
+    const initCamera = useCallback(async () => {
+        setCameraError(null);
+        setCameraStatus('requesting');
+
+        try {
+            let stream = CameraManager.getStream();
+            if (!stream) {
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'user' },
+                    audio: false,
+                });
+                CameraManager.setStream(stream);
+            }
+
+            if (!isMountedRef.current) {
+                stream.getTracks().forEach((track) => track.stop());
+                return;
+            }
+
+            streamRef.current = stream;
+            if (videoRef.current) {
+                videoRef.current.srcObject = stream;
+                try {
+                    await videoRef.current.play();
+                } catch (playError) {
+                    const name = playError instanceof DOMException ? playError.name : '';
+                    if (name === 'AbortError') {
+                        // Benign race during rapid mount/unmount transitions in dev.
+                        await new Promise((resolve) => setTimeout(resolve, 80));
+                        if (isMountedRef.current && videoRef.current) {
+                            await videoRef.current.play().catch(() => undefined);
+                        }
+                    } else {
+                        throw playError;
+                    }
+                }
+            }
+
+            setCameraStatus('ready');
+            await initializeProctoring();
+        } catch (cameraInitError) {
+            console.error('Camera initialization failed:', cameraInitError);
+            setCameraStatus('error');
+            setCameraError('Unable to access your camera. Please allow permissions and retry.');
+        }
+    }, [initializeProctoring]);
+
+    const loadExam = useCallback(async () => {
+        if (!attemptId) {
+            setError('Invalid assessment attempt id.');
+            setLoading(false);
+            return;
+        }
+
+        try {
+            setError(null);
+            const token = localStorage.getItem('token');
+            const res = await fetch(`/api/attempts/${attemptId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            const data = await res.json();
+
+            if (!data.success) {
+                setError(data.error || 'Failed to load assessment attempt.');
+                return;
+            }
+
+            if (data.attempt?.status !== 'in_progress') {
+                setError('This assessment session is not active.');
+                return;
+            }
+
+            setQuestions(data.questions || []);
+            setTimeLeft(data.attempt?.timeLeft || 0);
+            setViolationCount(data.attempt?.violationCount || 0);
+        } catch (fetchError) {
+            console.error('Failed to load exam:', fetchError);
+            setError('Unable to load assessment. Please try again.');
+        } finally {
+            if (isMountedRef.current) setLoading(false);
+        }
+    }, [attemptId]);
+
+    const submitAssessment = useCallback(async (autoSubmit = false) => {
+        if (isSubmitting || !attemptId) return;
+
         setIsSubmitting(true);
         try {
             const token = localStorage.getItem('token');
-            const answersArray = Object.entries(answers).map(([question, answer]) => ({ question, answer }));
-            const res = await fetch(`/api/assessments/${params.attemptId}/submit`, {
+            const answersArray = Object.entries(answers).map(([question, answer]) => ({
+                question,
+                answer,
+            }));
+
+            const res = await fetch(`/api/assessments/${attemptId}/submit`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-                body: JSON.stringify({ attemptId: params.attemptId, answers: answersArray, status: 'completed' }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    attemptId,
+                    answers: answersArray,
+                    status: autoSubmit ? 'completed' : 'completed',
+                }),
             });
             const data = await res.json();
-            if (data.success) {
-                stopProctoring();
-                router.push(`/results/${params.attemptId}`);
+
+            if (!data.success) {
+                setError(data.error || 'Failed to submit assessment.');
+                setIsSubmitting(false);
+                return;
             }
-        } catch (error) {
-            console.error('Failed to submit exam:', error);
+
+            cleanupProctoring();
+            CameraManager.stop();
+            router.push(`/results/${attemptId}`);
+        } catch (submitError) {
+            console.error('Failed to submit assessment:', submitError);
+            setError('Submission failed. Please retry.');
             setIsSubmitting(false);
         }
-    };
+    }, [answers, attemptId, cleanupProctoring, isSubmitting, router]);
+
+    const enterFullscreen = useCallback(async () => {
+        try {
+            if (!document.fullscreenElement) {
+                await document.documentElement.requestFullscreen();
+            }
+        } catch (fullscreenError) {
+            console.warn('Fullscreen request failed:', fullscreenError);
+            showWarning('Please allow fullscreen mode for this assessment.');
+        }
+    }, [showWarning]);
+
+    useEffect(() => {
+        isMountedRef.current = true;
+        installConsoleFilter();
+        void loadExam();
+        void initCamera();
+        void enterFullscreen();
+        const videoElement = videoRef.current;
+
+        const handleVisibility = () => {
+            if (document.hidden) {
+                void logViolation(VIOLATION_TYPES.TAB_SWITCH, 'Tab switch detected.', 'critical');
+            }
+        };
+
+        const handleBlur = () => {
+            void logViolation(VIOLATION_TYPES.TAB_SWITCH, 'Window focus lost.', 'critical');
+        };
+
+        const handleResize = () => {
+            if (window.innerWidth < 1000 || window.innerHeight < 620) {
+                void logViolation(VIOLATION_TYPES.SCREEN_MINIMIZE, 'Screen minimize or aggressive resize detected.');
+            }
+        };
+
+        const handleFullscreenChange = () => {
+            if (!document.fullscreenElement && !loading) {
+                showWarning('Fullscreen exit detected. Assessment terminated.');
+                setTerminated(true);
+                cleanupProctoring();
+                CameraManager.stop();
+                void logViolation(
+                    VIOLATION_TYPES.FULLSCREEN_EXIT,
+                    'Fullscreen mode exited during assessment.',
+                    'critical'
+                );
+            }
+        };
+
+        const handleContextMenu = (event: MouseEvent) => {
+            event.preventDefault();
+            showWarning('Right-click is disabled during assessment.');
+        };
+
+        const handleKeydown = (event: KeyboardEvent) => {
+            const key = event.key.toLowerCase();
+            const isCopyPasteShortcut = (event.ctrlKey || event.metaKey) && (key === 'c' || key === 'v');
+            if (!isCopyPasteShortcut) return;
+
+            event.preventDefault();
+            showWarning('Copy/Paste is not allowed during assessment.');
+        };
+
+        document.addEventListener('visibilitychange', handleVisibility);
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        document.addEventListener('contextmenu', handleContextMenu);
+        document.addEventListener('keydown', handleKeydown);
+        window.addEventListener('blur', handleBlur);
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            isMountedRef.current = false;
+            document.removeEventListener('visibilitychange', handleVisibility);
+            document.removeEventListener('fullscreenchange', handleFullscreenChange);
+            document.removeEventListener('contextmenu', handleContextMenu);
+            document.removeEventListener('keydown', handleKeydown);
+            window.removeEventListener('blur', handleBlur);
+            window.removeEventListener('resize', handleResize);
+
+            cleanupProctoring();
+            if (videoElement) {
+                videoElement.pause();
+                videoElement.srcObject = null;
+            }
+            CameraManager.stop();
+            removeConsoleFilter();
+        };
+    }, [cleanupProctoring, enterFullscreen, initCamera, installConsoleFilter, loadExam, loading, logViolation, removeConsoleFilter, showWarning]);
+
+    useEffect(() => {
+        if (loading || terminated || isSubmitting) return;
+        if (timeLeft <= 0) {
+            void submitAssessment(true);
+            return;
+        }
+
+        const interval = window.setInterval(() => {
+            setTimeLeft((prev) => Math.max(prev - 1, 0));
+        }, 1000);
+        return () => window.clearInterval(interval);
+    }, [isSubmitting, loading, submitAssessment, terminated, timeLeft]);
 
     const formatTime = (seconds: number) => {
         const mins = Math.floor(seconds / 60);
@@ -422,203 +546,177 @@ export default function ExamPage({ params: paramsPromise }: ExamPageProps) {
         return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     };
 
-    if (loading) return <Loading variant="spinner" fullScreen text="Initializing Terminal Sessions..." />;
+    const handleAnswerChange = (questionId: string, answerIndex: number) => {
+        setAnswers((prev) => ({ ...prev, [questionId]: answerIndex }));
+    };
 
-    const currentQ = questions[currentQuestion];
-    const progress = ((currentQuestion + 1) / questions.length) * 100;
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-[#020205] bg-grid text-cyan-50 grid place-items-center">
+                <p className="text-sm font-bold uppercase tracking-[0.3em] text-cyan-400/70">Initializing Assessment Grid...</p>
+            </div>
+        );
+    }
 
-    if (isHalted) {
-        return <CriticalError message={haltReason} />;
+    if (terminated) {
+        return (
+            <div className="min-h-screen bg-[#020205] bg-grid text-cyan-50 grid place-items-center p-6">
+                <div className="glass max-w-2xl rounded-3xl border-rose-500/30 p-10 text-center bg-rose-950/30">
+                    <p className="text-[11px] font-black uppercase tracking-[0.35em] text-rose-400 mb-4">Session Terminated</p>
+                    <h1 className="text-3xl font-black uppercase tracking-tight text-white mb-5">Violation Threshold Reached</h1>
+                    <p className="text-sm text-rose-200/80 mb-8">
+                        Your assessment was auto-terminated after {EXAM_CONFIG.MAX_VIOLATIONS} violations.
+                    </p>
+                    <button
+                        onClick={() => router.push('/dashboard')}
+                        className="px-6 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black uppercase tracking-[0.2em] text-xs"
+                    >
+                        Return to Dashboard
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    if (error || !activeQuestion) {
+        return (
+            <div className="min-h-screen bg-[#020205] bg-grid text-cyan-50 grid place-items-center p-6">
+                <div className="glass max-w-2xl rounded-3xl p-10 text-center">
+                    <p className="text-rose-400 text-sm font-bold uppercase tracking-[0.2em]">{error || 'No questions found for this attempt.'}</p>
+                </div>
+            </div>
+        );
     }
 
     return (
-        <div className="min-h-screen bg-[#020205] bg-grid selection:bg-cyan-500/30 selection:text-white overflow-hidden text-cyan-50/80 font-sans cursor-default no-select">
-            {/* Warning Overlay */}
-            <Modal isOpen={showWarning} onClose={() => setShowWarning(false)}>
-                <div className="text-center p-8">
-                    <div className="w-20 h-20 bg-rose-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-rose-500/30">
-                        <svg className="w-10 h-10 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
-                    </div>
-                    <h3 className="text-2xl font-black text-cyan-50 uppercase tracking-tighter mb-2">Protocol Violation</h3>
-                    <p className="text-rose-400 font-bold text-sm uppercase tracking-widest mb-6">{warningMessage}</p>
-                    <div className="flex justify-center space-x-2">
-                        {[...Array(5)].map((_, i) => (
-                            <div key={i} className={`h-1.5 w-8 rounded-full ${i < violations ? 'bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.5)]' : 'bg-slate-900'}`}></div>
-                        ))}
-                    </div>
+        <div className="min-h-screen bg-[#020205] bg-grid selection:bg-cyan-500/30 selection:text-white text-cyan-50/90">
+            {warning.show && (
+                <div className="fixed top-6 left-1/2 -translate-x-1/2 z-[60] glass border-rose-500/30 bg-rose-950/60 px-6 py-3 rounded-2xl">
+                    <p className="text-[10px] font-black uppercase tracking-[0.25em] text-rose-300">{warning.message}</p>
                 </div>
-            </Modal>
+            )}
 
-            {/* Terminal Header */}
-            <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5 bg-black/90">
+            <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5 bg-black/80">
                 <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-                    <div className="flex items-center space-x-6">
-                        <div className="w-10 h-10 bg-cyan-600 rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(0,242,255,0.3)]">
-                            <span className="text-black font-black">H</span>
-                        </div>
-                        <div className="h-8 w-px bg-white/10 hidden md:block"></div>
-                        <div className="hidden md:block">
-                            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-cyan-500/30 mb-0.5">Deployment Tracking</p>
-                            <p className="text-xs font-bold text-cyan-50 uppercase tracking-widest">Sector: {questions[0]?.category?.name || 'General'}</p>
-                        </div>
+                    <div>
+                        <p className="text-[9px] font-black uppercase tracking-[0.3em] text-cyan-500/40">Assessment Mode</p>
+                        <p className="text-xs font-black uppercase tracking-widest text-cyan-100">Question {currentQuestion + 1}/{questions.length}</p>
                     </div>
-
-                    <div className="flex items-center md:space-x-12">
-                        <div className="flex flex-col items-center">
-                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-cyan-500/30 mb-1">Time Remaining</p>
-                            <span className={`text-2xl font-black tabular-nums transition-colors ${timeLeft < 300 ? 'text-rose-500 animate-pulse' : 'text-cyan-50'}`}>
-                                {formatTime(timeLeft)}
-                            </span>
+                    <div className="flex items-center gap-8">
+                        <div>
+                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-cyan-500/40">Time Remaining</p>
+                            <p className={`text-2xl font-black ${timeLeft < 300 ? 'text-rose-400 animate-pulse' : 'text-cyan-100'}`}>{formatTime(timeLeft)}</p>
                         </div>
-                        <div className="h-10 w-px bg-white/10 hidden md:block"></div>
-                        <div className="hidden md:flex flex-col items-end">
-                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-cyan-500/30 mb-1">Progress Metric</p>
-                            <div className="flex items-center space-x-3">
-                                <div className="w-32 h-1.5 bg-white/5 rounded-full overflow-hidden">
-                                    <div className="h-full bg-cyan-500 transition-all duration-500 shadow-[0_0_15px_#00f2ff]" style={{ width: `${progress}%` }}></div>
-                                </div>
-                                <span className="text-xs font-black text-cyan-400">{currentQuestion + 1}/{questions.length}</span>
-                            </div>
+                        <div>
+                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-cyan-500/40">Violations</p>
+                            <p className={`text-xl font-black ${violationCount >= 3 ? 'text-rose-400' : 'text-cyan-300'}`}>
+                                {violationCount}/{EXAM_CONFIG.MAX_VIOLATIONS}
+                            </p>
                         </div>
                     </div>
                 </div>
             </header>
 
-            {/* AI Proctor HUD */}
-            <aside className="fixed top-24 right-8 z-40 w-64 flex flex-col gap-4">
-                <div className="glass rounded-2xl border-white/[0.05] p-1 overflow-hidden relative group bg-black shadow-2xl">
-                    <video ref={videoRef} autoPlay muted playsInline className="w-full aspect-[4/3] object-cover rounded-[14px] opacity-100 transition-opacity" />
-                    <div className="absolute inset-0 pointer-events-none">
-                        <div className="absolute top-4 left-4 flex items-center space-x-1.5">
-                            <div className="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping"></div>
-                            <span className="text-[8px] font-black text-rose-500 uppercase tracking-widest bg-rose-500/20 px-2 py-0.5 rounded border border-rose-500/20">Active Trace</span>
+            <main className="pt-24 pb-24 px-6 page-container">
+                <div className="container mx-auto grid lg:grid-cols-[1fr_320px] gap-8">
+                    <section className="glass rounded-[2rem] border-white/10 p-8 md:p-10 bg-black/50">
+                        <div className="w-full h-1.5 rounded-full bg-white/5 overflow-hidden mb-10">
+                            <div className="h-full bg-cyan-500 shadow-[0_0_16px_rgba(0,242,255,0.6)] transition-all duration-500" style={{ width: `${progress}%` }}></div>
                         </div>
-                        <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-cyan-500/30 m-4"></div>
-                        <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-cyan-500/30 m-4"></div>
-                    </div>
-                </div>
 
-                <div className="glass rounded-2xl border-white/[0.05] p-5 space-y-4 bg-black/60">
-                    <div className="flex items-center justify-between">
-                        <span className="text-[9px] font-black uppercase text-cyan-500/40 tracking-[0.2em]">Neural Flux</span>
-                        <span className="text-[9px] font-black uppercase text-cyan-400 tracking-widest">Stable_</span>
-                    </div>
-                    <div className="h-10 w-full flex items-end gap-1 px-1">
-                        {[...Array(24)].map((_, i) => (
-                            <div key={i} className="flex-1 bg-cyan-500/20 rounded-t-[1px] group-hover:bg-cyan-500/40 transition-all duration-700" style={{ height: `${20 + Math.random() * 80}%` }}></div>
-                        ))}
-                    </div>
-                    <div className="pt-4 border-t border-white/[0.05]">
-                        <div className="flex justify-between items-center">
-                            <span className="text-[9px] font-black uppercase text-cyan-500/40 tracking-[0.2em]">Integrity Check</span>
-                            <span className={`text-[9px] font-black uppercase ${violations >= 3 ? 'text-rose-500' : 'text-cyan-400'}`}>{violations}/5 Faults</span>
+                        <h1 className="text-3xl md:text-4xl font-black text-cyan-50 leading-tight tracking-tight mb-8 uppercase">
+                            {activeQuestion.question}
+                        </h1>
+
+                        <div className="grid gap-4">
+                            {(activeQuestion.options || []).map((option, idx) => {
+                                const isSelected = answers[activeQuestion._id] === idx;
+                                return (
+                                    <button
+                                        key={idx}
+                                        onClick={() => handleAnswerChange(activeQuestion._id, idx)}
+                                        className={`text-left rounded-2xl p-5 border transition-all duration-300 ${isSelected
+                                            ? 'bg-cyan-500/10 border-cyan-500/40 text-cyan-50 shadow-[0_0_30px_rgba(0,242,255,0.08)]'
+                                            : 'bg-white/[0.02] border-white/[0.06] text-cyan-100/80 hover:border-cyan-500/30'
+                                            }`}
+                                    >
+                                        <span className="font-black text-cyan-400 mr-2">{String.fromCharCode(65 + idx)}.</span>
+                                        {option}
+                                    </button>
+                                );
+                            })}
                         </div>
-                    </div>
-                </div>
-            </aside>
 
-            {/* Question Terminal */}
-            <main className="pt-24 pb-20 px-6 flex justify-center items-center min-h-[calc(100vh-160px)] page-container">
-                <div className="w-full max-w-4xl relative">
-                    <div className="relative group overflow-visible">
-                        {/* Decorative background glow */}
-                        <div className="absolute -inset-10 bg-cyan-500/[0.07] blur-[100px] rounded-[3rem] pointer-events-none group-hover:bg-cyan-500/[0.12] transition-all duration-1000"></div>
+                        <div className="mt-10 flex items-center justify-between">
+                            <button
+                                onClick={() => setCurrentQuestion((prev) => Math.max(0, prev - 1))}
+                                disabled={currentQuestion === 0}
+                                className="px-6 py-3 rounded-xl border border-white/10 text-xs font-black uppercase tracking-[0.2em] text-cyan-200/70 hover:text-cyan-300 hover:border-cyan-500/40 disabled:opacity-40 disabled:cursor-not-allowed"
+                            >
+                                Previous
+                            </button>
 
-                        <div className="bg-black/60 backdrop-blur-3xl rounded-[2.5rem] border border-white/[0.08] p-10 md:p-12 relative overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.8)]">
-                            {/* Inner Accent Line */}
-                            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent"></div>
+                            <div className="flex items-center gap-3">
+                                <button
+                                    onClick={() => void submitAssessment(false)}
+                                    disabled={isSubmitting}
+                                    className="px-6 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-black uppercase tracking-[0.2em] text-white disabled:opacity-40 disabled:cursor-not-allowed"
+                                >
+                                    {isSubmitting ? 'Submitting...' : 'Submit'}
+                                </button>
+                                <button
+                                    onClick={() => setCurrentQuestion((prev) => Math.min(questions.length - 1, prev + 1))}
+                                    disabled={currentQuestion >= questions.length - 1}
+                                    className="px-6 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-xs font-black uppercase tracking-[0.2em] text-black disabled:opacity-40 disabled:cursor-not-allowed"
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </section>
 
-                            <div className="mb-14 relative z-10">
-                                <div className="flex items-center space-x-4 mb-8">
-                                    <span className="text-[10px] font-black text-cyan-400 uppercase tracking-[0.5em]">Objective {currentQuestion + 1}</span>
-                                    <div className="h-px w-12 bg-cyan-500/20"></div>
+                    <aside className="space-y-4">
+                        <div className="glass rounded-2xl border-white/10 p-4 bg-black/60">
+                            <div className="flex items-center justify-between mb-3">
+                                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-cyan-400">Live Camera</p>
+                                <span className={`text-[10px] font-black uppercase tracking-[0.15em] ${cameraStatus === 'ready' ? 'text-emerald-400' : 'text-amber-400'}`}>
+                                    {cameraStatus}
+                                </span>
+                            </div>
+                            <div className="relative rounded-xl overflow-hidden border border-white/10 bg-black">
+                                <video ref={videoRef} autoPlay muted playsInline className="w-full aspect-[4/3] object-cover" />
+                                <div className="absolute top-2 left-2 px-2 py-1 bg-black/50 rounded border border-white/10">
+                                    <p className="text-[8px] font-black uppercase tracking-[0.2em] text-cyan-300">
+                                        {proctoringReady ? 'AI Monitor On' : 'AI Monitor Loading'}
+                                    </p>
                                 </div>
-
-                                <h2 className="text-3xl md:text-4xl font-black text-cyan-50 leading-[1.1] tracking-tighter uppercase mb-6">
-                                    {currentQ?.question}
-                                </h2>
-                                {currentQ?.description && (
-                                    <div className="relative group/desc">
-                                        <div className="absolute -left-8 top-0 bottom-0 w-[2px] bg-gradient-to-b from-cyan-500/50 via-cyan-500/10 to-transparent"></div>
-                                        <p className="text-cyan-200/60 font-medium leading-relaxed max-w-2xl pl-2 mb-6 text-base">
-                                            {currentQ?.description}
-                                        </p>
-                                    </div>
-                                )}
                             </div>
-
-                            {/* Options Lattice */}
-                            <div className="grid gap-4 relative z-10">
-                                {currentQ?.options?.map((option: string, idx: number) => {
-                                    const isSelected = answers[currentQ._id] === idx;
-                                    return (
-                                        <button
-                                            key={idx}
-                                            onClick={() => handleAnswerChange(currentQ._id, idx)}
-                                            className={`relative group/opt flex items-center text-left p-6 rounded-2xl border transition-all duration-500 ${isSelected ? 'bg-cyan-500/5 border-cyan-500/40 shadow-[0_0_30px_rgba(0,242,255,0.1)]' : 'bg-white/[0.02] border-white/[0.03] hover:border-white/10 hover:bg-white/[0.05]'}`}
-                                        >
-                                            <div className={`w-8 h-8 rounded-lg border flex items-center justify-center flex-shrink-0 transition-all duration-700 ${isSelected ? 'bg-cyan-500 border-cyan-400 shadow-[0_0_20px_rgba(0,242,255,0.4)]' : 'border-white/10 group-hover/opt:border-white/30'}`}>
-                                                <span className={`text-[10px] font-black ${isSelected ? 'text-black' : 'text-white/40'}`}>{String.fromCharCode(65 + idx)}</span>
-                                            </div>
-                                            <span className={`ml-6 text-base font-bold tracking-tight transition-colors duration-500 ${isSelected ? 'text-cyan-50' : 'text-cyan-900/60 group-hover/opt:text-cyan-200/80'}`}>{option}</span>
-
-                                            {isSelected && (
-                                                <div className="absolute right-8">
-                                                    <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_15px_#00f2ff]"></div>
-                                                </div>
-                                            )}
-                                        </button>
-                                    )
-                                })}
-                            </div>
+                            {cameraError && (
+                                <p className="mt-3 text-[11px] font-semibold text-rose-300">{cameraError}</p>
+                            )}
+                            {cameraStatus !== 'ready' && (
+                                <button
+                                    onClick={() => void initCamera()}
+                                    className="mt-4 w-full px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-black text-xs font-black uppercase tracking-[0.2em]"
+                                >
+                                    Retry Camera
+                                </button>
+                            )}
                         </div>
-                    </div>
+
+                        <div className="glass rounded-2xl border-white/10 p-4 bg-black/60">
+                            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-cyan-400 mb-3">Monitoring Rules</p>
+                            <ul className="text-xs text-cyan-100/70 space-y-2 leading-relaxed">
+                                <li>Face must remain visible at all times.</li>
+                                <li>Looking away and head movement are monitored.</li>
+                                <li>Multiple faces trigger violations.</li>
+                                <li>Tab switch and screen minimize are violations.</li>
+                                <li>Auto-terminate at {EXAM_CONFIG.MAX_VIOLATIONS} violations.</li>
+                            </ul>
+                        </div>
+                    </aside>
                 </div>
             </main>
-
-            {/* Command Footer */}
-            <footer className="fixed bottom-0 left-0 right-0 z-50 glass border-t border-white/5 bg-black/90">
-                <div className="container mx-auto px-6 h-24 flex items-center justify-between">
-                    <Button
-                        variant="outline"
-                        className="border-white/5 text-cyan-500/20 hover:text-cyan-400 hover:border-cyan-500/30 px-8 py-4 text-[10px] uppercase font-black tracking-[0.3em] transition-all disabled:opacity-0 bg-transparent"
-                        disabled={currentQuestion === 0}
-                        onClick={() => setCurrentQuestion((prev) => Math.max(0, prev - 1))}
-                    >
-                        / Backtrack
-                    </Button>
-
-                    <div className="flex items-center space-x-6">
-                        <div className="hidden sm:flex space-x-1.5">
-                            {questions.map((_, i) => (
-                                <div
-                                    key={i}
-                                    className={`w-1 h-3 rounded-full transition-all duration-500 ${i === currentQuestion ? 'bg-cyan-400 h-8 shadow-[0_0_10px_#00f2ff]' : answers[questions[i]?._id] !== undefined ? 'bg-cyan-900' : 'bg-white/5'}`}
-                                ></div>
-                            ))}
-                        </div>
-                        <Button
-                            variant="danger"
-                            className="bg-rose-600/10 text-rose-500 border border-rose-500/30 hover:bg-rose-600 hover:text-white px-8 py-4 text-[10px] uppercase font-black tracking-[0.2em] shadow-xl shadow-rose-950/20"
-                            onClick={() => handleSubmit(false)}
-                            loading={isSubmitting}
-                        >
-                            Finalize Session
-                        </Button>
-                    </div>
-
-                    <Button
-                        variant="primary"
-                        className="bg-cyan-600 hover:bg-cyan-500 text-black px-12 py-4 text-[10px] uppercase font-black tracking-[0.3em] shadow-[0_0_40px_rgba(0,242,255,0.2)] disabled:opacity-0 rounded-xl"
-                        disabled={currentQuestion === questions.length - 1}
-                        onClick={() => setCurrentQuestion((prev) => Math.min(questions.length - 1, prev + 1))}
-                    >
-                        Proceed Next /
-                    </Button>
-                </div>
-            </footer>
         </div>
     );
 }

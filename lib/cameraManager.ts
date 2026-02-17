@@ -1,59 +1,55 @@
 export class CameraManager {
-    private static activeStream: MediaStream | null = null;
-    private static activeLandmarker: any | null = null;
+    private static stream: MediaStream | null = null;
+    private static resources: any[] = [];
 
-    static register(stream: MediaStream, landmarker?: any) {
-        // Stop any previous stream before registering a new one
-        this.stopAll();
-
-        this.activeStream = stream;
-        this.activeLandmarker = landmarker;
-        console.log("CameraManager: Resource registered.");
+    static setStream(stream: MediaStream) {
+        this.stream = stream;
     }
 
-    static stopAll() {
-        console.log("CameraManager: Nuclear stop triggered.");
-        if (this.activeStream) {
-            this.activeStream.getTracks().forEach(track => {
-                try {
-                    track.stop();
-                    track.enabled = false;
-                } catch (e) {
-                    console.error("Failed to stop track:", e);
-                }
-            });
-            this.activeStream = null;
-        }
-
-        if (this.activeLandmarker) {
-            try {
-                // Ultra-defensive: Use an internal copy to avoid races and check specifically for method presence
-                const landmarker = this.activeLandmarker;
-                if (landmarker && typeof landmarker === 'object') {
-                    if (Object.prototype.hasOwnProperty.call(landmarker, 'close') || typeof landmarker.close === 'function') {
-                        try {
-                            landmarker.close();
-                        } catch (innerError) {
-                            console.warn("CameraManager: Internal close method failed, suppressing.");
-                        }
-                    }
-                }
-            } catch (e) {
-                console.error("CameraManager: Fatal wrapper crash during landmarker release:", e);
-            } finally {
-                this.activeLandmarker = null;
+    static getStream(): MediaStream | null {
+        if (this.stream && this.stream.active) {
+            const tracks = this.stream.getTracks();
+            if (tracks.some(t => t.readyState === 'live' && t.enabled)) {
+                return this.stream;
             }
         }
+        return null;
+    }
 
-        // Also attempt to find any rogue video elements and pause them
-        if (typeof document !== 'undefined') {
-            const videos = document.querySelectorAll('video');
-            videos.forEach(v => {
-                v.pause();
-                v.srcObject = null;
-                v.load();
-            });
+    static addResource(resource: any) {
+        if (resource) this.resources.push(resource);
+    }
+
+    static stop() {
+        console.log("[CM_V15] Safe stop triggered");
+
+        // Stop MediaStream
+        if (this.stream) {
+            try {
+                this.stream.getTracks().forEach(track => {
+                    track.stop();
+                    track.enabled = false;
+                });
+            } catch (e) {
+                console.warn("[CM_V15] Stream stop error:", e);
+            }
+            this.stream = null;
         }
+
+        // Dispose AI models
+        this.resources.forEach(resource => {
+            try {
+                if (resource && typeof resource.close === "function") {
+                    resource.close();
+                } else if (resource && typeof resource.stop === "function") {
+                    resource.stop();
+                }
+            } catch (e) {
+                console.warn("[CM_V15] Resource disposal error:", e);
+            }
+        });
+
+        this.resources = [];
     }
 }
 

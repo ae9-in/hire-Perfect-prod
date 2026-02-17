@@ -223,19 +223,67 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-32 px-6">
-          <div className="container mx-auto max-w-5xl">
-            <Card className="p-16 bg-[#050510] border border-white/10 text-white text-center rounded-[3rem] shadow-[0_0_50px_rgba(6,182,212,0.1)] relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform duration-1000"></div>
-              <div className="relative z-10">
-                <h2 className="text-5xl md:text-6xl font-black mb-8 tracking-tighter uppercase leading-none">Ready to transform <br /> your hiring?</h2>
-                <p className="text-xl text-slate-400 mb-12 max-w-xl mx-auto font-medium">Join 500+ teams evaluating candidates with HirePerfect. No credit card required to start.</p>
-                <Link href="/signup">
-                  <Button variant="primary" className="bg-cyan-600 text-white hover:bg-cyan-500 px-12 py-6 text-xl shadow-2xl shadow-cyan-900/40">Create Free Account</Button>
-                </Link>
+        {/* Pricing Section */}
+        <section id="pricing" className="py-32 px-6 bg-[#030308]/50 relative z-10 border-t border-white/5">
+          <div className="container mx-auto max-w-7xl">
+            <div className="text-center mb-24 px-4">
+              <span className="text-[10px] font-black text-cyan-500 uppercase tracking-[0.4em] mb-4 block">Simple, Transparent Pricing</span>
+              <h2 className="text-5xl md:text-6xl font-black text-white mb-6 tracking-tighter uppercase leading-[0.8]">
+                CHOOSE YOUR <br /><span className="text-gradient">ENGINE FOR GROWTH.</span>
+              </h2>
+              <p className="text-xl text-slate-400 font-medium max-w-2xl mx-auto">No hidden fees. Start for free. Scale as you evolve.</p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 px-4">
+              {/* Individual Tier */}
+              <Card className="p-12 bg-[#050510] border-white/5 hover:border-cyan-500/30 transition-all rounded-[2.5rem] flex flex-col items-center text-center">
+                <h3 className="text-2xl font-black text-white mb-2 uppercase tracking-tight">Individual</h3>
+                <div className="flex items-baseline mb-6">
+                  <span className="text-4xl font-black text-white">₹{PRICING.INDIVIDUAL_ASSESSMENT}</span>
+                  <span className="text-slate-500 ml-2 font-bold uppercase text-xs tracking-widest">/test</span>
+                </div>
+                <p className="text-slate-400 font-medium mb-12 text-sm leading-relaxed">Perfect for trying out single assessments with full proctoring.</p>
+                <div className="mt-auto w-full">
+                  <Link href="/signup">
+                    <Button variant="outline" className="w-full py-5 rounded-2xl glass border-white/10 hover:border-cyan-500/50 text-white font-black uppercase tracking-widest text-[10px]">Choose Plan</Button>
+                  </Link>
+                </div>
+              </Card>
+
+              {/* Category Combo - Featured */}
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-[2.6rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                <Card className="relative p-12 bg-[#050510] border-purple-500/30 transition-all rounded-[2.5rem] flex flex-col items-center text-center h-full">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-full text-[10px] font-black text-white uppercase tracking-widest shadow-xl">Most Popular</div>
+                  <h3 className="text-2xl font-black text-white mb-2 uppercase tracking-tight">Category Combo</h3>
+                  <div className="flex items-baseline mb-6">
+                    <span className="text-4xl font-black text-white">₹{PRICING.CATEGORY_COMBO}</span>
+                    <span className="text-slate-500 ml-2 font-bold uppercase text-xs tracking-widest">/cat</span>
+                  </div>
+                  <p className="text-slate-400 font-medium mb-12 text-sm leading-relaxed">6 assessments in one category. Best for targeted team evaluation.</p>
+                  <div className="mt-auto w-full">
+                    <Link href="/signup">
+                      <Button variant="primary" className="w-full py-5 rounded-2xl bg-gradient-to-r from-purple-600 to-cyan-600 border-0 shadow-2xl shadow-purple-500/20 text-white font-black uppercase tracking-widest text-[10px]">Get Started</Button>
+                    </Link>
+                  </div>
+                </Card>
               </div>
-            </Card>
+
+              {/* Full Bundle Tier */}
+              <Card className="p-12 bg-[#050510] border-white/5 hover:border-purple-500/30 transition-all rounded-[2.5rem] flex flex-col items-center text-center">
+                <h3 className="text-2xl font-black text-white mb-2 uppercase tracking-tight">Full Bundle</h3>
+                <div className="flex items-baseline mb-6">
+                  <span className="text-4xl font-black text-white">₹{PRICING.FULL_BUNDLE}</span>
+                  <span className="text-slate-500 ml-2 font-bold uppercase text-xs tracking-widest">/all</span>
+                </div>
+                <p className="text-slate-400 font-medium mb-12 text-sm leading-relaxed">All 36 assessments included. The complete hiring infrastructure.</p>
+                <div className="mt-auto w-full">
+                  <Link href="/signup">
+                    <Button variant="outline" className="w-full py-5 rounded-2xl glass border-white/10 hover:border-purple-500/50 text-white font-black uppercase tracking-widest text-[10px]">Choose Plan</Button>
+                  </Link>
+                </div>
+              </Card>
+            </div>
           </div>
         </section>
       </main>
@@ -269,8 +317,6 @@ export default function HomePage() {
                 <h4 className="font-black uppercase tracking-widest text-cyan-400 text-xs mb-6">Company</h4>
                 <ul className="space-y-4 text-slate-300 font-bold text-sm">
                   <li><Link href="/about" className="hover:text-cyan-400 transition-colors">About Us</Link></li>
-                  <li><Link href="/blog" className="hover:text-cyan-400 transition-colors">Blog</Link></li>
-                  <li><Link href="/careers" className="hover:text-cyan-400 transition-colors">Careers</Link></li>
                 </ul>
               </div>
               <div>

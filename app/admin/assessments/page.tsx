@@ -166,7 +166,7 @@ export default function AssessmentManagement() {
                         <Card key={a._id} className="p-8 border-white/5 bg-[#0a0a0f]/60 backdrop-blur-xl group hover:border-cyan-500/30 transition-all duration-500 flex flex-col justify-between">
                             <div>
                                 <div className="flex justify-between items-start mb-6">
-                                    <Badge variant={a.difficulty === 'easy' ? 'success' : a.difficulty === 'medium' ? 'primary' : 'destructive'} className="uppercase text-[9px] font-black tracking-widest px-3 py-1 bg-opacity-10 border-opacity-20">
+                                    <Badge variant={a.difficulty === 'easy' ? 'success' : a.difficulty === 'medium' ? 'primary' : 'error'} className="uppercase text-[9px] font-black tracking-widest px-3 py-1 bg-opacity-10 border-opacity-20">
                                         {a.difficulty}
                                     </Badge>
                                     <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">

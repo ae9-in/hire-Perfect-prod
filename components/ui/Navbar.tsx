@@ -27,7 +27,7 @@ const Navbar = () => {
     }, []);
 
     const handleLogout = () => {
-        CameraManager.stopAll();
+        CameraManager.stop();
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         setUser(null);

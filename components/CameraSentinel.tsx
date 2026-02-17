@@ -14,7 +14,7 @@ export default function CameraSentinel() {
         if (!isAssessmentArea) {
             // If the user navigates to any page OUTSIDE the assessment area, 
             // force a hardware release of the camera strings and AI engines.
-            CameraManager.stopAll();
+            CameraManager.stop();
         }
     }, [pathname]);
 
