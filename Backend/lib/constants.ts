@@ -19,6 +19,10 @@ export const VIOLATION_TYPES = {
     TAB_SWITCH: 'tab_switch',
     SCREEN_MINIMIZE: 'screen_minimize',
     FULLSCREEN_EXIT: 'fullscreen_exit',
+    SESSION_EXIT: 'session_exit',
+    COPY_PASTE: 'copy_paste',
+    CONTENT_CUT: 'content_cut',
+    SUDDEN_MOVEMENT: 'sudden_movement',
 } as const;
 
 export const VIOLATION_SEVERITY = {

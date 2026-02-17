@@ -3,10 +3,12 @@ import bcrypt from 'bcryptjs';
 
 export interface IUser extends Document {
     email: string;
-    password: string;
+    password?: string;
     name: string;
     role: 'admin' | 'candidate';
     phone?: string;
+    provider: 'local' | 'google' | 'github';
+    providerId?: string;
     createdAt: Date;
     updatedAt: Date;
     resetPasswordToken?: string;
@@ -26,7 +28,9 @@ const UserSchema = new Schema<IUser>(
         },
         password: {
             type: String,
-            required: [true, 'Password is required'],
+            required: function (this: any) {
+                return !this.provider || this.provider === 'local';
+            },
             minlength: [6, 'Password must be at least 6 characters'],
             select: false,
         },
@@ -44,6 +48,14 @@ const UserSchema = new Schema<IUser>(
             type: String,
             trim: true,
         },
+        provider: {
+            type: String,
+            default: 'local',
+        },
+        providerId: {
+            type: String,
+            index: true,
+        },
         resetPasswordToken: String,
         resetPasswordExpires: Date,
     },
@@ -54,7 +66,7 @@ const UserSchema = new Schema<IUser>(
 
 // Hash password before saving
 UserSchema.pre('save', async function () {
-    if (!this.isModified('password')) return;
+    if (!this.isModified('password') || !this.password) return;
 
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
@@ -63,6 +75,7 @@ UserSchema.pre('save', async function () {
 // Compare password method
 UserSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
     try {
+        if (!this.password) return false;
         return await bcrypt.compare(candidatePassword, this.password);
     } catch (error) {
         return false;

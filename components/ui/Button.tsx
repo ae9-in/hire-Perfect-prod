@@ -22,11 +22,11 @@ const Button: React.FC<ButtonProps> = ({
     const baseStyles = 'inline-flex items-center justify-center font-bold transition-all duration-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 btn-interact disabled:opacity-50 disabled:cursor-not-allowed';
 
     const variants = {
-        primary: 'bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-xl hover:shadow-indigo-200 focus:ring-indigo-500',
-        secondary: 'bg-purple-600 text-white hover:bg-purple-700 hover:shadow-xl hover:shadow-purple-200 focus:ring-purple-500',
-        outline: 'border-2 border-slate-200 text-slate-700 hover:border-indigo-600 hover:text-indigo-600 hover:bg-indigo-50',
-        ghost: 'text-slate-600 hover:bg-slate-100 hover:text-indigo-600',
-        danger: 'bg-rose-500 text-white hover:bg-rose-600 hover:shadow-xl hover:shadow-rose-100 focus:ring-rose-500',
+        primary: 'bg-cyan-600 text-white hover:bg-cyan-500 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] focus:ring-cyan-500',
+        secondary: 'bg-purple-600 text-white hover:bg-purple-700 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] focus:ring-purple-500',
+        outline: 'border-2 border-white/10 text-white hover:border-cyan-500/50 hover:text-cyan-400 hover:bg-cyan-500/5',
+        ghost: 'text-slate-400 hover:bg-white/5 hover:text-cyan-400',
+        danger: 'bg-rose-500 text-white hover:bg-rose-600 hover:shadow-[0_0_20px_rgba(244,63,94,0.3)] focus:ring-rose-500',
     };
 
     const sizes = {

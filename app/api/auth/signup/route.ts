@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
         await connectDB();
 
         const body = await request.json();
-        const { email, password, name, role, phone } = body;
+        const { email, password, name, role, phone, adminSecret } = body;
 
         // Validation
         if (!email || !password || !name) {
@@ -16,6 +16,17 @@ export async function POST(request: NextRequest) {
                 { error: 'Email, password, and name are required' },
                 { status: 400 }
             );
+        }
+
+        // Admin Security Check
+        if (role === 'admin') {
+            const systemAdminSecret = process.env.ADMIN_SIGNUP_SECRET;
+            if (!systemAdminSecret || adminSecret !== systemAdminSecret) {
+                return NextResponse.json(
+                    { error: 'Unauthorized: Invalid Admin Secret' },
+                    { status: 403 }
+                );
+            }
         }
 
         // Check if user already exists
@@ -34,6 +45,7 @@ export async function POST(request: NextRequest) {
             name,
             role: role || 'candidate',
             phone,
+            provider: 'local',
         });
 
         // Generate token

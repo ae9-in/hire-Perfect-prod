@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken, TokenPayload } from '@/lib/auth';
+import { getToken } from 'next-auth/jwt';
 
 export interface AuthRequest extends NextRequest {
     user?: TokenPayload;
@@ -8,40 +9,51 @@ export interface AuthRequest extends NextRequest {
 // Middleware to verify authentication
 export async function authMiddleware(request: NextRequest): Promise<{ authorized: boolean; user?: TokenPayload; response?: NextResponse }> {
     try {
+        // 1. Check for manual JWT in Authorization header
         const authHeader = request.headers.get('authorization');
 
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        if (authHeader && authHeader.startsWith('Bearer ')) {
+            const token = authHeader.substring(7);
+            const decoded = verifyToken(token);
+
+            if (decoded) {
+                return {
+                    authorized: true,
+                    user: decoded,
+                };
+            }
+        }
+
+        // 2. Check for NextAuth session (OAuth)
+        const nextAuthToken = await getToken({
+            req: request,
+            secret: process.env.NEXTAUTH_SECRET || process.env.JWT_SECRET,
+        });
+
+        if (nextAuthToken) {
             return {
-                authorized: false,
-                response: NextResponse.json(
-                    { error: 'Unauthorized - No token provided' },
-                    { status: 401 }
-                ),
+                authorized: true,
+                user: {
+                    userId: nextAuthToken.userId as string,
+                    email: (nextAuthToken.email as string) || '',
+                    role: (nextAuthToken.role as string) || 'candidate',
+                },
             };
         }
 
-        const token = authHeader.substring(7);
-        const decoded = verifyToken(token);
-
-        if (!decoded) {
-            return {
-                authorized: false,
-                response: NextResponse.json(
-                    { error: 'Unauthorized - Invalid token' },
-                    { status: 401 }
-                ),
-            };
-        }
-
-        return {
-            authorized: true,
-            user: decoded,
-        };
-    } catch (error) {
         return {
             authorized: false,
             response: NextResponse.json(
-                { error: 'Unauthorized - Token verification failed' },
+                { error: 'Unauthorized - No valid session or token provided' },
+                { status: 401 }
+            ),
+        };
+    } catch (error) {
+        console.error('Middleware auth error:', error);
+        return {
+            authorized: false,
+            response: NextResponse.json(
+                { error: 'Unauthorized - Auth verification failed' },
                 { status: 401 }
             ),
         };

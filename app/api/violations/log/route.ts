@@ -40,10 +40,10 @@ export async function POST(request: NextRequest) {
 
         // Update attempt
         attempt.violationCount += 1;
-        attempt.violations.push(violation._id);
+        attempt.violations.push(violation._id as any);
 
-        // Check if max violations exceeded
-        if (attempt.violationCount >= EXAM_CONFIG.MAX_VIOLATIONS) {
+        // Check if max violations exceeded or if it's a critical exit
+        if (attempt.violationCount >= EXAM_CONFIG.MAX_VIOLATIONS || type === 'SESSION_EXIT' || severity === 'critical') {
             attempt.status = 'terminated';
             attempt.completedAt = new Date();
         }

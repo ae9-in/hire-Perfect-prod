@@ -6,8 +6,8 @@
     "dev": "next dev --webpack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "seed": "tsx scripts/seed.ts"
+    "lint": "eslint .",
+    "seed": "tsx Backend/scripts/seed.ts"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^0.10.32",
@@ -21,6 +21,7 @@
     "mongoose": "^9.2.1",
     "nanoid": "^5.1.6",
     "next": "16.1.6",
+    "next-auth": "^4.24.13",
     "nodemailer": "^8.0.1",
     "prisma": "^5.22.0",
     "razorpay": "^2.9.6",

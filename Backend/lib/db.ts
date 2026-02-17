@@ -1,6 +1,19 @@
 import mongoose from 'mongoose';
 import dns from 'dns';
 
+/**
+ * Force-register all models to avoid MissingSchemaError in Next.js
+ * especially when using .populate()
+*/
+import '../models/User';
+import '../models/Assessment';
+import '../models/Question';
+import '../models/Attempt';
+import '../models/Violation';
+import '../models/Purchase';
+import '../models/Category';
+import '../models/Transaction';
+
 // Force IPv4 DNS resolution to fix Windows IPv6 issues
 dns.setDefaultResultOrder('ipv4first');
 

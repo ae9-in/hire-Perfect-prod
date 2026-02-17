@@ -2,7 +2,7 @@
 
 import React, { InputHTMLAttributes, useState, forwardRef } from 'react';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement | HTMLSelectElement> {
     label?: string;
     error?: string;
     success?: boolean;
@@ -10,9 +10,10 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     icon?: React.ReactNode;
     iconPosition?: 'left' | 'right';
     showPasswordToggle?: boolean;
+    as?: 'input' | 'select';
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(({
+const Input = forwardRef<any, InputProps>(({
     label,
     error,
     success,
@@ -22,6 +23,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
     showPasswordToggle = false,
     type = 'text',
     className = '',
+    as = 'input',
+    children,
     ...props
 }, ref) => {
     const [showPassword, setShowPassword] = useState(false);
@@ -31,26 +34,34 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
         ? (showPassword ? 'text' : 'password')
         : type;
 
-    const baseStyles = 'w-full px-5 py-4 rounded-xl border-2 transition-all duration-300 outline-none bg-white font-medium text-slate-900 placeholder:text-slate-300';
+    const baseStyles = 'w-full px-5 py-4 rounded-xl border border-white/10 transition-all duration-300 outline-none bg-slate-900/50 backdrop-blur-md font-medium text-white placeholder:text-slate-500 appearance-none';
 
     const stateStyles = error
-        ? 'border-rose-100 bg-rose-50/30 focus:border-rose-500 shadow-sm'
+        ? 'border-rose-500/50 bg-rose-500/5 focus:border-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.1)]'
         : success
-            ? 'border-green-100 bg-green-50/30 focus:border-green-500 shadow-sm'
+            ? 'border-emerald-500/50 bg-emerald-500/5 focus:border-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.1)]'
             : isFocused
-                ? 'border-indigo-500 shadow-xl shadow-indigo-100 ring-4 ring-indigo-50'
-                : 'border-slate-100 hover:border-slate-200 shadow-sm';
+                ? 'border-cyan-500/50 shadow-[0_0_20px_rgba(6,182,212,0.15)] ring-1 ring-cyan-500/20'
+                : 'hover:border-white/20';
 
     const iconPaddingLeft = icon && iconPosition === 'left' ? 'pl-14' : '';
     const iconPaddingRight = (icon && iconPosition === 'right') || showPasswordToggle ? 'pr-14' : '';
+
+    const commonProps = {
+        ref,
+        className: `${baseStyles} ${stateStyles} ${iconPaddingLeft} ${iconPaddingRight} ${className}`,
+        onFocus: () => setIsFocused(true),
+        onBlur: () => setIsFocused(false),
+        ...props
+    };
 
     return (
         <div className="w-full group">
             {label && (
                 <label className={`block text-[10px] font-black uppercase tracking-[0.2em] mb-2 transition-colors duration-300 ${error ? 'text-rose-500' :
-                        success ? 'text-green-600' :
-                            isFocused ? 'text-indigo-600' :
-                                'text-slate-400'
+                    success ? 'text-emerald-400' :
+                        isFocused ? 'text-cyan-400' :
+                            'text-slate-500'
                     }`}>
                     {label}
                 </label>
@@ -59,27 +70,29 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
             <div className="relative">
                 {/* Left Icon */}
                 {icon && iconPosition === 'left' && (
-                    <div className={`absolute left-5 top-1/2 -translate-y-1/2 transition-colors duration-300 ${isFocused ? 'text-indigo-500' : 'text-slate-300'}`}>
+                    <div className={`absolute left-5 top-1/2 -translate-y-1/2 transition-colors duration-300 z-10 ${isFocused ? 'text-cyan-400' : 'text-slate-500'}`}>
                         {icon}
                     </div>
                 )}
 
                 {/* Input Field */}
-                <input
-                    ref={ref}
-                    type={inputType}
-                    className={`${baseStyles} ${stateStyles} ${iconPaddingLeft} ${iconPaddingRight} ${className}`}
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={() => setIsFocused(false)}
-                    {...props}
-                />
+                {as === 'select' ? (
+                    <select {...commonProps as any} type={undefined}>
+                        {children}
+                    </select>
+                ) : (
+                    <input
+                        {...commonProps as any}
+                        type={inputType}
+                    />
+                )}
 
                 {/* Right Icon or Password Toggle */}
                 {(showPasswordToggle && type === 'password') ? (
                     <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className={`absolute right-5 top-1/2 -translate-y-1/2 transition-colors duration-300 ${isFocused ? 'text-indigo-500' : 'text-slate-300'} hover:text-slate-600`}
+                        className={`absolute right-5 top-1/2 -translate-y-1/2 transition-colors duration-300 z-10 ${isFocused ? 'text-cyan-400' : 'text-slate-500'} hover:text-white`}
                     >
                         {showPassword ? (
                             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -92,16 +105,22 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
                             </svg>
                         )}
                     </button>
-                ) : icon && iconPosition === 'right' && (
-                    <div className={`absolute right-5 top-1/2 -translate-y-1/2 transition-colors duration-300 ${isFocused ? 'text-indigo-500' : 'text-slate-300'}`}>
+                ) : icon && iconPosition === 'right' ? (
+                    <div className={`absolute right-5 top-1/2 -translate-y-1/2 transition-colors duration-300 z-10 ${isFocused ? 'text-cyan-400' : 'text-slate-500'}`}>
                         {icon}
+                    </div>
+                ) : as === 'select' && (
+                    <div className={`absolute right-5 top-1/2 -translate-y-1/2 transition-colors duration-300 z-10 pointer-events-none ${isFocused ? 'text-cyan-400' : 'text-slate-500'}`}>
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
                     </div>
                 )}
             </div>
 
             {/* Helper Text or Error Message */}
             {(error || helperText) && (
-                <p className={`mt-2 text-xs font-bold uppercase tracking-tight ${error ? 'text-rose-500' : 'text-slate-400'}`}>
+                <p className={`mt-2 text-[10px] font-black uppercase tracking-tight ${error ? 'text-rose-500' : 'text-slate-500'}`}>
                     {error || helperText}
                 </p>
             )}

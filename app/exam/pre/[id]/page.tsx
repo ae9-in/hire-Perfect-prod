@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Navbar from '@/components/ui/Navbar';
 import Button from '@/components/ui/Button';
 import Loading from '@/components/ui/Loading';
+import { CameraManager } from '@/lib/cameraManager';
 
 export default function PreAssessmentPage({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
     const params = React.use(paramsPromise);
@@ -15,11 +16,34 @@ export default function PreAssessmentPage({ params: paramsPromise }: { params: P
     const [error, setError] = useState<string | null>(null);
     const [consent, setConsent] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
+    const streamRef = useRef<MediaStream | null>(null);
+    const isMounted = useRef(true);
 
     useEffect(() => {
+        isMounted.current = true;
         loadAssessment();
-        initCamera();
+
+        return () => {
+            isMounted.current = false;
+            stopCamera();
+        };
     }, []);
+
+    const stopCamera = () => {
+        CameraManager.stopAll();
+        if (streamRef.current) {
+            streamRef.current.getTracks().forEach(track => {
+                track.stop();
+                track.enabled = false;
+            });
+            streamRef.current = null;
+        }
+        if (videoRef.current) {
+            videoRef.current.pause();
+            videoRef.current.srcObject = null;
+            videoRef.current.load(); // Force clear hardware buffer
+        }
+    };
 
     const loadAssessment = async () => {
         try {
@@ -30,17 +54,11 @@ export default function PreAssessmentPage({ params: paramsPromise }: { params: P
             });
             const data = await res.json();
 
-            if (!data.success && data.error?.includes('already have an in-progress attempt')) {
-                const attemptsRes = await fetch('/api/attempts', {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                const attemptsData = await attemptsRes.json();
-                const existing = attemptsData.attempts.find((a: any) => a.assessment._id === params.id && a.status === 'in_progress');
-                if (existing) {
-                    setAssessment({ _id: params.id, attemptId: existing._id });
-                }
-            } else if (data.success) {
+            if (data.success) {
                 setAssessment({ ...data.assessment, attemptId: data.attempt.id });
+            } else if (data.error?.includes('Protocol Violation')) {
+                // Assessment was already finished or terminated
+                setError(data.error);
             } else {
                 setError(data.error || 'Failed to initialize assessment');
             }
@@ -54,27 +72,41 @@ export default function PreAssessmentPage({ params: paramsPromise }: { params: P
 
     const initCamera = async () => {
         const timeoutId = setTimeout(() => {
-            if (!cameraOk) {
+            if (isMounted.current && !cameraOk) {
                 setError('Camera initialization timed out. Hardware calibration failed.');
             }
         }, 10000);
 
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+
+            if (!isMounted.current) {
+                // Component unmounted while waiting for user permission
+                stream.getTracks().forEach(track => track.stop());
+                return;
+            }
+
+            streamRef.current = stream;
+            CameraManager.register(stream);
             clearTimeout(timeoutId);
+
             if (videoRef.current) {
                 videoRef.current.srcObject = stream;
+                videoRef.current.play().catch(e => console.error("Video play error:", e));
                 setCameraOk(true);
             }
         } catch (err) {
-            clearTimeout(timeoutId);
-            console.error('Camera access error:', err);
-            setError('Optical sensor data unavailable. Please authorize camera access for proctoring protocols.');
+            if (isMounted.current) {
+                clearTimeout(timeoutId);
+                console.error('Camera access error:', err);
+                setError('Optical sensor data unavailable. Please authorize camera access for proctoring protocols.');
+            }
         }
     };
 
     const handleStart = () => {
         if (assessment?.attemptId && consent) {
+            stopCamera();
             router.push(`/exam/${assessment.attemptId}`);
         }
     };
@@ -114,7 +146,7 @@ export default function PreAssessmentPage({ params: paramsPromise }: { params: P
 
                                 {/* Video Feed */}
                                 <div className="relative aspect-video rounded-3xl overflow-hidden bg-black border border-white/5 shadow-inner">
-                                    <video ref={videoRef} autoPlay muted className={`w-full h-full object-cover grayscale brightness-125 contrast-125 transition-all duration-1000 ${cameraOk ? 'opacity-60' : 'opacity-0'}`} />
+                                    <video ref={videoRef} autoPlay muted playsInline className={`w-full h-full object-cover ${cameraOk ? 'opacity-100' : 'opacity-0'}`} />
 
                                     {/* HUD Overlay */}
                                     <div className="absolute inset-0 pointer-events-none">
@@ -132,9 +164,24 @@ export default function PreAssessmentPage({ params: paramsPromise }: { params: P
                                     </div>
 
                                     {!cameraOk && !error && (
-                                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/95 backdrop-blur-xl">
-                                            <div className="w-12 h-12 border-2 border-white/5 border-t-cyan-500 rounded-full animate-spin mb-6"></div>
-                                            <div className="text-[10px] font-black uppercase tracking-[0.5em] text-cyan-400 animate-pulse">Synchronizing Hardware...</div>
+                                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/95 backdrop-blur-xl group/init">
+                                            <div className="absolute inset-0 bg-cyan-500/5 animate-pulse"></div>
+                                            <div className="relative z-10 flex flex-col items-center">
+                                                <div className="w-20 h-20 bg-cyan-500/10 rounded-full flex items-center justify-center mb-8 border border-cyan-500/20 group-hover/init:scale-110 transition-transform duration-500">
+                                                    <svg className="w-10 h-10 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                                    </svg>
+                                                </div>
+                                                <Button
+                                                    variant="primary"
+                                                    size="sm"
+                                                    className="px-8 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-black uppercase tracking-[0.3em] text-[10px] shadow-[0_0_30px_rgba(0,242,255,0.2)]"
+                                                    onClick={initCamera}
+                                                >
+                                                    Initialize Optical Sensors
+                                                </Button>
+                                                <p className="mt-6 text-[9px] font-bold text-slate-500 uppercase tracking-widest animate-pulse">Awaiting Hardware Authorization</p>
+                                            </div>
                                         </div>
                                     )}
 
@@ -216,14 +263,14 @@ export default function PreAssessmentPage({ params: paramsPromise }: { params: P
                                     </div>
 
                                     <Button
-                                        variant="primary"
+                                        variant={error?.includes('Protocol Breach') ? 'danger' : 'primary'}
                                         size="lg"
                                         fullWidth
-                                        className="py-6 bg-cyan-600 hover:bg-cyan-500 text-black shadow-[0_0_40px_rgba(0,242,255,0.2)] text-xs font-black uppercase tracking-[0.6em] rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98]"
+                                        className={`py-6 text-xs font-black uppercase tracking-[0.6em] rounded-2xl transition-all ${error?.includes('Protocol Breach') ? 'bg-rose-600 hover:bg-rose-700 shadow-[0_0_40px_rgba(225,29,72,0.2)]' : 'bg-cyan-600 hover:bg-cyan-500 text-black shadow-[0_0_40px_rgba(0,242,255,0.2)] hover:scale-[1.02] active:scale-[0.98]'}`}
                                         disabled={!cameraOk || !!error || !consent}
                                         onClick={handleStart}
                                     >
-                                        Inaugurate Session
+                                        {error?.includes('Protocol Breach') ? 'Access Denied' : 'Start Assessment'}
                                     </Button>
                                 </div>
                             </div>

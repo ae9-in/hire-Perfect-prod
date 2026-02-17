@@ -10,8 +10,8 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ children, className = '', hover = true }) => {
     return (
-        <div className={`bg-white rounded-2xl border border-slate-100 p-1 shadow-sm transition-all duration-300 ${hover ? 'card-hover' : ''} ${className}`}>
-            <div className="h-full w-full rounded-[14px]">
+        <div className={`bg-slate-900/40 backdrop-blur-md rounded-2xl border border-white/5 shadow-sm transition-all duration-300 text-white ${hover ? 'card-hover' : ''} ${className}`}>
+            <div className="h-full w-full">
                 {children}
             </div>
         </div>

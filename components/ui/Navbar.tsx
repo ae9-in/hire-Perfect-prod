@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import Button from './Button';
+import { CameraManager } from '@/lib/cameraManager';
 
 const Navbar = () => {
     const pathname = usePathname();
@@ -26,6 +27,7 @@ const Navbar = () => {
     }, []);
 
     const handleLogout = () => {
+        CameraManager.stopAll();
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         setUser(null);
@@ -44,11 +46,11 @@ const Navbar = () => {
                 }`}>
                 <div className="flex items-center space-x-8">
                     <Link href="/" className="flex items-center space-x-2 group">
-                        <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg transform group-hover:rotate-6 transition-transform">
+                        <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg transform group-hover:rotate-6 transition-transform shadow-cyan-500/20">
                             <span className="text-white font-black text-xl">H</span>
                         </div>
-                        <span className="text-xl font-black tracking-tighter text-slate-900">
-                            HIRE<span className="text-indigo-600 font-black">PERFECT</span>
+                        <span className="text-xl font-black tracking-tighter text-white">
+                            HIRE<span className="text-cyan-400 font-black">PERFECT</span>
                         </span>
                     </Link>
 
@@ -58,38 +60,49 @@ const Navbar = () => {
                                 key={link.name}
                                 href={link.href}
                                 className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ${pathname === link.href
-                                        ? 'bg-indigo-50 text-indigo-600'
-                                        : 'text-slate-600 hover:bg-slate-50 hover:text-indigo-600'
+                                    ? 'bg-cyan-500/10 text-cyan-400'
+                                    : 'text-slate-400 hover:bg-white/5 hover:text-cyan-400'
                                     }`}
                             >
                                 {link.name}
                             </Link>
                         ))}
+                        {user?.role === 'admin' && (
+                            <Link
+                                href="/admin/dashboard"
+                                className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ${pathname.startsWith('/admin')
+                                    ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20'
+                                    : 'text-slate-400 hover:bg-white/5 hover:text-purple-400'
+                                    }`}
+                            >
+                                Admin Command
+                            </Link>
+                        )}
                     </div>
                 </div>
 
                 <div className="flex items-center space-x-3">
                     {user ? (
                         <div className="flex items-center space-x-4">
-                            <div className="flex items-center gap-3 px-3 py-1.5 bg-slate-100 rounded-xl hidden md:flex">
-                                <div className="w-7 h-7 bg-indigo-500 rounded-full flex items-center justify-center shadow-sm">
+                            <div className="flex items-center gap-3 px-3 py-1.5 bg-white/5 rounded-xl hidden md:flex border border-white/5">
+                                <div className="w-7 h-7 bg-cyan-600 rounded-full flex items-center justify-center shadow-sm">
                                     <span className="text-white font-bold text-xs">
                                         {user?.name?.charAt(0).toUpperCase()}
                                     </span>
                                 </div>
-                                <span className="text-sm font-bold text-slate-700">{user?.name}</span>
+                                <span className="text-sm font-bold text-slate-300">{user?.name}</span>
                             </div>
-                            <Button variant="primary" size="sm" onClick={handleLogout} className="shadow-lg shadow-indigo-100">
+                            <Button variant="primary" size="sm" onClick={handleLogout} className="shadow-lg shadow-cyan-900/20">
                                 Logout
                             </Button>
                         </div>
                     ) : (
                         <>
                             <Link href="/login">
-                                <Button variant="ghost" size="sm" className="font-bold text-indigo-600">Login</Button>
+                                <Button variant="ghost" size="sm" className="font-bold text-cyan-400">Login</Button>
                             </Link>
                             <Link href="/signup">
-                                <Button variant="primary" size="sm" className="shadow-lg shadow-indigo-100">
+                                <Button variant="primary" size="sm" className="shadow-lg shadow-cyan-900/20">
                                     Sign Up
                                 </Button>
                             </Link>

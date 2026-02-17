@@ -6,6 +6,8 @@ import Button from '@/components/ui/Button';
 import Modal from '@/components/ui/Modal';
 import Loading from '@/components/ui/Loading';
 import { EXAM_CONFIG, VIOLATION_TYPES } from '@/lib/constants';
+import { CameraManager } from '@/lib/cameraManager';
+import CriticalError from '@/components/ui/CriticalError';
 
 interface ExamPageProps {
     params: Promise<{ attemptId: string }>;
@@ -24,27 +26,128 @@ export default function ExamPage({ params: paramsPromise }: ExamPageProps) {
     const [warningMessage, setWarningMessage] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
+    const streamRef = useRef<MediaStream | null>(null);
+    const isMounted = useRef(true);
     const [proctoringActive, setProctoringActive] = useState(false);
+    const [isHalted, setIsHalted] = useState(false);
+    const [haltReason, setHaltReason] = useState('');
 
     const [faceLandmarker, setFaceLandmarker] = useState<any>(null);
+    const faceLandmarkerRef = useRef<any>(null);
     const lastVideoTimeRef = useRef(-1);
+    const requestRef = useRef<number | null>(null);
+    const lastViolationLogRef = useRef<Record<string, number>>({});
+    const isInitializing = useRef(false);
+    const loadingRef = useRef(loading);
+    const violationsRef = useRef(violations);
+    const lastNosePosRef = useRef<{ x: number, y: number } | null>(null);
+    const lastMovementLoggedRef = useRef<number>(0);
+
+    // Sync refs with state
+    useEffect(() => { loadingRef.current = loading; }, [loading]);
+    useEffect(() => { violationsRef.current = violations; }, [violations]);
+
+    const throttlingLogViolation = async (type: string, description: string, severity = 'high') => {
+        const now = Date.now();
+        const lastLog = lastViolationLogRef.current[type] || 0;
+
+        // Cooldown: 3 seconds (tuned for responsiveness)
+        if (now - lastLog < 3000 && (type === VIOLATION_TYPES.LOOKING_AWAY || type === VIOLATION_TYPES.FACE_NOT_DETECTED || type === VIOLATION_TYPES.MULTIPLE_FACES)) {
+            return;
+        }
+
+        lastViolationLogRef.current[type] = now;
+        await logViolation(type, description, severity);
+    };
 
     useEffect(() => {
+        isMounted.current = true;
         enterFullscreen();
-        initProctoring();
         loadExam();
+
+        const handleBlur = () => {
+            logViolation(VIOLATION_TYPES.TAB_SWITCH, 'Session focus blurred (Possible window switch).', 'critical');
+            setHaltReason('FOCUS LOST: UNAUTHORIZED WINDOW SWITCHING DETECTED. SESSION TERMINATED.');
+            setIsHalted(true);
+            stopProctoring();
+        };
+
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+            const token = localStorage.getItem('token');
+            const url = '/api/violations/log';
+            const data = JSON.stringify({
+                attemptId: params.attemptId,
+                type: VIOLATION_TYPES.SESSION_EXIT,
+                severity: 'critical',
+                description: 'User attempted to navigate away or close the terminal.'
+            });
+
+            if (token) {
+                const blob = new Blob([data], { type: 'application/json' });
+                navigator.sendBeacon(url, blob);
+            }
+        };
+
+        const handleFullscreenChange = () => {
+            if (!document.fullscreenElement && !loadingRef.current) {
+                logViolation(VIOLATION_TYPES.FULLSCREEN_EXIT, 'Strict Fullscreen Protocol Breach. Session Terminated.', 'critical');
+                setHaltReason('STRICT FULLSCREEN PROTOCOL BREACH. SESSION TERMINATED. HARDWARE ACCESS REVOKED.');
+                setIsHalted(true);
+                stopProctoring();
+            }
+        };
+
+        const handleResize = () => {
+            if (!loading && (window.innerWidth < 1000 || window.innerHeight < 600)) {
+                throttlingLogViolation(VIOLATION_TYPES.SCREEN_MINIMIZE, 'Terminal dimensions below operational threshold. Possible window resize/minimize breach.');
+            }
+        };
+
+        const handleSecurityViolation = (e: ClipboardEvent) => {
+            e.preventDefault();
+            const type = e.type === 'cut' ? VIOLATION_TYPES.CONTENT_CUT : VIOLATION_TYPES.COPY_PASTE;
+            logViolation(type, `Unauthorized ${e.type} operation detected.`, 'high');
+            showWarningModal(`Security Breach: Unauthorized ${e.type} detected.`);
+        };
 
         document.addEventListener('contextmenu', preventContextMenu);
         document.addEventListener('visibilitychange', handleVisibilityChange);
         document.addEventListener('keydown', preventKeyboardShortcuts);
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        document.addEventListener('copy', handleSecurityViolation);
+        document.addEventListener('paste', handleSecurityViolation);
+        document.addEventListener('cut', handleSecurityViolation);
+        window.addEventListener('blur', handleBlur);
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        window.addEventListener('resize', handleResize);
 
         return () => {
             document.removeEventListener('contextmenu', preventContextMenu);
             document.removeEventListener('visibilitychange', handleVisibilityChange);
             document.removeEventListener('keydown', preventKeyboardShortcuts);
+            document.removeEventListener('fullscreenchange', handleFullscreenChange);
+            document.removeEventListener('copy', handleSecurityViolation);
+            document.removeEventListener('paste', handleSecurityViolation);
+            document.removeEventListener('cut', handleSecurityViolation);
+            window.removeEventListener('blur', handleBlur);
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('resize', handleResize);
+            isMounted.current = false;
             stopProctoring();
+            if (faceLandmarkerRef.current) {
+                faceLandmarkerRef.current.close();
+                faceLandmarkerRef.current = null;
+            }
         };
     }, []);
+
+    // Initialize proctoring only after exam is loaded and videoRef is available
+    useEffect(() => {
+        if (!loading && isMounted.current) {
+            initProctoring();
+        }
+    }, [loading]);
 
     useEffect(() => {
         if (timeLeft <= 0 && !loading) {
@@ -52,10 +155,10 @@ export default function ExamPage({ params: paramsPromise }: ExamPageProps) {
             return;
         }
         const timer = setInterval(() => {
-            if (!loading) setTimeLeft((prev) => prev - 1);
+            if (!loading && !isHalted) setTimeLeft((prev) => prev - 1);
         }, 1000);
         return () => clearInterval(timer);
-    }, [timeLeft, loading]);
+    }, [timeLeft, loading, isHalted]);
 
     const loadExam = async () => {
         try {
@@ -69,7 +172,10 @@ export default function ExamPage({ params: paramsPromise }: ExamPageProps) {
                 setQuestions(data.questions);
                 setTimeLeft(data.attempt.timeLeft);
                 if (data.attempt.status !== 'in_progress') {
-                    router.push(`/results/${params.attemptId}`);
+                    setHaltReason('PROTOCOL VIOLATION: ASSESSMENT SESSION FOR THIS IDENTITY IS ALREADY COMPLETED. ACCESS PERMANENTLY REVOKED.');
+                    setIsHalted(true);
+                    setLoading(false);
+                    return;
                 }
             } else {
                 router.push('/dashboard');
@@ -89,6 +195,9 @@ export default function ExamPage({ params: paramsPromise }: ExamPageProps) {
     };
 
     const initProctoring = async () => {
+        if (isInitializing.current || streamRef.current) return;
+        isInitializing.current = true;
+
         try {
             const { FaceLandmarker, FilesetResolver } = await import('@mediapipe/tasks-vision');
             const filesetResolver = await FilesetResolver.forVisionTasks(
@@ -103,18 +212,38 @@ export default function ExamPage({ params: paramsPromise }: ExamPageProps) {
                 runningMode: "VIDEO",
                 numFaces: 2
             });
+
+            if (!isMounted.current) {
+                landmarker.close();
+                return;
+            }
+            faceLandmarkerRef.current = landmarker;
             setFaceLandmarker(landmarker);
 
             const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
+
+            if (!isMounted.current) {
+                stream.getTracks().forEach(track => track.stop());
+                landmarker.close();
+                return;
+            }
+
+            streamRef.current = stream;
+            CameraManager.register(stream, landmarker);
             if (videoRef.current) {
                 videoRef.current.srcObject = stream;
+                videoRef.current.play().catch(e => console.error("Video secondary play error:", e));
                 videoRef.current.onloadedmetadata = () => {
-                    setProctoringActive(true);
-                    requestAnimationFrame(detectFrame);
+                    if (isMounted.current) {
+                        setProctoringActive(true);
+                        requestRef.current = requestAnimationFrame(detectFrame);
+                    }
                 };
             }
         } catch (error) {
             console.error('Proctoring init error:', error);
+        } finally {
+            isInitializing.current = false;
         }
     };
 
@@ -127,22 +256,42 @@ export default function ExamPage({ params: paramsPromise }: ExamPageProps) {
 
             if (result.faceLandmarks) {
                 if (result.faceLandmarks.length > 1) {
-                    logViolation(VIOLATION_TYPES.MULTIPLE_FACES, 'Multiple operative presence detected.');
+                    throttlingLogViolation(VIOLATION_TYPES.MULTIPLE_FACES, 'Multiple operative presence detected.');
                 }
                 if (result.faceLandmarks.length === 0) {
-                    logViolation(VIOLATION_TYPES.FACE_NOT_DETECTED, 'Operative facial scan lost.');
-                }
-                if (result.faceLandmarks[0]) {
-                    const headRotation = calculateHeadRotation(result.faceLandmarks[0]);
-                    if (Math.abs(headRotation.y) > 0.35) {
-                        logViolation(VIOLATION_TYPES.LOOKING_AWAY, 'Gaze deviation detected.');
+                    setHaltReason('Optical sensor data lost. Please ensure your face is clearly visible.');
+                    setIsHalted(true);
+                    throttlingLogViolation(VIOLATION_TYPES.FACE_NOT_DETECTED, 'Operative facial scan lost.');
+                } else {
+                    if (result.faceLandmarks[0]) {
+                        const nose = result.faceLandmarks[0][1];
+                        if (lastNosePosRef.current && nose) {
+                            const dist = Math.sqrt(
+                                Math.pow(nose.x - lastNosePosRef.current.x, 2) +
+                                Math.pow(nose.y - lastNosePosRef.current.y, 2)
+                            );
+
+                            // Sudden movement threshold: 0.15 (empirical tuning)
+                            const now = Date.now();
+                            if (dist > 0.15 && now - lastMovementLoggedRef.current > 5000) {
+                                throttlingLogViolation(VIOLATION_TYPES.SUDDEN_MOVEMENT as any, 'Uncontrolled sudden movement detected.');
+                                showWarningModal('Protocol Alert: Sudden movement detected. Maintain focus.');
+                                lastMovementLoggedRef.current = now;
+                            }
+                        }
+                        if (nose) lastNosePosRef.current = { x: nose.x, y: nose.y };
+
+                        const headRotation = calculateHeadRotation(result.faceLandmarks[0]);
+                        if (Math.abs(headRotation.y) > 0.35) {
+                            throttlingLogViolation(VIOLATION_TYPES.LOOKING_AWAY, 'Gaze deviation detected.');
+                        }
                     }
                 }
             }
         }
 
         if (proctoringActive) {
-            requestAnimationFrame(detectFrame);
+            requestRef.current = requestAnimationFrame(detectFrame);
         }
     };
 
@@ -157,10 +306,23 @@ export default function ExamPage({ params: paramsPromise }: ExamPageProps) {
     };
 
     const stopProctoring = () => {
+        CameraManager.stopAll();
         setProctoringActive(false);
-        if (videoRef.current && videoRef.current.srcObject) {
-            const stream = videoRef.current.srcObject as MediaStream;
-            stream.getTracks().forEach((track) => track.stop());
+        if (requestRef.current) {
+            cancelAnimationFrame(requestRef.current);
+            requestRef.current = null;
+        }
+        if (streamRef.current) {
+            streamRef.current.getTracks().forEach((track) => {
+                track.stop();
+                track.enabled = false;
+            });
+            streamRef.current = null;
+        }
+        if (videoRef.current) {
+            videoRef.current.pause();
+            videoRef.current.srcObject = null;
+            videoRef.current.load(); // Force clearing the buffer
         }
     };
 
@@ -168,29 +330,51 @@ export default function ExamPage({ params: paramsPromise }: ExamPageProps) {
 
     const handleVisibilityChange = () => {
         if (document.hidden) {
-            logViolation(VIOLATION_TYPES.TAB_SWITCH, 'Session focus lost (Tab switch detected).');
-            showWarningModal('Focus lost. Unauthorized tab switching logged.');
+            logViolation(VIOLATION_TYPES.TAB_SWITCH, 'Session focus lost (Tab switch detected).', 'critical');
+            setHaltReason('TAB SWITCH: UNAUTHORIZED BACKGROUND NAVIGATION. SESSION TERMINATED.');
+            setIsHalted(true);
+            stopProctoring();
         }
     };
 
     const preventKeyboardShortcuts = (e: KeyboardEvent) => {
-        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J')) || (e.ctrlKey && e.key === 'u')) {
+        const key = e.key.toLowerCase();
+        if (key === 'f12' || (e.ctrlKey && e.shiftKey && (key === 'i' || key === 'c' || key === 'j')) || (e.ctrlKey && key === 'u')) {
             e.preventDefault();
             logViolation(VIOLATION_TYPES.TAB_SWITCH, 'Attempted terminal inspection (DevTools).');
         }
+        if (e.ctrlKey && (key === 'c' || key === 'v' || key === 'x')) {
+            e.preventDefault();
+            const type = key === 'x' ? VIOLATION_TYPES.CONTENT_CUT : VIOLATION_TYPES.COPY_PASTE;
+            logViolation(type, `Keyboard shortcut Ctrl+${key.toUpperCase()} blocked.`, 'high');
+            showWarningModal(`Security Breach: Unauthorized Ctrl+${key.toUpperCase()} detected.`);
+        }
     };
 
-    const logViolation = async (type: string, description: string) => {
+    const logViolation = async (type: string, description: string, severity = 'high') => {
+        // Atomic UI update and Ref sync
+        const newViolCount = violationsRef.current + 1;
+        setViolations(prev => prev + 1);
+        violationsRef.current = newViolCount;
+
+        if (newViolCount >= EXAM_CONFIG.MAX_VIOLATIONS) {
+            setHaltReason(`CRITICAL PROTOCOL LIMIT REACHED (${newViolCount}/${EXAM_CONFIG.MAX_VIOLATIONS} VIOLATIONS). ACCESS REVOKED.`);
+            setIsHalted(true);
+            stopProctoring();
+        }
+
         try {
             const token = localStorage.getItem('token');
             const res = await fetch('/api/violations/log', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-                body: JSON.stringify({ attemptId: params.attemptId, type, description, severity: 'high' }),
+                body: JSON.stringify({ attemptId: params.attemptId, type, description, severity }),
             });
 
             const data = await res.json();
-            setViolations(data.violationCount || 0);
+            if (data.success) {
+                setViolations(data.violationCount || 0);
+            }
 
             if (data.terminated) {
                 router.push('/dashboard');
@@ -242,6 +426,10 @@ export default function ExamPage({ params: paramsPromise }: ExamPageProps) {
 
     const currentQ = questions[currentQuestion];
     const progress = ((currentQuestion + 1) / questions.length) * 100;
+
+    if (isHalted) {
+        return <CriticalError message={haltReason} />;
+    }
 
     return (
         <div className="min-h-screen bg-[#020205] bg-grid selection:bg-cyan-500/30 selection:text-white overflow-hidden text-cyan-50/80 font-sans cursor-default no-select">
@@ -300,8 +488,8 @@ export default function ExamPage({ params: paramsPromise }: ExamPageProps) {
 
             {/* AI Proctor HUD */}
             <aside className="fixed top-24 right-8 z-40 w-64 flex flex-col gap-4">
-                <div className="glass rounded-2xl border-white/[0.05] p-1 overflow-hidden relative group bg-black/60 shadow-2xl">
-                    <video ref={videoRef} autoPlay muted className="w-full aspect-[4/3] object-cover rounded-[14px] opacity-40 grayscale contrast-125 brightness-125 group-hover:opacity-70 transition-opacity" />
+                <div className="glass rounded-2xl border-white/[0.05] p-1 overflow-hidden relative group bg-black shadow-2xl">
+                    <video ref={videoRef} autoPlay muted playsInline className="w-full aspect-[4/3] object-cover rounded-[14px] opacity-100 transition-opacity" />
                     <div className="absolute inset-0 pointer-events-none">
                         <div className="absolute top-4 left-4 flex items-center space-x-1.5">
                             <div className="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping"></div>
@@ -332,13 +520,13 @@ export default function ExamPage({ params: paramsPromise }: ExamPageProps) {
             </aside>
 
             {/* Question Terminal */}
-            <main className="pt-32 pb-32 px-6 flex justify-center items-center min-h-screen page-container h-full">
+            <main className="pt-24 pb-20 px-6 flex justify-center items-center min-h-[calc(100vh-160px)] page-container">
                 <div className="w-full max-w-4xl relative">
                     <div className="relative group overflow-visible">
                         {/* Decorative background glow */}
-                        <div className="absolute -inset-20 bg-cyan-500/[0.07] blur-[120px] rounded-[4rem] pointer-events-none group-hover:bg-cyan-500/[0.12] transition-all duration-1000"></div>
+                        <div className="absolute -inset-10 bg-cyan-500/[0.07] blur-[100px] rounded-[3rem] pointer-events-none group-hover:bg-cyan-500/[0.12] transition-all duration-1000"></div>
 
-                        <div className="bg-black/60 backdrop-blur-3xl rounded-[3rem] border border-white/[0.08] p-12 md:p-16 relative overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.8)]">
+                        <div className="bg-black/60 backdrop-blur-3xl rounded-[2.5rem] border border-white/[0.08] p-10 md:p-12 relative overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.8)]">
                             {/* Inner Accent Line */}
                             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent"></div>
 
@@ -348,13 +536,13 @@ export default function ExamPage({ params: paramsPromise }: ExamPageProps) {
                                     <div className="h-px w-12 bg-cyan-500/20"></div>
                                 </div>
 
-                                <h2 className="text-4xl md:text-5xl font-black text-cyan-50 leading-[1.1] tracking-tighter uppercase mb-10">
+                                <h2 className="text-3xl md:text-4xl font-black text-cyan-50 leading-[1.1] tracking-tighter uppercase mb-6">
                                     {currentQ?.question}
                                 </h2>
                                 {currentQ?.description && (
                                     <div className="relative group/desc">
                                         <div className="absolute -left-8 top-0 bottom-0 w-[2px] bg-gradient-to-b from-cyan-500/50 via-cyan-500/10 to-transparent"></div>
-                                        <p className="text-cyan-200/60 font-medium leading-relaxed max-w-2xl pl-2 mb-10 text-lg">
+                                        <p className="text-cyan-200/60 font-medium leading-relaxed max-w-2xl pl-2 mb-6 text-base">
                                             {currentQ?.description}
                                         </p>
                                     </div>
@@ -362,19 +550,19 @@ export default function ExamPage({ params: paramsPromise }: ExamPageProps) {
                             </div>
 
                             {/* Options Lattice */}
-                            <div className="grid gap-5 relative z-10">
+                            <div className="grid gap-4 relative z-10">
                                 {currentQ?.options?.map((option: string, idx: number) => {
                                     const isSelected = answers[currentQ._id] === idx;
                                     return (
                                         <button
                                             key={idx}
                                             onClick={() => handleAnswerChange(currentQ._id, idx)}
-                                            className={`relative group/opt flex items-center text-left p-8 rounded-3xl border transition-all duration-500 ${isSelected ? 'bg-cyan-500/5 border-cyan-500/40 shadow-[0_0_30px_rgba(0,242,255,0.1)]' : 'bg-white/[0.02] border-white/[0.03] hover:border-white/10 hover:bg-white/[0.05]'}`}
+                                            className={`relative group/opt flex items-center text-left p-6 rounded-2xl border transition-all duration-500 ${isSelected ? 'bg-cyan-500/5 border-cyan-500/40 shadow-[0_0_30px_rgba(0,242,255,0.1)]' : 'bg-white/[0.02] border-white/[0.03] hover:border-white/10 hover:bg-white/[0.05]'}`}
                                         >
-                                            <div className={`w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0 transition-all duration-700 ${isSelected ? 'bg-cyan-500 border-cyan-400 shadow-[0_0_20px_rgba(0,242,255,0.4)]' : 'border-white/10 group-hover/opt:border-white/30'}`}>
-                                                <span className={`text-xs font-black ${isSelected ? 'text-black' : 'text-white/40'}`}>{String.fromCharCode(65 + idx)}</span>
+                                            <div className={`w-8 h-8 rounded-lg border flex items-center justify-center flex-shrink-0 transition-all duration-700 ${isSelected ? 'bg-cyan-500 border-cyan-400 shadow-[0_0_20px_rgba(0,242,255,0.4)]' : 'border-white/10 group-hover/opt:border-white/30'}`}>
+                                                <span className={`text-[10px] font-black ${isSelected ? 'text-black' : 'text-white/40'}`}>{String.fromCharCode(65 + idx)}</span>
                                             </div>
-                                            <span className={`ml-8 text-lg font-bold tracking-tight transition-colors duration-500 ${isSelected ? 'text-cyan-50' : 'text-cyan-900/60 group-hover/opt:text-cyan-200/80'}`}>{option}</span>
+                                            <span className={`ml-6 text-base font-bold tracking-tight transition-colors duration-500 ${isSelected ? 'text-cyan-50' : 'text-cyan-900/60 group-hover/opt:text-cyan-200/80'}`}>{option}</span>
 
                                             {isSelected && (
                                                 <div className="absolute right-8">

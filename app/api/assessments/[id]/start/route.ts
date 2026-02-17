@@ -53,18 +53,29 @@ export async function POST(
         }
         */
 
-        // Check for existing in-progress attempt
+        // Check for ANY existing attempt
         const existingAttempt = await Attempt.findOne({
             user: authResult.user.userId,
             assessment: assessmentId,
-            status: 'in_progress',
-        });
+        }).sort({ createdAt: -1 });
 
         if (existingAttempt) {
-            return NextResponse.json(
-                { error: 'You already have an in-progress attempt for this assessment' },
-                { status: 400 }
-            );
+            if (existingAttempt.status === 'in_progress') {
+                // Allow recovering in-progress attempts
+                return NextResponse.json({
+                    success: true,
+                    isResumed: true,
+                    assessment,
+                    attempt: {
+                        id: existingAttempt._id,
+                        duration: assessment.duration,
+                    }
+                });
+            } else {
+                // For DEBUG/TESTING: Remove the existing attempt to allow re-starting
+                await Attempt.findByIdAndDelete(existingAttempt._id);
+                console.log(`[DEBUG] Deleted existing ${existingAttempt.status} attempt to allow restart.`);
+            }
         }
 
         // Get random questions

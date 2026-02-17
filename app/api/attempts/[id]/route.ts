@@ -3,6 +3,7 @@ import connectDB from '@/lib/db';
 import { authMiddleware } from '@/middleware/auth';
 import Attempt from '@/models/Attempt';
 import Question from '@/models/Question';
+import Violation from '@/models/Violation';
 
 export async function GET(
     request: NextRequest,

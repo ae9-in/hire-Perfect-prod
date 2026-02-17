@@ -46,14 +46,14 @@ export default function Modal({ isOpen, onClose, title, children, size = 'md' }:
             />
 
             {/* Modal */}
-            <div className={`relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full ${sizes[size]} animate-slide-up`}>
+            <div className={`relative bg-[#050510]/90 backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl w-full ${sizes[size]} animate-slide-up overflow-hidden`}>
                 {/* Header */}
                 {title && (
-                    <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{title}</h2>
+                    <div className="flex items-center justify-between p-8 border-b border-white/5">
+                        <h2 className="text-2xl font-black text-white uppercase tracking-tighter">{title}</h2>
                         <button
                             onClick={onClose}
-                            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                            className="text-slate-500 hover:text-white transition-colors p-2"
                         >
                             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -63,7 +63,7 @@ export default function Modal({ isOpen, onClose, title, children, size = 'md' }:
                 )}
 
                 {/* Content */}
-                <div className="p-6">{children}</div>
+                <div className="p-8">{children}</div>
             </div>
         </div>
     );
