@@ -33,10 +33,17 @@ A production-ready full-stack web application for conducting secure, AI-monitore
 - Face detection using MediaPipe
 - Eye tracking and head movement detection
 - Multiple face detection
+- Startup calibration window to reduce false positives
+- Per-rule cooldowns and consecutive-frame checks for stable warnings
+- Detector watchdog with auto-recovery on inference stall
+- Live AI health telemetry in exam UI (engine state, detected faces, AI FPS)
 - Tab switch detection
 - Screen minimize detection
 - Violation warning system
 - Auto-termination after 5 violations
+
+Note:
+- `AI FPS` shown in the exam panel is AI detection throughput (detections per second), not raw camera sensor FPS.
 
 ### 🔒 Security Features
 - Full-screen enforcement
