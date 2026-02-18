@@ -31,7 +31,19 @@ export default function PreAssessmentPage() {
     const attachVideo = useCallback(async (stream: MediaStream) => {
         if (!videoRef.current) return;
         videoRef.current.srcObject = stream;
-        await videoRef.current.play();
+        try {
+            await videoRef.current.play();
+        } catch (playError) {
+            const name = playError instanceof DOMException ? playError.name : '';
+            if (name === 'AbortError') {
+                await new Promise((resolve) => setTimeout(resolve, 80));
+                if (isMountedRef.current && videoRef.current) {
+                    await videoRef.current.play().catch(() => undefined);
+                }
+            } else {
+                throw playError;
+            }
+        }
     }, []);
 
     const loadAssessment = useCallback(async () => {
@@ -71,7 +83,12 @@ export default function PreAssessmentPage() {
             let stream = CameraManager.getStream();
             if (!stream) {
                 stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: 'user' },
+                    video: {
+                        facingMode: 'user',
+                        width: { ideal: 640, max: 960 },
+                        height: { ideal: 480, max: 540 },
+                        frameRate: { ideal: 15, max: 24 },
+                    },
                     audio: false,
                 });
                 CameraManager.setStream(stream);

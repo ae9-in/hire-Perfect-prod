@@ -23,6 +23,16 @@ interface FaceLandmarkerInstance {
     close?: () => void;
 }
 
+const DEFAULT_VIOLATION_COOLDOWN_MS = 3500;
+const VIOLATION_COOLDOWN_MS: Record<string, number> = {
+    [VIOLATION_TYPES.LOOKING_AWAY]: 2200,
+    [VIOLATION_TYPES.SUDDEN_MOVEMENT]: 1000,
+    [VIOLATION_TYPES.GAZE_DEVIATION]: 1000,
+    [VIOLATION_TYPES.FACE_NOT_DETECTED]: 900,
+    [VIOLATION_TYPES.MULTIPLE_FACES]: 1000,
+};
+const PROCTORING_WARMUP_MS = 3000;
+
 export default function ExamPage() {
     const params = useParams<{ attemptId: string }>();
     const router = useRouter();
@@ -38,9 +48,28 @@ export default function ExamPage() {
     const isInitializingProctoringRef = useRef(false);
     const animationRef = useRef<number | null>(null);
     const lastVideoTimeRef = useRef(-1);
+    const lastDetectionTsRef = useRef(0);
     const violationCooldownRef = useRef<Record<string, number>>({});
     const previousNoseRef = useRef<{ x: number; y: number } | null>(null);
+    const obstructionStreakRef = useRef(0);
+    const faceMissingStreakRef = useRef(0);
+    const headAwayStreakRef = useRef(0);
+    const suddenMoveStreakRef = useRef(0);
+    const gazeStreakRef = useRef(0);
+    const baselineYawRef = useRef(0);
+    const baselinePitchRef = useRef(0);
+    const baselineGazeRef = useRef(0);
+    const baselineSamplesRef = useRef(0);
+    const proctoringStartTsRef = useRef(0);
+    const frameCanvasRef = useRef<HTMLCanvasElement | null>(null);
     const isDetectingRef = useRef(false);
+    const violationCountRef = useRef(0);
+    const terminatedRef = useRef(false);
+    const loadingRef = useRef(true);
+    const attemptIdRef = useRef<string | undefined>(attemptId);
+    const lastAIDetectTsRef = useRef(0);
+    const aiFrameCounterRef = useRef(0);
+    const restartingAIRef = useRef(false);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -56,6 +85,8 @@ export default function ExamPage() {
     const [proctoringReady, setProctoringReady] = useState(false);
     const [violationCount, setViolationCount] = useState(0);
     const [warning, setWarning] = useState<WarningState>({ show: false, message: '' });
+    const [aiLastFaceCount, setAiLastFaceCount] = useState(0);
+    const [aiFps, setAiFps] = useState(0);
 
     const activeQuestion = questions[currentQuestion];
     const progress = useMemo(() => (
@@ -71,6 +102,22 @@ export default function ExamPage() {
         }, 2500);
     }, []);
 
+    useEffect(() => {
+        violationCountRef.current = violationCount;
+    }, [violationCount]);
+
+    useEffect(() => {
+        terminatedRef.current = terminated;
+    }, [terminated]);
+
+    useEffect(() => {
+        loadingRef.current = loading;
+    }, [loading]);
+
+    useEffect(() => {
+        attemptIdRef.current = attemptId;
+    }, [attemptId]);
+
     const cleanupProctoring = useCallback(() => {
         isProctoringActiveRef.current = false;
         if (animationRef.current) {
@@ -81,6 +128,20 @@ export default function ExamPage() {
         faceLandmarkerRef.current = null;
         setProctoringReady(false);
         previousNoseRef.current = null;
+        lastVideoTimeRef.current = -1;
+        lastAIDetectTsRef.current = 0;
+        aiFrameCounterRef.current = 0;
+        faceMissingStreakRef.current = 0;
+        headAwayStreakRef.current = 0;
+        suddenMoveStreakRef.current = 0;
+        gazeStreakRef.current = 0;
+        baselineYawRef.current = 0;
+        baselinePitchRef.current = 0;
+        baselineGazeRef.current = 0;
+        baselineSamplesRef.current = 0;
+        proctoringStartTsRef.current = 0;
+        setAiLastFaceCount(0);
+        setAiFps(0);
         isInitializingProctoringRef.current = false;
     }, []);
 
@@ -108,17 +169,23 @@ export default function ExamPage() {
         description: string,
         severity: 'low' | 'medium' | 'high' | 'critical' = 'high'
     ) => {
+        const activeAttemptId = attemptIdRef.current;
+        if (!activeAttemptId) return;
+
         const now = Date.now();
+        const cooldownMs = VIOLATION_COOLDOWN_MS[type] ?? DEFAULT_VIOLATION_COOLDOWN_MS;
         const last = violationCooldownRef.current[type] || 0;
-        if (now - last < 3500) return;
+        if (now - last < cooldownMs) return;
         violationCooldownRef.current[type] = now;
 
-        const currentCount = violationCount + 1;
+        const currentCount = violationCountRef.current + 1;
+        violationCountRef.current = currentCount;
         setViolationCount(currentCount);
         showWarning(description);
 
         if (currentCount >= EXAM_CONFIG.MAX_VIOLATIONS) {
             setTerminated(true);
+            terminatedRef.current = true;
             cleanupProctoring();
             CameraManager.stop();
         }
@@ -132,7 +199,7 @@ export default function ExamPage() {
                     Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
-                    attemptId,
+                    attemptId: activeAttemptId,
                     type,
                     severity,
                     description,
@@ -141,23 +208,24 @@ export default function ExamPage() {
             const data = await res.json();
 
             if (typeof data.violationCount === 'number') {
+                violationCountRef.current = data.violationCount;
                 setViolationCount(data.violationCount);
             }
 
             if (data.terminated) {
                 setTerminated(true);
+                terminatedRef.current = true;
                 cleanupProctoring();
                 CameraManager.stop();
             }
         } catch (logError) {
             console.error('Failed to log violation:', logError);
         }
-    }, [attemptId, cleanupProctoring, showWarning, violationCount]);
+    }, [cleanupProctoring, showWarning]);
 
     const detectFrame = useCallback(async () => {
         if (!isMountedRef.current || !isProctoringActiveRef.current || !faceLandmarkerRef.current || !videoRef.current) return;
         if (isDetectingRef.current) {
-            animationRef.current = requestAnimationFrame(() => { void detectFrame(); });
             return;
         }
 
@@ -165,26 +233,28 @@ export default function ExamPage() {
         try {
             const video = videoRef.current;
             if (video.readyState < 2) {
-                animationRef.current = requestAnimationFrame(() => { void detectFrame(); });
                 return;
             }
             if (video.videoWidth === 0 || video.videoHeight === 0) {
-                animationRef.current = requestAnimationFrame(() => { void detectFrame(); });
                 return;
             }
 
             if (video.currentTime === lastVideoTimeRef.current) {
-                animationRef.current = requestAnimationFrame(() => { void detectFrame(); });
                 return;
             }
             lastVideoTimeRef.current = video.currentTime;
+            const now = performance.now();
+            if (now - lastDetectionTsRef.current < 66) {
+                return;
+            }
+            lastDetectionTsRef.current = now;
 
             const landmarker = faceLandmarkerRef.current;
             if (!landmarker) return;
             let result: { faceLandmarks?: Array<Array<{ x: number; y: number }>> } | null = null;
 
             try {
-                result = landmarker.detectForVideo(video, performance.now());
+                result = landmarker.detectForVideo(video, now);
             } catch (detectError) {
                 const detectMessage = detectError instanceof Error ? detectError.message.toLowerCase() : String(detectError).toLowerCase();
                 const transientDetectError =
@@ -198,16 +268,77 @@ export default function ExamPage() {
             }
 
             if (!result) {
-                animationRef.current = requestAnimationFrame(() => { void detectFrame(); });
                 return;
             }
             const faces = result.faceLandmarks || [];
+            aiFrameCounterRef.current += 1;
+            lastAIDetectTsRef.current = Date.now();
+            setAiLastFaceCount(faces.length);
+            const inWarmup = (Date.now() - proctoringStartTsRef.current) < PROCTORING_WARMUP_MS;
+            let frameViolation: { type: string; message: string } | null = null;
+
+            let lensLikelyBlocked = false;
+            if (faces.length === 0) {
+                try {
+                    let canvas = frameCanvasRef.current;
+                    if (!canvas) {
+                        canvas = document.createElement('canvas');
+                        canvas.width = 32;
+                        canvas.height = 24;
+                        frameCanvasRef.current = canvas;
+                    }
+                    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+                    if (ctx) {
+                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+                        let dark = 0;
+                        let lumaSum = 0;
+                        const total = pixels.length / 4;
+                        for (let i = 0; i < pixels.length; i += 4) {
+                            const r = pixels[i];
+                            const g = pixels[i + 1];
+                            const b = pixels[i + 2];
+                            const luma = 0.299 * r + 0.587 * g + 0.114 * b;
+                            lumaSum += luma;
+                            if (luma < 28) dark += 1;
+                        }
+                        const darkRatio = dark / Math.max(total, 1);
+                        const avgLuma = lumaSum / Math.max(total, 1);
+                        lensLikelyBlocked = darkRatio > 0.9 || avgLuma < 25;
+                    }
+                } catch {
+                    lensLikelyBlocked = false;
+                }
+            }
 
             if (faces.length === 0) {
-                await logViolation(VIOLATION_TYPES.FACE_NOT_DETECTED, 'Face not detected in camera frame.');
+                faceMissingStreakRef.current += 1;
+                headAwayStreakRef.current = 0;
+                suddenMoveStreakRef.current = 0;
+                gazeStreakRef.current = 0;
+                if (lensLikelyBlocked) {
+                    obstructionStreakRef.current += 1;
+                } else {
+                    obstructionStreakRef.current = 0;
+                }
+                if (faceMissingStreakRef.current >= 2) {
+                    frameViolation = {
+                        type: VIOLATION_TYPES.FACE_NOT_DETECTED,
+                        message: obstructionStreakRef.current >= 2
+                            ? 'Camera lens appears blocked. Keep camera unobstructed.'
+                            : 'Face not detected in camera frame.'
+                    };
+                }
             } else if (faces.length > 1) {
-                await logViolation(VIOLATION_TYPES.MULTIPLE_FACES, 'Multiple faces detected.');
+                obstructionStreakRef.current = 0;
+                faceMissingStreakRef.current = 0;
+                headAwayStreakRef.current = 0;
+                suddenMoveStreakRef.current = 0;
+                gazeStreakRef.current = 0;
+                frameViolation = { type: VIOLATION_TYPES.MULTIPLE_FACES, message: 'Multiple faces detected.' };
             } else {
+                obstructionStreakRef.current = 0;
+                faceMissingStreakRef.current = 0;
                 const landmarks = faces[0];
                 const nose = landmarks?.[1];
                 const leftEye = landmarks?.[33];
@@ -215,15 +346,46 @@ export default function ExamPage() {
 
                 if (nose && leftEye && rightEye) {
                     const eyeCenterX = (leftEye.x + rightEye.x) / 2;
+                    const eyeCenterY = (leftEye.y + rightEye.y) / 2;
                     const eyeDistance = Math.max(Math.abs(rightEye.x - leftEye.x), 0.0001);
                     const yaw = (nose.x - eyeCenterX) / eyeDistance;
+                    const pitch = (nose.y - eyeCenterY) / eyeDistance;
+                    const leftIris = landmarks?.[468];
+                    const rightIris = landmarks?.[473];
+                    const leftInner = landmarks?.[133];
+                    const leftOuter = landmarks?.[33];
+                    const rightInner = landmarks?.[362];
+                    const rightOuter = landmarks?.[263];
+                    let gazeOffset: number | null = null;
+                    if (leftIris && rightIris && leftInner && leftOuter && rightInner && rightOuter) {
+                        const leftWidth = Math.max(Math.abs(leftOuter.x - leftInner.x), 0.0001);
+                        const rightWidth = Math.max(Math.abs(rightOuter.x - rightInner.x), 0.0001);
+                        const leftCenter = (leftOuter.x + leftInner.x) / 2;
+                        const rightCenter = (rightOuter.x + rightInner.x) / 2;
+                        const leftOffset = (leftIris.x - leftCenter) / leftWidth;
+                        const rightOffset = (rightIris.x - rightCenter) / rightWidth;
+                        gazeOffset = (leftOffset + rightOffset) / 2;
+                    }
 
-                    // Eye direction + head yaw approximation
-                    if (Math.abs(yaw) > 0.35) {
-                        await logViolation(
-                            VIOLATION_TYPES.LOOKING_AWAY,
-                            'Please look at the screen and keep your head centered.'
-                        );
+                    if (inWarmup) {
+                        const n = baselineSamplesRef.current;
+                        baselineYawRef.current = (baselineYawRef.current * n + yaw) / (n + 1);
+                        baselinePitchRef.current = (baselinePitchRef.current * n + pitch) / (n + 1);
+                        if (gazeOffset !== null) {
+                            baselineGazeRef.current = (baselineGazeRef.current * n + gazeOffset) / (n + 1);
+                        }
+                        baselineSamplesRef.current = n + 1;
+                    }
+
+                    if (inWarmup) {
+                        headAwayStreakRef.current = 0;
+                    } else if (
+                        baselineSamplesRef.current >= 8 &&
+                        (Math.abs(yaw - baselineYawRef.current) > 0.22 || Math.abs(pitch - baselinePitchRef.current) > 0.24)
+                    ) {
+                        headAwayStreakRef.current += 1;
+                    } else {
+                        headAwayStreakRef.current = 0;
                     }
 
                     // Sudden head movement approximation via nose displacement
@@ -231,14 +393,58 @@ export default function ExamPage() {
                     if (previousNose) {
                         const dx = Math.abs(nose.x - previousNose.x);
                         const dy = Math.abs(nose.y - previousNose.y);
-                        if (dx > 0.09 || dy > 0.09) {
-                            await logViolation(
-                                VIOLATION_TYPES.LOOKING_AWAY,
-                                'Excessive head movement detected. Keep stable posture.'
-                            );
+                        if (inWarmup) {
+                            suddenMoveStreakRef.current = 0;
+                        } else if (dx > 0.04 || dy > 0.04) {
+                            suddenMoveStreakRef.current += 1;
+                        } else {
+                            suddenMoveStreakRef.current = 0;
                         }
                     }
                     previousNoseRef.current = { x: nose.x, y: nose.y };
+                    if (inWarmup) {
+                        gazeStreakRef.current = 0;
+                    } else if (
+                        gazeOffset !== null &&
+                        baselineSamplesRef.current >= 8 &&
+                        Math.abs(gazeOffset - baselineGazeRef.current) > 0.18
+                    ) {
+                        gazeStreakRef.current += 1;
+                    } else {
+                        gazeStreakRef.current = 0;
+                    }
+                } else {
+                    gazeStreakRef.current = 0;
+                }
+
+                if (!inWarmup) {
+                    if (headAwayStreakRef.current >= 3) {
+                        frameViolation = {
+                            type: VIOLATION_TYPES.LOOKING_AWAY,
+                            message: 'Please keep your face centered and look at the screen.'
+                        };
+                    } else if (suddenMoveStreakRef.current >= 2) {
+                        frameViolation = {
+                            type: VIOLATION_TYPES.SUDDEN_MOVEMENT,
+                            message: 'Excessive head movement detected. Keep stable posture.'
+                        };
+                    } else if (gazeStreakRef.current >= 3) {
+                        frameViolation = {
+                            type: VIOLATION_TYPES.GAZE_DEVIATION,
+                            message: 'Eye gaze deviation detected. Keep eyes on the screen.'
+                        };
+                    }
+                }
+            }
+
+            if (frameViolation) {
+                await logViolation(frameViolation.type, frameViolation.message);
+                if (frameViolation.type === VIOLATION_TYPES.LOOKING_AWAY) {
+                    headAwayStreakRef.current = 0;
+                } else if (frameViolation.type === VIOLATION_TYPES.SUDDEN_MOVEMENT) {
+                    suddenMoveStreakRef.current = 0;
+                } else if (frameViolation.type === VIOLATION_TYPES.GAZE_DEVIATION) {
+                    gazeStreakRef.current = 0;
                 }
             }
         } catch (detectionError) {
@@ -255,11 +461,11 @@ export default function ExamPage() {
             }
         } finally {
             isDetectingRef.current = false;
-            if (isMountedRef.current && !terminated && isProctoringActiveRef.current) {
+            if (isMountedRef.current && !terminatedRef.current && isProctoringActiveRef.current) {
                 animationRef.current = requestAnimationFrame(() => { void detectFrame(); });
             }
         }
-    }, [logViolation, terminated]);
+    }, [logViolation]);
 
     const initializeProctoring = useCallback(async () => {
         if (isInitializingProctoringRef.current || faceLandmarkerRef.current) return;
@@ -303,6 +509,17 @@ export default function ExamPage() {
             faceLandmarkerRef.current = landmarker;
             isProctoringActiveRef.current = true;
             setProctoringReady(true);
+            proctoringStartTsRef.current = Date.now();
+            lastAIDetectTsRef.current = Date.now();
+            previousNoseRef.current = null;
+            faceMissingStreakRef.current = 0;
+            headAwayStreakRef.current = 0;
+            suddenMoveStreakRef.current = 0;
+            gazeStreakRef.current = 0;
+            baselineYawRef.current = 0;
+            baselinePitchRef.current = 0;
+            baselineGazeRef.current = 0;
+            baselineSamplesRef.current = 0;
             if (!animationRef.current) {
                 animationRef.current = requestAnimationFrame(() => { void detectFrame(); });
             }
@@ -314,6 +531,32 @@ export default function ExamPage() {
         }
     }, [detectFrame]);
 
+    const attachStreamToVideo = useCallback(async () => {
+        if (!streamRef.current || !videoRef.current) return false;
+
+        const stream = streamRef.current;
+        const video = videoRef.current;
+        if (video.srcObject !== stream) {
+            video.srcObject = stream;
+        }
+
+        try {
+            await video.play();
+            return true;
+        } catch (playError) {
+            const name = playError instanceof DOMException ? playError.name : '';
+            if (name === 'AbortError') {
+                await new Promise((resolve) => setTimeout(resolve, 80));
+                if (isMountedRef.current && videoRef.current) {
+                    await videoRef.current.play().catch(() => undefined);
+                    return true;
+                }
+                return false;
+            }
+            throw playError;
+        }
+    }, []);
+
     const initCamera = useCallback(async () => {
         setCameraError(null);
         setCameraStatus('requesting');
@@ -322,7 +565,12 @@ export default function ExamPage() {
             let stream = CameraManager.getStream();
             if (!stream) {
                 stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: 'user' },
+                    video: {
+                        facingMode: 'user',
+                        width: { ideal: 640, max: 960 },
+                        height: { ideal: 480, max: 540 },
+                        frameRate: { ideal: 15, max: 24 },
+                    },
                     audio: false,
                 });
                 CameraManager.setStream(stream);
@@ -334,23 +582,7 @@ export default function ExamPage() {
             }
 
             streamRef.current = stream;
-            if (videoRef.current) {
-                videoRef.current.srcObject = stream;
-                try {
-                    await videoRef.current.play();
-                } catch (playError) {
-                    const name = playError instanceof DOMException ? playError.name : '';
-                    if (name === 'AbortError') {
-                        // Benign race during rapid mount/unmount transitions in dev.
-                        await new Promise((resolve) => setTimeout(resolve, 80));
-                        if (isMountedRef.current && videoRef.current) {
-                            await videoRef.current.play().catch(() => undefined);
-                        }
-                    } else {
-                        throw playError;
-                    }
-                }
-            }
+            await attachStreamToVideo();
 
             setCameraStatus('ready');
             await initializeProctoring();
@@ -359,7 +591,7 @@ export default function ExamPage() {
             setCameraStatus('error');
             setCameraError('Unable to access your camera. Please allow permissions and retry.');
         }
-    }, [initializeProctoring]);
+    }, [attachStreamToVideo, initializeProctoring]);
 
     const loadExam = useCallback(async () => {
         if (!attemptId) {
@@ -474,9 +706,10 @@ export default function ExamPage() {
         };
 
         const handleFullscreenChange = () => {
-            if (!document.fullscreenElement && !loading) {
+            if (!document.fullscreenElement && !loadingRef.current) {
                 showWarning('Fullscreen exit detected. Assessment terminated.');
                 setTerminated(true);
+                terminatedRef.current = true;
                 cleanupProctoring();
                 CameraManager.stop();
                 void logViolation(
@@ -525,7 +758,7 @@ export default function ExamPage() {
             CameraManager.stop();
             removeConsoleFilter();
         };
-    }, [cleanupProctoring, enterFullscreen, initCamera, installConsoleFilter, loadExam, loading, logViolation, removeConsoleFilter, showWarning]);
+    }, [cleanupProctoring, enterFullscreen, initCamera, installConsoleFilter, loadExam, logViolation, removeConsoleFilter, showWarning]);
 
     useEffect(() => {
         if (loading || terminated || isSubmitting) return;
@@ -539,6 +772,59 @@ export default function ExamPage() {
         }, 1000);
         return () => window.clearInterval(interval);
     }, [isSubmitting, loading, submitAssessment, terminated, timeLeft]);
+
+    useEffect(() => {
+        if (terminated) return;
+        const interval = window.setInterval(() => {
+            const frames = aiFrameCounterRef.current;
+            aiFrameCounterRef.current = 0;
+            setAiFps(frames);
+        }, 1000);
+        return () => window.clearInterval(interval);
+    }, [terminated]);
+
+    useEffect(() => {
+        if (loading || terminated) return;
+        const watchdog = window.setInterval(() => {
+            if (!cameraStatus || cameraStatus !== 'ready') return;
+            if (!isProctoringActiveRef.current || !proctoringReady) return;
+            if (Date.now() - proctoringStartTsRef.current < 8000) return;
+            const now = Date.now();
+            const age = now - lastAIDetectTsRef.current;
+            if (age < 5000) return;
+            if (restartingAIRef.current) return;
+
+            restartingAIRef.current = true;
+            showWarning('AI monitor stalled. Reinitializing detector...');
+            cleanupProctoring();
+            void initializeProctoring().finally(() => {
+                restartingAIRef.current = false;
+            });
+        }, 2000);
+
+        return () => window.clearInterval(watchdog);
+    }, [cameraStatus, cleanupProctoring, initializeProctoring, loading, proctoringReady, showWarning, terminated]);
+
+    useEffect(() => {
+        if (loading || terminated) return;
+        if (!streamRef.current) return;
+
+        let cancelled = false;
+        const rebind = async () => {
+            try {
+                const attached = await attachStreamToVideo();
+                if (cancelled || !attached) return;
+                await initializeProctoring();
+            } catch (attachError) {
+                console.warn('Video rebind failed:', attachError);
+            }
+        };
+
+        void rebind();
+        return () => {
+            cancelled = true;
+        };
+    }, [attachStreamToVideo, initializeProctoring, loading, terminated]);
 
     const formatTime = (seconds: number) => {
         const mins = Math.floor(seconds / 60);
@@ -688,6 +974,22 @@ export default function ExamPage() {
                                 <div className="absolute top-2 left-2 px-2 py-1 bg-black/50 rounded border border-white/10">
                                     <p className="text-[8px] font-black uppercase tracking-[0.2em] text-cyan-300">
                                         {proctoringReady ? 'AI Monitor On' : 'AI Monitor Loading'}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="mt-3 grid grid-cols-3 gap-2 text-[10px]">
+                                <div className="rounded border border-white/10 bg-black/40 px-2 py-1">
+                                    <p className="text-cyan-500/60 uppercase">AI FPS</p>
+                                    <p className="font-black text-cyan-200">{aiFps}</p>
+                                </div>
+                                <div className="rounded border border-white/10 bg-black/40 px-2 py-1">
+                                    <p className="text-cyan-500/60 uppercase">Faces</p>
+                                    <p className="font-black text-cyan-200">{aiLastFaceCount}</p>
+                                </div>
+                                <div className="rounded border border-white/10 bg-black/40 px-2 py-1">
+                                    <p className="text-cyan-500/60 uppercase">Engine</p>
+                                    <p className={`font-black ${proctoringReady ? 'text-emerald-300' : 'text-amber-300'}`}>
+                                        {proctoringReady ? 'RUN' : 'INIT'}
                                     </p>
                                 </div>
                             </div>
