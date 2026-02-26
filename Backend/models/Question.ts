@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export interface IQuestion extends Document {
-    _id: string;
+    _id: mongoose.Types.ObjectId;
     assessment: mongoose.Types.ObjectId;
     type: 'mcq' | 'scenario' | 'coding';
     question: string;
@@ -83,3 +83,4 @@ QuestionSchema.index({ assessment: 1 });
 const Question: Model<IQuestion> = mongoose.models.Question || mongoose.model<IQuestion>('Question', QuestionSchema);
 
 export default Question;
+

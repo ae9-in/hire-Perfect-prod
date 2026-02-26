@@ -69,7 +69,7 @@ export async function GET(request: NextRequest) {
 }
 
 // Utility to create a new log entry
-export async function createLog(data: {
+async function createLog(data: {
     action: string;
     description: string;
     actor: { id: string; name: string; email: string; role: string };
@@ -86,3 +86,4 @@ export async function createLog(data: {
         console.error('Failed to create audit log:', error);
     }
 }
+

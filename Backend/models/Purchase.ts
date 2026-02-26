@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export interface IPurchase extends Document {
-    _id: string;
+    _id: mongoose.Types.ObjectId;
     user: mongoose.Types.ObjectId;
     purchaseType: 'individual' | 'category' | 'bundle';
     assessment?: mongoose.Types.ObjectId; // For individual purchase
@@ -79,3 +79,4 @@ PurchaseSchema.index({ category: 1 });
 const Purchase: Model<IPurchase> = mongoose.models.Purchase || mongoose.model<IPurchase>('Purchase', PurchaseSchema);
 
 export default Purchase;
+

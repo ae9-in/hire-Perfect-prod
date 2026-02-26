@@ -1,4 +1,4 @@
-# OAuth 2.0 Credentials Setup Guide
+    # OAuth 2.0 Credentials Setup Guide
 
 Follow these steps to obtain the necessary credentials for Google and GitHub authentication.
 

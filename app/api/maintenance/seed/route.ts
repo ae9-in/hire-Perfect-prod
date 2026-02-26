@@ -4,19 +4,20 @@ import Category from '@/models/Category';
 import Assessment from '@/models/Assessment';
 import Question from '@/models/Question';
 import { CATEGORIES } from '@/lib/constants';
+import { generateAssessmentQuestions } from '@/lib/questionBank';
+import { toSlug } from '@/lib/slug';
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
     try {
-        console.log('🚀 Triggering Maintenance Seed...');
         await connectDB();
 
-        // Clear existing data
+        let seededAssessments = 0;
+        let seededQuestions = 0;
+
         await Category.deleteMany({});
         await Assessment.deleteMany({});
         await Question.deleteMany({});
-        console.log('✅ Cleared existing data');
 
-        // Create categories and assessments
         for (let i = 0; i < CATEGORIES.length; i++) {
             const categoryData = CATEGORIES[i];
 
@@ -29,7 +30,7 @@ export async function GET(request: NextRequest) {
             });
 
             for (const assessmentTitle of categoryData.assessments) {
-                const slug = assessmentTitle.toLowerCase().replace(/\s+/g, '-');
+                const slug = toSlug(assessmentTitle);
 
                 const assessment = await Assessment.create({
                     title: assessmentTitle,
@@ -45,38 +46,29 @@ export async function GET(request: NextRequest) {
                     isActive: true,
                 });
 
-                const questions = [];
-                for (let j = 1; j <= 15; j++) {
-                    questions.push({
-                        assessment: assessment._id.toString(),
-                        type: 'mcq',
-                        question: `${assessmentTitle} Proficiency - Q${j}: What is the primary characteristic of ${assessmentTitle} in a professional environment?`,
-                        options: [
-                            'Enhanced efficiency and scalability',
-                            'Legacy compatibility and maintenance',
-                            'Resource optimization and management',
-                            'Regulatory compliance and auditing',
-                        ],
-                        correctAnswer: 0, // Option 1 for testing
-                        explanation: `The correct answer demonstrates fundamental knowledge required for ${assessmentTitle}.`,
-                        points: 1,
-                        difficulty: 'medium',
-                        tags: [assessmentTitle],
-                    });
-                }
+                const questions = generateAssessmentQuestions({
+                    assessmentTitle,
+                    assessmentId: assessment._id.toString(),
+                    totalQuestions: 15,
+                });
                 await Question.insertMany(questions);
+
+                seededAssessments += 1;
+                seededQuestions += questions.length;
             }
         }
 
         return NextResponse.json({
             success: true,
-            message: 'Database seeded successfully with 36 assessments and 540 questions.'
+            message: `Database seeded successfully with ${seededAssessments} assessments and ${seededQuestions} questions.`,
         });
     } catch (error: any) {
-        console.error('❌ Maintenance Seed Error:', error);
-        return NextResponse.json({
-            success: false,
-            error: error.message
-        }, { status: 500 });
+        return NextResponse.json(
+            {
+                success: false,
+                error: error.message,
+            },
+            { status: 500 }
+        );
     }
 }

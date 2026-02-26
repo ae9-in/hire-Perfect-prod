@@ -58,10 +58,9 @@ export async function POST(
 
             let isCorrect = false;
             if (question.type === 'mcq') {
-                // Hard-coded for testing: Option 1 is always right
-                isCorrect = Number(ans.answer) === 0 || Number(ans.answer) === Number(question.correctAnswer);
+                isCorrect = Number(ans.answer) === Number(question.correctAnswer);
             } else if (question.type === 'scenario') {
-                isCorrect = ans.answer === '0' || ans.answer.toLowerCase().trim() === question.correctAnswer.toString().toLowerCase().trim();
+                isCorrect = ans.answer.toLowerCase().trim() === question.correctAnswer.toString().toLowerCase().trim();
             }
             // For coding questions, we'd need a code execution engine (simplified here)
 

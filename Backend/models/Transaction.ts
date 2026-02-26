@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export interface ITransaction extends Document {
-    _id: string;
+    _id: mongoose.Types.ObjectId;
     user: mongoose.Types.ObjectId;
     purchase: mongoose.Types.ObjectId;
     razorpayOrderId: string;
@@ -84,3 +84,4 @@ TransactionSchema.index({ status: 1 });
 const Transaction: Model<ITransaction> = mongoose.models.Transaction || mongoose.model<ITransaction>('Transaction', TransactionSchema);
 
 export default Transaction;
+

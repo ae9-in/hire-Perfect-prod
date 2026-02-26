@@ -5,12 +5,17 @@ import path from 'path';
 // Load environment variables
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 
-const MONGODB_URI = process.env.MONGODB_URI;
+function getMongoUri(): string {
+    const uri = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-    console.error('❌ MONGODB_URI is not defined in .env.local');
-    process.exit(1);
+    if (!uri) {
+        throw new Error('MONGODB_URI is not defined in .env.local');
+    }
+
+    return uri;
 }
+
+const MONGODB_URI = getMongoUri();
 
 // Minimal User Schema to query only email and name
 const userSchema = new mongoose.Schema({
@@ -53,3 +58,4 @@ async function checkUsers() {
 }
 
 checkUsers();
+

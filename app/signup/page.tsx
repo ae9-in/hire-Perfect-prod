@@ -14,7 +14,6 @@ export default function SignupPage() {
         email: '',
         password: '',
         confirmPassword: '',
-        role: 'candidate',
         phone: '',
     });
     const [loading, setLoading] = useState(false);
@@ -62,7 +61,6 @@ export default function SignupPage() {
                     name: formData.name,
                     email: formData.email,
                     password: formData.password,
-                    role: formData.role,
                     phone: formData.phone,
                 }),
             });
@@ -78,8 +76,9 @@ export default function SignupPage() {
             } else {
                 router.push('/dashboard');
             }
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : 'Signup failed';
+            setError(message);
         } finally {
             setLoading(false);
         }
@@ -121,16 +120,14 @@ export default function SignupPage() {
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                 />
-                                <Input
-                                    label="Track Type"
-                                    as="select"
-                                    required
-                                    value={formData.role}
-                                    onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                                >
-                                    <option value="candidate">Candidate</option>
-                                    <option value="admin">Administrator</option>
-                                </Input>
+                                <div className="space-y-2">
+                                    <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
+                                        Track Type
+                                    </label>
+                                    <div className="h-14 rounded-xl border border-white/10 bg-white/[0.02] px-4 flex items-center text-sm font-bold text-cyan-300">
+                                        Candidate
+                                    </div>
+                                </div>
                             </div>
 
                             <Input

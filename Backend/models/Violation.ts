@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export interface IViolation extends Document {
-    _id: string;
+    _id: mongoose.Types.ObjectId;
     attempt: mongoose.Types.ObjectId;
     user: mongoose.Types.ObjectId;
     type: 'face_not_detected' | 'multiple_faces' | 'looking_away' | 'tab_switch' | 'screen_minimize' | 'fullscreen_exit';
@@ -59,3 +59,4 @@ ViolationSchema.index({ type: 1, severity: 1 });
 const Violation: Model<IViolation> = mongoose.models.Violation || mongoose.model<IViolation>('Violation', ViolationSchema);
 
 export default Violation;
+
