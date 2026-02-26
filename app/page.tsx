@@ -54,40 +54,75 @@ export default function HomePage() {
               </Link>
             </div>
 
-            {/* Hero Image Section */}
+            {/* Hero Snapshot Section */}
             <div className="mt-20 relative animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-              <div className="relative glass rounded-[2.5rem] p-2 shadow-2xl shadow-cyan-500/10 border border-white/10 max-w-6xl mx-auto overflow-hidden rotate-[-0.5deg]">
-                <div className="relative w-full aspect-[21/9] rounded-[2rem] overflow-hidden bg-[#050510]">
-                  {/* Subtle Grid Pattern Fallback */}
+              <div className="relative glass rounded-[2.5rem] p-2 shadow-2xl shadow-cyan-500/10 border border-white/10 max-w-6xl mx-auto overflow-hidden">
+                <div className="relative rounded-[2rem] bg-[#050510] border border-white/10 p-8 md:p-10 overflow-hidden">
                   <div className="absolute inset-0 bg-grid opacity-20"></div>
+                  <div className="absolute -top-16 -right-16 w-64 h-64 bg-cyan-500/10 blur-3xl rounded-full"></div>
+                  <div className="absolute -bottom-16 -left-16 w-64 h-64 bg-purple-500/10 blur-3xl rounded-full"></div>
 
-                  {/* The Image */}
-                  <img
-                    src="/hero-platform-visualization.webp"
-                    alt="HirePerfect AI Proctoring Platform"
-                    className="w-full h-full object-cover relative z-0"
-                    onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).classList.add('opacity-0');
-                    }}
-                  />
-
-                  {/* Bottom Fade Gradient Overlay - Matches body background */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#020205] via-transparent to-transparent z-10"></div>
-
-                  {/* Futuristic HUD elements */}
-                  <div className="absolute top-8 left-8 z-20 glass-cyan px-4 py-2 rounded-xl border border-cyan-500/30 animate-float">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2.5 h-2.5 bg-cyan-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(6,182,212,0.8)]"></div>
-                      <span className="text-[10px] font-black text-white uppercase tracking-widest">AI Monitoring Active</span>
+                  <div className="relative z-10">
+                    <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+                      <div className="glass-cyan px-4 py-2 rounded-xl border border-cyan-500/30">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-2.5 h-2.5 bg-cyan-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(6,182,212,0.8)]"></div>
+                          <span className="text-[10px] font-black text-white uppercase tracking-widest">AI Monitoring Active</span>
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-black text-slate-300 uppercase tracking-[0.3em]">Live Platform Snapshot</span>
                     </div>
-                  </div>
 
-                  {/* Placeholder Content (Shows if image is missing) */}
-                  <div className="absolute inset-0 flex items-center justify-center z-10 bg-[#050510]/80 backdrop-blur-sm">
-                    <div className="text-center opacity-70">
-                      <div className="w-20 h-20 bg-gradient-to-br from-cyan-600/50 to-purple-800/50 rounded-full mx-auto mb-6 blur-2xl animate-pulse"></div>
-                      <p className="text-cyan-400 font-black text-[10px] tracking-[0.4em] uppercase mb-2">Visualizing Terminal Infrastructure</p>
-                      <p className="text-slate-500 text-[9px] font-medium tracking-widest uppercase italic">Awaiting Visual Asset Interface (hero-platform-visualization.webp)</p>
+                    <div className="grid md:grid-cols-12 gap-6">
+                      <div className="md:col-span-5 bg-white/5 border border-white/10 rounded-2xl p-6">
+                        <p className="text-[10px] font-black text-cyan-400 tracking-[0.25em] uppercase mb-4">Session Control</p>
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between">
+                            <span className="text-slate-300 text-sm font-semibold">Face Detection</span>
+                            <span className="text-emerald-400 text-xs font-black tracking-widest uppercase">Stable</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-slate-300 text-sm font-semibold">Environment Lock</span>
+                            <span className="text-emerald-400 text-xs font-black tracking-widest uppercase">Enabled</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-slate-300 text-sm font-semibold">Anomaly Alerts</span>
+                            <span className="text-cyan-400 text-xs font-black tracking-widest uppercase">Real-Time</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="md:col-span-7 bg-white/5 border border-white/10 rounded-2xl p-6">
+                        <p className="text-[10px] font-black text-purple-400 tracking-[0.25em] uppercase mb-4">Assessment Workflow</p>
+                        <div className="grid sm:grid-cols-3 gap-4">
+                          <div className="rounded-xl border border-white/10 bg-black/20 p-4">
+                            <p className="text-cyan-300 text-[10px] font-black uppercase tracking-widest mb-2">Step 01</p>
+                            <p className="text-white text-sm font-bold leading-snug">Candidate Verification</p>
+                          </div>
+                          <div className="rounded-xl border border-white/10 bg-black/20 p-4">
+                            <p className="text-cyan-300 text-[10px] font-black uppercase tracking-widest mb-2">Step 02</p>
+                            <p className="text-white text-sm font-bold leading-snug">Secure Exam Session</p>
+                          </div>
+                          <div className="rounded-xl border border-white/10 bg-black/20 p-4">
+                            <p className="text-cyan-300 text-[10px] font-black uppercase tracking-widest mb-2">Step 03</p>
+                            <p className="text-white text-sm font-bold leading-snug">Result Intelligence</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                      {[
+                        { label: 'Monitored Attempts', value: '12K+' },
+                        { label: 'Active Recruiters', value: '180+' },
+                        { label: 'Assessment Tracks', value: '36+' },
+                        { label: 'Uptime Target', value: '99.9%' },
+                      ].map((item) => (
+                        <div key={item.label} className="rounded-xl bg-white/5 border border-white/10 p-4 text-left">
+                          <p className="text-lg md:text-xl font-black text-white">{item.value}</p>
+                          <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1">{item.label}</p>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -151,20 +186,160 @@ export default function HomePage() {
                 </Card>
               </div>
 
-              {/* Feature 4: Large - Coding Assessments */}
+              {/* Feature 4: Large - MCQ Assessments */}
               <div className="md:col-span-8 group">
                 <Card className="h-full p-1 border-0 bg-transparent group overflow-visible relative">
                   <div className="absolute -inset-1 bg-cyan-900/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="bg-[#050510] h-full rounded-[2rem] p-12 flex flex-col justify-center text-white relative overflow-hidden border border-white/5">
+                  <div className="bg-[#050510] h-full rounded-[2rem] p-8 md:p-10 flex flex-col justify-between text-white relative overflow-hidden border border-white/5">
                     <div className="absolute inset-0 bg-grid opacity-10"></div>
                     <div className="relative z-10">
-                      <div className="inline-block px-4 py-1.5 bg-white/5 rounded-lg border border-white/10 text-cyan-300 font-black text-[10px] tracking-[0.3em] uppercase mb-8">Protocol Alpha</div>
-                      <h3 className="text-5xl font-black mb-6 uppercase tracking-tighter leading-none">CodeLabs <br /> Integration</h3>
-                      <p className="text-slate-400 max-w-xl font-medium text-lg leading-relaxed">Evaluate technical prowess with a sophisticated IDE supporting 15+ languages. Live code execution and automated grading.</p>
+                      <div className="inline-block px-4 py-1.5 bg-white/5 rounded-lg border border-white/10 text-cyan-300 font-black text-[10px] tracking-[0.22em] uppercase mb-6">
+                        Assessment Core
+                      </div>
+                      <h3 className="text-4xl md:text-5xl font-black mb-5 uppercase tracking-tight leading-[0.95]">
+                        Structured MCQ
+                        <br />
+                        Evaluation
+                      </h3>
+                      <p className="text-slate-400 max-w-2xl font-medium text-base md:text-lg leading-relaxed">
+                        Deliver high-quality multiple-choice assessments with category-based coverage, clear scoring logic,
+                        and consistent evaluation standards.
+                      </p>
                     </div>
                   </div>
                 </Card>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Process Section */}
+        <section className="py-28 px-6 bg-[#020205] border-t border-white/5">
+          <div className="container mx-auto max-w-7xl">
+            <div className="mb-16 px-4 text-center">
+              <span className="text-[10px] font-black text-cyan-500 uppercase tracking-[0.35em] mb-4 block">How It Works</span>
+              <h2 className="text-5xl md:text-6xl font-black text-white mb-6 tracking-tighter uppercase leading-[0.85]">
+                FROM REGISTRATION <br /><span className="text-gradient">TO VERIFIED RESULTS.</span>
+              </h2>
+              <p className="text-lg text-slate-400 font-medium max-w-3xl mx-auto">
+                A structured workflow built to maintain fairness, consistency, and confidence in every assessment session.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-4 gap-6 px-4">
+              {[
+                {
+                  step: '01',
+                  title: 'Candidate Onboarding',
+                  text: 'Users register, authenticate, and access role-based assessment journeys.',
+                },
+                {
+                  step: '02',
+                  title: 'Assessment Start',
+                  text: 'Candidates begin category-focused MCQ assessments with exam controls enabled.',
+                },
+                {
+                  step: '03',
+                  title: 'Live Monitoring',
+                  text: 'Session activity is monitored for anomalies to preserve exam integrity in real time.',
+                },
+                {
+                  step: '04',
+                  title: 'Scoring & Review',
+                  text: 'Attempts are evaluated and surfaced with result visibility and admin audit support.',
+                },
+              ].map((item) => (
+                <Card key={item.step} className="p-8 bg-[#050510] rounded-[2rem] border-white/10 hover:border-cyan-500/30 transition-all">
+                  <div className="text-cyan-400 text-xs font-black tracking-[0.25em] uppercase mb-4">{item.step}</div>
+                  <h3 className="text-2xl font-black text-white mb-3 uppercase leading-tight">{item.title}</h3>
+                  <p className="text-slate-400 font-medium leading-relaxed">{item.text}</p>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Trust & Standards Section */}
+        <section className="py-28 px-6 bg-[#030308]/70 border-t border-white/5">
+          <div className="container mx-auto max-w-7xl">
+            <div className="grid lg:grid-cols-12 gap-10 px-4">
+              <div className="lg:col-span-7">
+                <span className="text-[10px] font-black text-cyan-500 uppercase tracking-[0.35em] mb-4 block">Trust Layer</span>
+                <h2 className="text-5xl md:text-6xl font-black text-white mb-6 tracking-tighter uppercase leading-[0.85]">
+                  BUILT FOR <span className="text-gradient">SECURITY AND ACCOUNTABILITY.</span>
+                </h2>
+                <p className="text-lg text-slate-400 font-medium max-w-2xl mb-10 leading-relaxed">
+                  HirePerfect is designed for professional assessment operations with controlled sessions, transparent review
+                  signals, and centralized administrative oversight.
+                </p>
+                <div className="grid sm:grid-cols-2 gap-5">
+                  {[
+                    'Full-screen and tab-focus controls during exams',
+                    'AI-assisted monitoring and violation logging',
+                    'Structured admin views for attempts and users',
+                    'Role-aware access boundaries across the platform',
+                  ].map((point) => (
+                    <div key={point} className="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-slate-300 font-semibold leading-relaxed">
+                      {point}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="lg:col-span-5">
+                <Card className="h-full p-10 rounded-[2rem] border-white/10 bg-[#050510] relative overflow-hidden">
+                  <div className="absolute -top-10 -right-10 w-48 h-48 bg-cyan-500/10 blur-3xl rounded-full"></div>
+                  <div className="relative z-10">
+                    <h3 className="text-3xl font-black text-white mb-8 uppercase tracking-tight">Platform Outcomes</h3>
+                    <div className="space-y-5">
+                      {[
+                        { label: 'Assessment Reliability', value: 'High' },
+                        { label: 'Admin Visibility', value: 'Comprehensive' },
+                        { label: 'Evaluation Consistency', value: 'Standardized' },
+                        { label: 'Remote Readiness', value: 'Production-Ready' },
+                      ].map((item) => (
+                        <div key={item.label} className="flex items-center justify-between border-b border-white/10 pb-3">
+                          <span className="text-slate-400 font-bold text-sm uppercase tracking-wider">{item.label}</span>
+                          <span className="text-cyan-300 font-black text-sm uppercase tracking-widest">{item.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Why HirePerfect Section */}
+        <section className="py-28 px-6 bg-[#020205] border-t border-white/5">
+          <div className="container mx-auto max-w-7xl px-4">
+            <div className="text-center mb-16">
+              <span className="text-[10px] font-black text-cyan-500 uppercase tracking-[0.35em] mb-4 block">Why Teams Choose Us</span>
+              <h2 className="text-5xl md:text-6xl font-black text-white mb-6 tracking-tighter uppercase leading-[0.85]">
+                A COMPLETE SYSTEM <br /><span className="text-gradient">FOR MODERN ASSESSMENTS.</span>
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              <Card className="p-10 rounded-[2rem] bg-[#050510] border-white/10 hover:border-cyan-500/30 transition-all">
+                <h3 className="text-2xl font-black text-white mb-4 uppercase tracking-tight">Professional Delivery</h3>
+                <p className="text-slate-400 font-medium leading-relaxed">
+                  Structured exam workflows, polished UX, and clear evaluation flow for reliable execution across teams.
+                </p>
+              </Card>
+              <Card className="p-10 rounded-[2rem] bg-[#050510] border-white/10 hover:border-purple-500/30 transition-all">
+                <h3 className="text-2xl font-black text-white mb-4 uppercase tracking-tight">Operational Clarity</h3>
+                <p className="text-slate-400 font-medium leading-relaxed">
+                  From onboarding to results, every stage is visible to admins through centralized controls and logs.
+                </p>
+              </Card>
+              <Card className="p-10 rounded-[2rem] bg-[#050510] border-white/10 hover:border-emerald-500/30 transition-all">
+                <h3 className="text-2xl font-black text-white mb-4 uppercase tracking-tight">Scalable Foundation</h3>
+                <p className="text-slate-400 font-medium leading-relaxed">
+                  Category-based MCQ architecture supports growth across hiring cohorts, academic programs, and training tracks.
+                </p>
+              </Card>
             </div>
           </div>
         </section>
