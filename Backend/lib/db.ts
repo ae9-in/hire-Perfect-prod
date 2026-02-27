@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 import dns from 'dns';
 
 /**
- * Force-register all models to avoid MissingSchemaError in Next.js
- * especially when using .populate()
-*/
+ * Force-register all models to avoid MissingSchemaError in Next.js,
+ * especially when using .populate().
+ */
 import '../models/User';
 import '../models/Assessment';
 import '../models/Question';
@@ -13,15 +13,20 @@ import '../models/Violation';
 import '../models/Purchase';
 import '../models/Category';
 import '../models/Transaction';
+import '../models/FAQSubmission';
 
-// Force IPv4 DNS resolution to fix Windows IPv6 issues
+// Force IPv4 DNS resolution to reduce Windows IPv6/SRV issues.
 dns.setDefaultResultOrder('ipv4first');
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/hireperfect';
-
-if (!MONGODB_URI) {
-    throw new Error('Please define the MONGODB_URI environment variable');
+function getMongoUri(): string {
+    const uri = process.env.MONGODB_URI;
+    if (!uri) {
+        throw new Error('Please define the MONGODB_URI environment variable');
+    }
+    return uri;
 }
+
+const MONGODB_URI = getMongoUri();
 
 interface MongooseCache {
     conn: typeof mongoose | null;
@@ -32,7 +37,7 @@ declare global {
     var mongoose: MongooseCache;
 }
 
-let cached: MongooseCache = global.mongoose || { conn: null, promise: null };
+const cached: MongooseCache = global.mongoose || { conn: null, promise: null };
 
 if (!global.mongoose) {
     global.mongoose = cached;
@@ -46,34 +51,33 @@ async function connectDB(): Promise<typeof mongoose> {
     if (!cached.promise) {
         const opts = {
             bufferCommands: false,
-            family: 4, // Force IPv4 to fix querySrv ECONNREFUSED issues
-            serverSelectionTimeoutMS: 10000, // Increase timeout to 10 seconds
+            family: 4,
+            serverSelectionTimeoutMS: 10000,
             socketTimeoutMS: 45000,
             retryWrites: true,
-            // Additional options to help with Windows DNS/SRV issues
             maxPoolSize: 10,
             minPoolSize: 2,
         };
 
-        console.log('🔄 Attempting to connect to MongoDB...');
-        console.log('📍 URI:', MONGODB_URI.replace(/:[^:@]+@/, ':****@')); // Hide password in logs
+        console.log('Attempting to connect to MongoDB...');
+        console.log('URI:', MONGODB_URI.replace(/:[^:@]+@/, ':****@'));
 
         cached.promise = mongoose.connect(MONGODB_URI, opts)
-            .then((mongoose) => {
-                console.log('✅ MongoDB connected successfully');
-                console.log('📊 Connection state:', mongoose.connection.readyState);
-                return mongoose;
+            .then((instance) => {
+                console.log('MongoDB connected successfully');
+                console.log('Connection state:', instance.connection.readyState);
+                console.log('Connected host:', instance.connection.host);
+                console.log('Connected database:', instance.connection.name);
+                return instance;
             })
-            .catch((error) => {
-                console.error('❌ MongoDB connection error:', error.message);
+            .catch((error: any) => {
+                console.error('MongoDB connection error:', error.message);
                 console.error('Error code:', error.code);
                 console.error('Error name:', error.name);
 
-                // If it's an SRV error, provide helpful message
                 if (error.code === 'ECONNREFUSED' && error.message.includes('querySrv')) {
-                    console.error('💡 Tip: This appears to be a DNS SRV resolution issue.');
-                    console.error('   Your DNS can resolve the hostname but the MongoDB driver cannot perform SRV lookups.');
-                    console.error('   This is a known issue on some Windows systems.');
+                    console.error('Tip: This appears to be a DNS SRV resolution issue.');
+                    console.error('Your DNS can resolve the hostname but the MongoDB driver cannot perform SRV lookups.');
                 }
 
                 throw error;
@@ -82,11 +86,11 @@ async function connectDB(): Promise<typeof mongoose> {
 
     try {
         cached.conn = await cached.promise;
-    } catch (e: any) {
+    } catch (error: any) {
         cached.promise = null;
-        console.error('❌ Failed to establish MongoDB connection');
-        console.error('Error details:', e.message);
-        throw e;
+        console.error('Failed to establish MongoDB connection');
+        console.error('Error details:', error.message);
+        throw error;
     }
 
     return cached.conn;

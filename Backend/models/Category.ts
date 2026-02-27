@@ -1,9 +1,12 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
+import { Types } from "mongoose";
 
 export interface ICategory extends Document {
+    _id: Types.ObjectId;
     name: string;
     slug: string;
     description: string;
+    subjects: string[];
     icon?: string;
     order: number;
     isActive: boolean;
@@ -29,6 +32,10 @@ const CategorySchema = new Schema<ICategory>(
         description: {
             type: String,
             required: [true, 'Category description is required'],
+        },
+        subjects: {
+            type: [String],
+            default: [],
         },
         icon: {
             type: String,

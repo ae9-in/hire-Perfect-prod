@@ -78,7 +78,6 @@ const TransactionSchema = new Schema<ITransaction>(
 
 // Index for faster queries
 TransactionSchema.index({ user: 1 });
-TransactionSchema.index({ razorpayOrderId: 1 });
 TransactionSchema.index({ status: 1 });
 
 const Transaction: Model<ITransaction> = mongoose.models.Transaction || mongoose.model<ITransaction>('Transaction', TransactionSchema);

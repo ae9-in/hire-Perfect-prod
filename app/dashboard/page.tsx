@@ -208,9 +208,7 @@ export default function DashboardPage() {
                                                         ) : attempt.status === 'terminated' ? (
                                                             <Button variant="outline" size="sm" disabled className="text-[10px] uppercase font-black tracking-widest text-rose-900 border-rose-950 bg-transparent opacity-40 cursor-not-allowed">Terminated</Button>
                                                         ) : (
-                                                            <Link href={`/exam/${attempt._id}`}>
-                                                                <Button variant="outline" size="sm" className="text-[10px] uppercase font-black tracking-widest text-rose-500 border-rose-500/30 hover:bg-rose-500/10 hover:border-rose-500 hover:text-rose-400 shadow-lg shadow-rose-900/10">Terminated</Button>
-                                                            </Link>
+                                                            <Button variant="outline" size="sm" disabled className="text-[10px] uppercase font-black tracking-widest text-slate-500 border-slate-700 bg-transparent opacity-60 cursor-not-allowed">No Resume</Button>
                                                         )}
                                                     </td>
                                                 </tr>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Navbar from '@/components/ui/Navbar';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
@@ -88,6 +89,11 @@ export default function AdminDashboard() {
                     </div>
 
                     <div className="flex items-center gap-6">
+                        <Link href="/admin/faq-submissions">
+                            <Button variant="outline" className="px-8 py-4 uppercase tracking-widest text-[10px] font-black border-white/10 hover:border-cyan-500/40 text-white">
+                                FAQ Inbox
+                            </Button>
+                        </Link>
                         <Button variant="primary" className="px-8 py-4 uppercase tracking-widest text-[10px] font-black shadow-xl shadow-cyan-500/20 bg-cyan-500 hover:bg-cyan-400 border-none" onClick={loadData}>Refresh Link</Button>
                     </div>
                 </div>

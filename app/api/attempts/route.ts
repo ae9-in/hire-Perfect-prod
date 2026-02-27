@@ -16,9 +16,29 @@ export async function GET(request: NextRequest) {
             .populate('assessment', 'title category')
             .sort({ startedAt: -1 });
 
+        const terminatedAssessmentIds = new Set(
+            attempts
+                .filter((attempt: any) => attempt.status === 'terminated')
+                .map((attempt: any) => {
+                    const assessment = attempt.assessment as any;
+                    return assessment?._id ? assessment._id.toString() : attempt.assessment?.toString();
+                })
+                .filter(Boolean)
+        );
+
+        const filteredAttempts = attempts.filter((attempt: any) => {
+            if (attempt.status !== 'in_progress') {
+                return true;
+            }
+
+            const assessment = attempt.assessment as any;
+            const assessmentId = assessment?._id ? assessment._id.toString() : attempt.assessment?.toString();
+            return !terminatedAssessmentIds.has(assessmentId);
+        });
+
         return NextResponse.json({
             success: true,
-            attempts,
+            attempts: filteredAttempts,
         });
     } catch (error: any) {
         console.error('List user attempts error:', error);

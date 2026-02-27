@@ -38,7 +38,11 @@ export async function POST(request: NextRequest) {
         await connectDB();
 
         const body = await request.json();
-        const category = await Category.create(body);
+        const subjects = body.subjects || body.assessments || [];
+        const category = await Category.create({
+            ...body,
+            subjects,
+        });
 
         return NextResponse.json({
             success: true,

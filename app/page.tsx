@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
@@ -8,6 +8,47 @@ import { CATEGORIES, PRICING } from '@/lib/constants';
 import Navbar from '@/components/ui/Navbar';
 
 export default function HomePage() {
+  const [faqForm, setFaqForm] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+  const [faqSubmitting, setFaqSubmitting] = useState(false);
+  const [faqFeedback, setFaqFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+
+  const handleFAQSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFaqFeedback(null);
+    setFaqSubmitting(true);
+
+    try {
+      const res = await fetch('/api/faq-submissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(faqForm),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setFaqFeedback({ type: 'error', message: data.error || 'Failed to submit your query.' });
+        return;
+      }
+
+      setFaqFeedback({ type: 'success', message: 'Thanks. Your query has been submitted successfully.' });
+      setFaqForm({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+      });
+    } catch (error) {
+      setFaqFeedback({ type: 'error', message: 'Something went wrong. Please try again.' });
+    } finally {
+      setFaqSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#020205] text-white bg-grid selection:bg-cyan-500/30 selection:text-cyan-200">
       <Navbar />
@@ -381,7 +422,7 @@ export default function HomePage() {
                         </div>
                         <div className="text-right">
                           <span className="text-[9px] font-black text-slate-500 tracking-[0.2em] uppercase block mb-1">Stock</span>
-                          <span className="text-[11px] font-black text-cyan-500 tracking-widest uppercase">{category.assessments.length} UNITS</span>
+                          <span className="text-[11px] font-black text-cyan-500 tracking-widest uppercase">{(category.subjects || category.assessments || []).length} SUBJECTS</span>
                         </div>
                       </div>
                       <h3 className="text-2xl font-black text-white mb-4 group-hover:text-cyan-400 transition-colors uppercase tracking-tight leading-none">
@@ -390,6 +431,11 @@ export default function HomePage() {
                       <p className="text-slate-400 text-base leading-relaxed font-medium">
                         {category.description}
                       </p>
+                      <ul className="mt-5 space-y-1.5">
+                        {(category.subjects || category.assessments || []).slice(0, 4).map((subject: string) => (
+                          <li key={subject} className="text-xs text-slate-500 font-bold tracking-wide truncate">• {subject}</li>
+                        ))}
+                      </ul>
                     </Card>
                   </Link>
                 )
@@ -461,12 +507,70 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-      </main>
 
-      {/* Modern Footer */}
-      <footer className="pt-24 pb-12 px-6 bg-slate-950 text-white relative border-t border-white/5">
+        {/* FAQ Submission Section */}
+        <section id="faq-submission-form" className="py-28 px-6 bg-[#020205] border-t border-white/5">
+          <div className="container mx-auto max-w-4xl">
+            <div className="text-center mb-12">
+              <span className="text-[10px] font-black text-cyan-500 uppercase tracking-[0.35em] mb-4 block">FAQ Submission</span>
+              <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-[0.9] mb-4">
+                CONTACT US
+              </h2>
+              <p className="text-slate-400 font-medium max-w-2xl mx-auto">
+                Have a query about assessments, billing, or platform usage? Submit your message and our team will respond.
+              </p>
+            </div>
+
+            <Card className="p-8 md:p-10 rounded-[2rem] bg-[#050510] border-white/10">
+              <form onSubmit={handleFAQSubmit} className="space-y-4">
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  value={faqForm.name}
+                  onChange={(e) => setFaqForm({ ...faqForm, name: e.target.value })}
+                  className="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none focus:border-cyan-500/50"
+                  required
+                />
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  value={faqForm.email}
+                  onChange={(e) => setFaqForm({ ...faqForm, email: e.target.value })}
+                  className="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none focus:border-cyan-500/50"
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Subject"
+                  value={faqForm.subject}
+                  onChange={(e) => setFaqForm({ ...faqForm, subject: e.target.value })}
+                  className="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none focus:border-cyan-500/50"
+                  required
+                />
+                <textarea
+                  placeholder="Write your query..."
+                  rows={5}
+                  value={faqForm.message}
+                  onChange={(e) => setFaqForm({ ...faqForm, message: e.target.value })}
+                  className="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none focus:border-cyan-500/50 resize-none"
+                  required
+                />
+                <Button type="submit" variant="primary" className="w-full py-4" loading={faqSubmitting}>
+                  Submit Query
+                </Button>
+                {faqFeedback && (
+                  <p className={`text-sm font-bold ${faqFeedback.type === 'success' ? 'text-emerald-400' : 'text-rose-400'}`}>
+                    {faqFeedback.message}
+                  </p>
+                )}
+              </form>
+            </Card>
+          </div>
+        </section>
+      </main>      {/* Modern Footer */}
+      <footer className="pt-20 pb-10 px-6 bg-slate-950 text-white relative border-t border-white/5">
         <div className="container mx-auto max-w-7xl">
-          <div className="grid md:grid-cols-12 gap-12 mb-20">
+          <div className="grid md:grid-cols-12 gap-10 mb-14">
             <div className="md:col-span-4">
               <Link href="/" className="flex items-center space-x-2 mb-8 group">
                 <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/10 transition-transform group-hover:rotate-6">
@@ -474,41 +578,59 @@ export default function HomePage() {
                 </div>
                 <span className="text-2xl font-black tracking-tighter uppercase text-white">Hire<span className="text-cyan-400">Perfect</span></span>
               </Link>
-              <p className="text-slate-400 font-medium leading-relaxed max-w-xs">
+              <p className="text-slate-400 font-medium leading-relaxed max-w-sm">
                 Empowering teams to find the best talent through secure, AI-powered assessments.
               </p>
             </div>
 
-            <div className="md:col-span-8 flex flex-wrap gap-x-24 gap-y-12 justify-end">
-              <div>
-                <h4 className="font-black uppercase tracking-widest text-cyan-400 text-xs mb-6">Product</h4>
-                <ul className="space-y-4 text-slate-300 font-bold text-sm">
-                  <li><Link href="/assessments" className="hover:text-cyan-400 transition-colors">Assessments</Link></li>
-                  <li><Link href="/dashboard" className="hover:text-cyan-400 transition-colors">Dashboard</Link></li>
-                  <li><Link href="/pricing" className="hover:text-cyan-400 transition-colors">Pricing</Link></li>
-                </ul>
+            <div className="md:col-span-3">
+              <h4 className="font-black uppercase tracking-widest text-cyan-400 text-xs mb-6">FAQ Submission</h4>
+              <div className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-4 max-w-sm">
+                <p className="text-slate-400 text-sm font-medium leading-relaxed mb-4 max-w-[28ch]">
+                  Need help or have a question? Reach out through our FAQ submission form.
+                </p>
+                <Link
+                  href="#faq-submission-form"
+                  className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-cyan-500/30 text-cyan-300 font-black text-[11px] uppercase tracking-[0.18em] hover:bg-cyan-500/10 hover:text-cyan-200 transition-colors"
+                >
+                  Contact Us
+                  <span aria-hidden>&rarr;</span>
+                </Link>
               </div>
-              <div>
-                <h4 className="font-black uppercase tracking-widest text-cyan-400 text-xs mb-6">Company</h4>
-                <ul className="space-y-4 text-slate-300 font-bold text-sm">
-                  <li><Link href="/about" className="hover:text-cyan-400 transition-colors">About Us</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-black uppercase tracking-widest text-cyan-400 text-xs mb-6">Legal</h4>
-                <ul className="space-y-4 text-slate-300 font-bold text-sm">
-                  <li><Link href="/privacy" className="hover:text-cyan-400 transition-colors">Privacy Policy</Link></li>
-                  <li><Link href="/terms" className="hover:text-cyan-400 transition-colors">Terms of Service</Link></li>
-                </ul>
+            </div>
+
+            <div className="md:col-span-5">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-6">
+                <div>
+                  <h4 className="font-black uppercase tracking-widest text-cyan-400 text-xs mb-6">Product</h4>
+                  <ul className="space-y-4 text-slate-300 font-bold text-sm">
+                    <li><Link href="/assessments" className="hover:text-cyan-400 transition-colors">Assessments</Link></li>
+                    <li><Link href="/dashboard" className="hover:text-cyan-400 transition-colors">Dashboard</Link></li>
+                    <li><Link href="/pricing" className="hover:text-cyan-400 transition-colors">Pricing</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-black uppercase tracking-widest text-cyan-400 text-xs mb-6">Company</h4>
+                  <ul className="space-y-4 text-slate-300 font-bold text-sm">
+                    <li><Link href="/about" className="hover:text-cyan-400 transition-colors">About Us</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-black uppercase tracking-widest text-cyan-400 text-xs mb-6">Legal</h4>
+                  <ul className="space-y-4 text-slate-300 font-bold text-sm">
+                    <li><Link href="/privacy" className="hover:text-cyan-400 transition-colors">Privacy Policy</Link></li>
+                    <li><Link href="/terms" className="hover:text-cyan-400 transition-colors">Terms of Service</Link></li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row items-center justify-between pt-12 border-t border-white/5 gap-8">
+          <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-white/5 gap-6">
             <p className="text-slate-500 font-bold text-sm uppercase tracking-widest">
-              © 2026 HirePerfect Platform. Built for Excellence.
+              (C) 2026 HirePerfect Platform. Built for Excellence.
             </p>
-            <div className="flex gap-6">
+            <div className="flex gap-4">
               {[1, 2, 3].map((s) => (
                 <div key={s} className="w-10 h-10 rounded-full bg-slate-900 border border-white/5 flex items-center justify-center hover:bg-cyan-600 transition-colors cursor-pointer group hover:shadow-[0_0_15px_rgba(6,182,212,0.4)]">
                   <div className="w-4 h-4 bg-slate-500 group-hover:bg-white transition-colors rounded-sm"></div>
@@ -521,3 +643,7 @@ export default function HomePage() {
     </div>
   );
 }
+
+
+
+

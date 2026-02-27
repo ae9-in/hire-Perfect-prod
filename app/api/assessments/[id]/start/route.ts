@@ -4,7 +4,6 @@ import { authMiddleware } from '@/middleware/auth';
 import Assessment from '@/models/Assessment';
 import Question from '@/models/Question';
 import Attempt from '@/models/Attempt';
-import Purchase from '@/models/Purchase';
 
 export async function POST(
     request: NextRequest,
@@ -31,57 +30,38 @@ export async function POST(
             );
         }
 
-        // Check if user has access
-        const purchases = await Purchase.find({
-            user: authResult.user.userId,
-            status: 'completed',
-        });
-
-        const hasAccess = purchases.some(
-            (p) =>
-                (p.purchaseType === 'individual' && p.assessment?.toString() === assessmentId) ||
-                (p.purchaseType === 'category' && p.category?.toString() === assessment.category.toString()) ||
-                p.purchaseType === 'bundle'
-        );
-
-        /* Bypassed for testing
-        if (!hasAccess) {
-            return NextResponse.json(
-                { error: 'You do not have access to this assessment' },
-                { status: 403 }
-            );
-        }
-        */
-
-        // Check for ANY existing attempt
-        const existingAttempt = await Attempt.findOne({
-            user: authResult.user.userId,
-            assessment: assessmentId,
-        }).sort({ createdAt: -1 });
-
-        if (existingAttempt) {
-            if (existingAttempt.status === 'in_progress') {
-                // Allow recovering in-progress attempts
-                return NextResponse.json({
-                    success: true,
-                    isResumed: true,
-                    assessment,
-                    attempt: {
-                        id: existingAttempt._id,
-                        duration: assessment.duration,
-                    }
-                });
-            } else {
-                // For DEBUG/TESTING: Remove the existing attempt to allow re-starting
-                await Attempt.findByIdAndDelete(existingAttempt._id);
-                console.log(`[DEBUG] Deleted existing ${existingAttempt.status} attempt to allow restart.`);
+        // No resume policy: close any stale in-progress attempts before creating a new attempt.
+        await Attempt.updateMany(
+            {
+                user: authResult.user.userId,
+                assessment: assessmentId,
+                status: 'in_progress',
+            },
+            {
+                $set: {
+                    status: 'terminated',
+                    completedAt: new Date(),
+                },
             }
-        }
+        );
 
         // Get random questions
         const allQuestions = await Question.find({ assessment: assessmentId });
+        if (allQuestions.length === 0) {
+            return NextResponse.json(
+                { error: 'No questions are available for this assessment yet.' },
+                { status: 409 }
+            );
+        }
+
+        // If assessment.totalQuestions is 0 or invalid, fall back to all available questions.
+        const requestedCount = typeof assessment.totalQuestions === 'number' && assessment.totalQuestions > 0
+            ? assessment.totalQuestions
+            : allQuestions.length;
+        const finalQuestionCount = Math.min(requestedCount, allQuestions.length);
+
         const shuffled = allQuestions.sort(() => 0.5 - Math.random());
-        const selectedQuestions = shuffled.slice(0, assessment.totalQuestions);
+        const selectedQuestions = shuffled.slice(0, finalQuestionCount);
 
         // Create attempt
         const attempt = await Attempt.create({
@@ -109,6 +89,11 @@ export async function POST(
 
         return NextResponse.json({
             success: true,
+            assessment: {
+                _id: assessment._id,
+                title: assessment.title,
+                duration: assessment.duration,
+            },
             attempt: {
                 id: attempt._id,
                 duration: assessment.duration,

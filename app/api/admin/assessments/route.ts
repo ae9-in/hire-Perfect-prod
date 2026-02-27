@@ -4,6 +4,13 @@ import { authMiddleware } from '@/middleware/auth';
 import Assessment from '@/models/Assessment';
 import { USER_ROLES } from '@/lib/constants';
 
+function normalizeAssessmentDifficulty(value: unknown): 'beginner' | 'intermediate' | 'advanced' {
+    const normalized = String(value || '').toLowerCase().trim();
+    if (normalized === 'easy' || normalized === 'beginner') return 'beginner';
+    if (normalized === 'hard' || normalized === 'advanced') return 'advanced';
+    return 'intermediate';
+}
+
 export async function GET(request: NextRequest) {
     try {
         const authResult = await authMiddleware(request);
@@ -14,10 +21,24 @@ export async function GET(request: NextRequest) {
         await connectDB();
 
         const assessments = await Assessment.find({}).populate('category', 'name').sort({ createdAt: -1 });
+        const categoryGroups = new Map<string, any>();
+        for (const assessment of assessments) {
+            const category = assessment.category as any;
+            const categoryId = String(category?._id || 'uncategorized');
+            if (!categoryGroups.has(categoryId)) {
+                categoryGroups.set(categoryId, {
+                    _id: categoryId,
+                    name: category?.name || 'Uncategorized',
+                    subjects: [],
+                });
+            }
+            categoryGroups.get(categoryId).subjects.push(assessment);
+        }
 
         return NextResponse.json({
             success: true,
-            assessments
+            assessments,
+            categories: Array.from(categoryGroups.values()),
         });
     } catch (error: any) {
         console.error('Admin assessments fetch error:', error);
@@ -38,7 +59,10 @@ export async function POST(request: NextRequest) {
         await connectDB();
 
         const body = await request.json();
-        const assessment = await Assessment.create(body);
+        const assessment = await Assessment.create({
+            ...body,
+            difficulty: normalizeAssessmentDifficulty(body?.difficulty),
+        });
 
         return NextResponse.json({
             success: true,
@@ -68,6 +92,10 @@ export async function PATCH(request: NextRequest) {
 
         if (!id) {
             return NextResponse.json({ error: 'Assessment ID is required' }, { status: 400 });
+        }
+
+        if ('difficulty' in updateData) {
+            updateData.difficulty = normalizeAssessmentDifficulty(updateData.difficulty);
         }
 
         const assessment = await Assessment.findByIdAndUpdate(id, updateData, { new: true });

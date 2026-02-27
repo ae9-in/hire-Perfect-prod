@@ -4,7 +4,20 @@ export interface IViolation extends Document {
     _id: mongoose.Types.ObjectId;
     attempt: mongoose.Types.ObjectId;
     user: mongoose.Types.ObjectId;
-    type: 'face_not_detected' | 'multiple_faces' | 'looking_away' | 'tab_switch' | 'screen_minimize' | 'fullscreen_exit';
+    type:
+    | 'face_not_detected'
+    | 'multiple_faces'
+    | 'looking_away'
+    | 'tab_switch'
+    | 'screen_minimize'
+    | 'fullscreen_exit'
+    | 'session_exit'
+    | 'copy_paste'
+    | 'content_cut'
+    | 'sudden_movement'
+    | 'gaze_deviation'
+    | 'voice_detected'
+    | 'prohibited_object';
     severity: 'low' | 'medium' | 'high' | 'critical';
     description: string;
     timestamp: Date;
@@ -26,7 +39,21 @@ const ViolationSchema = new Schema<IViolation>(
         },
         type: {
             type: String,
-            enum: ['face_not_detected', 'multiple_faces', 'looking_away', 'tab_switch', 'screen_minimize', 'fullscreen_exit'],
+            enum: [
+                'face_not_detected',
+                'multiple_faces',
+                'looking_away',
+                'tab_switch',
+                'screen_minimize',
+                'fullscreen_exit',
+                'session_exit',
+                'copy_paste',
+                'content_cut',
+                'sudden_movement',
+                'gaze_deviation',
+                'voice_detected',
+                'prohibited_object',
+            ],
             required: [true, 'Violation type is required'],
         },
         severity: {

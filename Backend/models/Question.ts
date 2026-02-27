@@ -13,8 +13,13 @@ export interface IQuestion extends Document {
     tags: string[];
     codeTemplate?: string; // For coding questions
     testCases?: Array<{ input: string; output: string }>; // For coding questions
+    normalizedQuestion: string;
     createdAt: Date;
     updatedAt: Date;
+}
+
+function normalizeQuestionText(value: string): string {
+    return value.trim().replace(/\s+/g, ' ').toLowerCase();
 }
 
 const QuestionSchema = new Schema<IQuestion>(
@@ -32,22 +37,38 @@ const QuestionSchema = new Schema<IQuestion>(
         question: {
             type: String,
             required: [true, 'Question text is required'],
+            trim: true,
         },
         options: {
             type: [String],
             validate: {
                 validator: function (this: IQuestion, v: string[]) {
                     if (this.type === 'mcq') {
-                        return v && v.length >= 2;
+                        return Array.isArray(v) && v.length === 4 && v.every((option) => typeof option === 'string' && option.trim().length > 0);
                     }
                     return true;
                 },
-                message: 'MCQ questions must have at least 2 options',
+                message: 'MCQ questions must have exactly 4 non-empty options',
             },
         },
         correctAnswer: {
             type: Schema.Types.Mixed,
             required: [true, 'Correct answer is required'],
+            validate: {
+                validator: function (value: unknown) {
+                    if (this.type === 'mcq') {
+                        const numericValue = Number(value);
+                        return Number.isInteger(numericValue) && numericValue >= 0 && numericValue <= 3;
+                    }
+
+                    if (this.type === 'scenario') {
+                        return typeof value === 'string' && value.trim().length > 0;
+                    }
+
+                    return true;
+                },
+                message: 'Invalid correctAnswer for question type',
+            },
         },
         explanation: {
             type: String,
@@ -71,6 +92,14 @@ const QuestionSchema = new Schema<IQuestion>(
                 output: String,
             },
         ],
+        normalizedQuestion: {
+            type: String,
+            required: true,
+            select: false,
+            default: function (this: IQuestion) {
+                return normalizeQuestionText(this.question || '');
+            },
+        },
     },
     {
         timestamps: true,
@@ -79,6 +108,21 @@ const QuestionSchema = new Schema<IQuestion>(
 
 // Index for faster queries
 QuestionSchema.index({ assessment: 1 });
+QuestionSchema.index({ assessment: 1, difficulty: 1 });
+QuestionSchema.index({ assessment: 1, normalizedQuestion: 1 }, { unique: true });
+
+QuestionSchema.pre('validate', function (this: any) {
+    this.question = this.question?.trim();
+    this.normalizedQuestion = normalizeQuestionText(this.question || '');
+
+    if (Array.isArray(this.options)) {
+        this.options = this.options.map((option: string) => option.trim());
+    }
+
+    if (this.type === 'mcq') {
+        this.correctAnswer = Number(this.correctAnswer);
+    }
+});
 
 const Question: Model<IQuestion> = mongoose.models.Question || mongoose.model<IQuestion>('Question', QuestionSchema);
 

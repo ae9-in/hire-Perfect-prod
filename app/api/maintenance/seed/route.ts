@@ -4,7 +4,6 @@ import Category from '@/models/Category';
 import Assessment from '@/models/Assessment';
 import Question from '@/models/Question';
 import { CATEGORIES } from '@/lib/constants';
-import { generateAssessmentQuestions } from '@/lib/questionBank';
 import { toSlug } from '@/lib/slug';
 
 export async function GET(_request: NextRequest) {
@@ -12,55 +11,47 @@ export async function GET(_request: NextRequest) {
         await connectDB();
 
         let seededAssessments = 0;
-        let seededQuestions = 0;
-
         await Category.deleteMany({});
         await Assessment.deleteMany({});
         await Question.deleteMany({});
 
         for (let i = 0; i < CATEGORIES.length; i++) {
             const categoryData = CATEGORIES[i];
+            const subjectTitles = categoryData.subjects || categoryData.assessments || [];
 
             const category = await Category.create({
                 name: categoryData.name,
                 slug: categoryData.slug,
                 description: categoryData.description,
+                subjects: subjectTitles,
                 order: i + 1,
                 isActive: true,
             });
 
-            for (const assessmentTitle of categoryData.assessments) {
-                const slug = toSlug(assessmentTitle);
+            for (const subjectTitle of subjectTitles) {
+                const slug = toSlug(subjectTitle);
 
                 const assessment = await Assessment.create({
-                    title: assessmentTitle,
+                    title: subjectTitle,
                     slug: `${categoryData.slug}-${slug}`,
-                    description: `Comprehensive assessment for ${assessmentTitle}. This 30-minute timed exam evaluates your core competency in ${assessmentTitle} through randomized MCQ questions.`,
+                    description: `Comprehensive assessment track for ${subjectTitle}.`,
                     category: category._id,
                     duration: 30,
                     price: 500,
-                    totalQuestions: 15,
+                    totalQuestions: 0,
                     passingScore: 60,
-                    difficulty: 'medium',
-                    tags: [categoryData.name, assessmentTitle],
+                    difficulty: 'intermediate',
+                    tags: [categoryData.name, subjectTitle],
                     isActive: true,
                 });
 
-                const questions = generateAssessmentQuestions({
-                    assessmentTitle,
-                    assessmentId: assessment._id.toString(),
-                    totalQuestions: 15,
-                });
-                await Question.insertMany(questions);
-
                 seededAssessments += 1;
-                seededQuestions += questions.length;
             }
         }
 
         return NextResponse.json({
             success: true,
-            message: `Database seeded successfully with ${seededAssessments} assessments and ${seededQuestions} questions.`,
+            message: `Database seeded successfully with ${seededAssessments} assessments.`,
         });
     } catch (error: any) {
         return NextResponse.json(

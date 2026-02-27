@@ -18,9 +18,16 @@ export async function POST(
 
         await connectDB();
 
-        const assessmentId = id;
+        const routeId = id;
         const body = await request.json();
         const { attemptId, answers, status } = body;
+
+        if (!attemptId || !Array.isArray(answers)) {
+            return NextResponse.json(
+                { error: 'attemptId and answers array are required' },
+                { status: 400 }
+            );
+        }
 
         // Get attempt
         const attempt = await Attempt.findById(attemptId);
@@ -33,6 +40,17 @@ export async function POST(
 
         const assessmentIdFromAttempt = attempt.assessment.toString();
 
+        // Backward-compatible route validation:
+        // Some clients call /api/assessments/<attemptId>/submit instead of <assessmentId>.
+        const routeMatchesAssessment = routeId === assessmentIdFromAttempt;
+        const routeMatchesAttempt = routeId === String(attemptId);
+        if (!routeMatchesAssessment && !routeMatchesAttempt) {
+            return NextResponse.json(
+                { error: 'Attempt does not belong to this assessment' },
+                { status: 400 }
+            );
+        }
+
         // Verify ownership
         if (attempt.user.toString() !== authResult.user.userId) {
             return NextResponse.json(
@@ -41,9 +59,11 @@ export async function POST(
             );
         }
 
-        // Get all questions for this assessment using the correct assessment ID
-        const questions = await Question.find({ assessment: assessmentIdFromAttempt });
-        console.log(`Scoring: Found ${questions.length} questions for assessment ${assessmentIdFromAttempt}`);
+        // Score only against the randomized set assigned at attempt start
+        const questions = await Question.find({
+            _id: { $in: attempt.questions as any },
+            assessment: assessmentIdFromAttempt,
+        });
         const questionMap = new Map(questions.map((q) => [q._id.toString(), q]));
 
         // Calculate score
@@ -84,8 +104,9 @@ export async function POST(
         attempt.answers = gradedAnswers;
         attempt.score = totalPoints;
         attempt.correctAnswers = correctAnswers;
-        attempt.percentage = (correctAnswers / attempt.totalQuestions) * 100;
-        attempt.status = status || 'completed';
+        const totalQuestions = Math.max(attempt.totalQuestions, 1);
+        attempt.percentage = (correctAnswers / totalQuestions) * 100;
+        attempt.status = status === 'terminated' ? 'terminated' : 'completed';
         attempt.completedAt = new Date();
         attempt.timeSpent = timeSpent;
         await attempt.save();
@@ -99,7 +120,6 @@ export async function POST(
                 percentage: attempt.percentage,
                 timeSpent,
                 status: attempt.status,
-                debug: gradedAnswers // Temporary for testing
             },
         });
     } catch (error: any) {

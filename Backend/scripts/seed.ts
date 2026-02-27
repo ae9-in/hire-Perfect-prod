@@ -19,12 +19,11 @@ async function seed() {
         const { default: Assessment } = await import('../models/Assessment');
         const { default: Question } = await import('../models/Question');
         const { CATEGORIES } = await import('../lib/constants');
-        const { generateAssessmentQuestions } = await import('../lib/questionBank');
         const { toSlug } = await import('../lib/slug');
 
         console.log('Connecting to database...');
         await connectDB();
-        console.log('Starting database seed for assessments and questions...');
+        console.log('Starting database seed for categories and assessments...');
 
         await Category.deleteMany({});
         await Assessment.deleteMany({});
@@ -33,41 +32,35 @@ async function seed() {
 
         for (let i = 0; i < CATEGORIES.length; i++) {
             const categoryData = CATEGORIES[i];
+            const subjectTitles = categoryData.subjects || categoryData.assessments || [];
 
             const category = await Category.create({
                 name: categoryData.name,
                 slug: categoryData.slug,
                 description: categoryData.description,
+                subjects: subjectTitles,
                 order: i + 1,
                 isActive: true,
             });
             console.log(`Created category: ${category.name}`);
 
-            for (const assessmentTitle of categoryData.assessments) {
-                const slug = toSlug(assessmentTitle);
+            for (const subjectTitle of subjectTitles) {
+                const slug = toSlug(subjectTitle);
 
                 const assessment = await Assessment.create({
-                    title: assessmentTitle,
+                    title: subjectTitle,
                     slug: `${categoryData.slug}-${slug}`,
-                    description: `Comprehensive assessment for ${assessmentTitle}. This 30-minute timed exam evaluates your core competency in ${assessmentTitle} through randomized MCQ questions.`,
+                    description: `Comprehensive assessment track for ${subjectTitle}.`,
                     category: category._id,
                     duration: 30,
                     price: 500,
-                    totalQuestions: 15,
+                    totalQuestions: 0,
                     passingScore: 60,
-                    difficulty: 'medium',
-                    tags: [categoryData.name, assessmentTitle],
+                    difficulty: 'intermediate',
+                    tags: [categoryData.name, subjectTitle],
                     isActive: true,
                 });
-                console.log(`  Created assessment: ${assessmentTitle}`);
-
-                const sampleQuestionsList = generateAssessmentQuestions({
-                    assessmentTitle,
-                    assessmentId: assessment._id.toString(),
-                    totalQuestions: 15,
-                });
-                await Question.insertMany(sampleQuestionsList);
-                console.log(`    Added ${sampleQuestionsList.length} MCQ questions`);
+                console.log(`  Created subject assessment: ${subjectTitle}`);
             }
         }
 

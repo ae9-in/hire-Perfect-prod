@@ -26,7 +26,7 @@ export default function AssessmentManagement() {
         price: 500,
         totalQuestions: 20,
         passingScore: 60,
-        difficulty: 'medium',
+        difficulty: 'intermediate',
         isActive: true
     });
 
@@ -83,7 +83,7 @@ export default function AssessmentManagement() {
                 setFormData({
                     title: '', slug: '', description: '', category: '',
                     duration: 30, price: 500, totalQuestions: 20,
-                    passingScore: 60, difficulty: 'medium', isActive: true
+                    passingScore: 60, difficulty: 'intermediate', isActive: true
                 });
             }
         } catch (error) {
@@ -166,7 +166,7 @@ export default function AssessmentManagement() {
                         <Card key={a._id} className="p-8 border-white/5 bg-[#0a0a0f]/60 backdrop-blur-xl group hover:border-cyan-500/30 transition-all duration-500 flex flex-col justify-between">
                             <div>
                                 <div className="flex justify-between items-start mb-6">
-                                    <Badge variant={a.difficulty === 'easy' ? 'success' : a.difficulty === 'medium' ? 'primary' : 'error'} className="uppercase text-[9px] font-black tracking-widest px-3 py-1 bg-opacity-10 border-opacity-20">
+                                    <Badge variant={a.difficulty === 'beginner' ? 'success' : a.difficulty === 'intermediate' ? 'primary' : 'error'} className="uppercase text-[9px] font-black tracking-widest px-3 py-1 bg-opacity-10 border-opacity-20">
                                         {a.difficulty}
                                     </Badge>
                                     <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -261,15 +261,15 @@ export default function AssessmentManagement() {
                                     </select>
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Difficulty</label>
+                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Level</label>
                                     <select
                                         value={formData.difficulty}
                                         onChange={(e) => setFormData({ ...formData, difficulty: e.target.value as any })}
                                         className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-cyan-500/50 outline-none"
                                     >
-                                        <option value="easy" className="bg-[#0a0a0f]">EASY</option>
-                                        <option value="medium" className="bg-[#0a0a0f]">MEDIUM</option>
-                                        <option value="hard" className="bg-[#0a0a0f]">HARD</option>
+                                        <option value="beginner" className="bg-[#0a0a0f]">BEGINNER</option>
+                                        <option value="intermediate" className="bg-[#0a0a0f]">INTERMEDIATE</option>
+                                        <option value="advanced" className="bg-[#0a0a0f]">ADVANCED</option>
                                     </select>
                                 </div>
                                 <div className="space-y-2">

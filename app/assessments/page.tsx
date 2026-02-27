@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Navbar from '@/components/ui/Navbar';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
@@ -11,19 +11,27 @@ import { CATEGORIES } from '@/lib/constants';
 
 export default function AssessmentsPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [assessments, setAssessments] = useState<any[]>([]);
+    const [categoryGroups, setCategoryGroups] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [userPurchases, setUserPurchases] = useState<string[]>([]);
     const [selectedAssessment, setSelectedAssessment] = useState<any>(null);
     const [showPurchaseModal, setShowPurchaseModal] = useState(false);
+    const [seedError, setSeedError] = useState<string | null>(null);
 
     useEffect(() => {
+        const categoryFromQuery = searchParams.get('category');
+        if (categoryFromQuery) {
+            setSelectedCategory(categoryFromQuery);
+        }
         loadData();
-    }, []);
+    }, [searchParams]);
 
     const loadData = async () => {
         try {
+            setSeedError(null);
             const token = localStorage.getItem('token');
             const [assessmentsRes, purchasesRes] = await Promise.all([
                 fetch('/api/assessments', {
@@ -37,6 +45,28 @@ export default function AssessmentsPage() {
 
             if (assessmentsData.success) {
                 setAssessments(assessmentsData.assessments || []);
+                setCategoryGroups(assessmentsData.categories || []);
+
+                const hasAnyAssessments = (assessmentsData.assessments || []).length > 0 || (assessmentsData.categories || []).length > 0;
+                if (!hasAnyAssessments) {
+                    const seedRes = await fetch('/api/maintenance/seed');
+                    const seedData = await seedRes.json();
+
+                    if (seedData.success) {
+                        const retryRes = await fetch('/api/assessments', {
+                            headers: token ? { Authorization: `Bearer ${token}` } : {}
+                        });
+                        const retryData = await retryRes.json();
+                        if (retryData.success) {
+                            setAssessments(retryData.assessments || []);
+                            setCategoryGroups(retryData.categories || []);
+                        } else {
+                            setSeedError('Auto-initialization completed, but assessments could not be loaded.');
+                        }
+                    } else {
+                        setSeedError(seedData.error || 'Unable to initialize assessments.');
+                    }
+                }
             }
             if (purchasesData.success) {
                 setUserPurchases(purchasesData.purchases?.map((p: any) => p.assessment?.toString() || p.category?.toString()) || []);
@@ -52,13 +82,32 @@ export default function AssessmentsPage() {
         router.push(`/exam/pre/${assessmentId}`);
     };
 
-    const filteredAssessments = selectedCategory
-        ? assessments.filter(a => {
-            const categoryValue = a.category?.name || a.category;
-            const categoryId = a.category?._id || a.category;
-            return categoryValue === selectedCategory || categoryId === selectedCategory;
+    const derivedGroups = categoryGroups.length > 0
+        ? categoryGroups
+        : Object.values(
+            assessments.reduce((acc: any, assessment: any) => {
+                const category = assessment.category;
+                const categoryId = String(category?._id || category || 'uncategorized');
+                if (!acc[categoryId]) {
+                    acc[categoryId] = {
+                        _id: categoryId,
+                        name: category?.name || 'Uncategorized',
+                        slug: category?.slug,
+                        subjects: [],
+                    };
+                }
+                acc[categoryId].subjects.push(assessment);
+                return acc;
+            }, {})
+        );
+
+    const categoryFilterOptions = derivedGroups.length > 0 ? derivedGroups : CATEGORIES;
+    const filteredCategoryGroups = selectedCategory
+        ? derivedGroups.filter((group: any) => {
+            const key = group.slug || group._id || group.name;
+            return key === selectedCategory;
         })
-        : assessments;
+        : derivedGroups;
 
     if (loading) {
         return <Loading variant="spinner" fullScreen text="Preparing Assessments..." />;
@@ -88,48 +137,65 @@ export default function AssessmentsPage() {
                     </p>
                 </div>
 
-                {/* Modern Category Filter */}
-                <div className="flex flex-wrap justify-center gap-2 mb-16 max-w-4xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-                    <button
-                        onClick={() => setSelectedCategory(null)}
-                        className={`px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${selectedCategory === null
-                            ? 'bg-cyan-500 text-white shadow-2xl shadow-cyan-900/40 scale-105'
-                            : 'bg-white/5 text-slate-400 hover:bg-white/10 border border-white/5'
-                            }`}
-                    >
-                        All Tracks
-                    </button>
-                    {CATEGORIES.map((cat) => (
-                        <button
-                            key={cat.slug}
-                            onClick={() => setSelectedCategory(cat.name)}
-                            className={`px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${selectedCategory === cat.name
-                                ? 'bg-cyan-500 text-white shadow-2xl shadow-cyan-900/40 scale-105'
-                                : 'bg-white/5 text-slate-400 hover:bg-white/10 border border-white/5'
-                                }`}
-                        >
-                            {cat.name}
-                        </button>
-                    ))}
+                {/* Professional Category Filter */}
+                <div className="mb-16 max-w-5xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                    <div className="rounded-3xl border border-white/10 bg-slate-900/40 backdrop-blur-md p-5 md:p-6">
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+                            <div>
+                                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-cyan-400">Category Filter</p>
+                                <p className="text-slate-400 text-sm mt-2">
+                                    {selectedCategory
+                                        ? `Showing subjects for selected category`
+                                        : `Showing all categories`}
+                                </p>
+                            </div>
+
+                            <div className="w-full md:w-[520px]">
+                                <select
+                                    value={selectedCategory || ''}
+                                    onChange={(e) => setSelectedCategory(e.target.value || null)}
+                                    className="w-full h-12 rounded-2xl bg-[#080b14] border border-white/15 px-4 text-sm font-semibold text-slate-200 outline-none focus:border-cyan-500/60 focus:ring-2 focus:ring-cyan-500/20 transition-all"
+                                >
+                                    <option value="">All Tracks</option>
+                                    {categoryFilterOptions.map((cat: any) => {
+                                        const categoryKey = cat.slug || cat._id || cat.name;
+                                        return (
+                                            <option key={categoryKey} value={categoryKey}>
+                                                {cat.name}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Assessments Grid */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                    {filteredAssessments.length > 0 ? (
-                        filteredAssessments.map((assessment, idx) => (
+                {/* Categories -> Subjects */}
+                <div className="max-w-7xl mx-auto animate-fade-in-up space-y-12" style={{ animationDelay: '0.2s' }}>
+                    {filteredCategoryGroups.length > 0 ? (
+                        filteredCategoryGroups.map((group: any) => (
+                            <section key={group._id || group.slug || group.name}>
+                                <div className="mb-6 px-1">
+                                    <h2 className="text-3xl font-black text-white uppercase tracking-tight">{group.name}</h2>
+                                    <p className="text-slate-500 text-xs font-black uppercase tracking-widest mt-1">{(group.subjects || []).length} Subjects</p>
+                                </div>
+                                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                    {(group.subjects || []).map((assessment: any) => (
                             <Card key={assessment._id} className="group p-1 border-white/5 bg-slate-900/40 backdrop-blur-md hover:border-cyan-500/30 transition-all duration-500">
                                 <div className="bg-transparent rounded-[14px] p-8 h-full flex flex-col relative overflow-hidden">
                                     <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-full translate-x-8 -translate-y-8 blur-2xl group-hover:bg-cyan-500/10 transition-colors"></div>
 
-                                    <div className="flex items-start justify-between mb-8 relative z-10">
-                                        <div className="flex flex-col">
-                                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-cyan-500 mb-1 opacity-80">
-                                                {typeof assessment.category === 'string' ? assessment.category : assessment.category?.name}
-                                            </span>
-                                            <h3 className="text-2xl font-black text-white leading-tight group-hover:text-cyan-400 transition-colors uppercase tracking-tight">
-                                                {assessment.title}
-                                            </h3>
-                                        </div>
+                                        <div className="flex items-start justify-between mb-8 relative z-10">
+                                            <div className="flex flex-col">
+                                                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-cyan-500 mb-1 opacity-80">Subject</span>
+                                                <h3 className="text-2xl font-black text-white leading-tight group-hover:text-cyan-400 transition-colors uppercase tracking-tight">
+                                                    {assessment.title}
+                                                </h3>
+                                                <span className="mt-3 inline-flex w-fit px-2.5 py-1 rounded-lg border border-white/10 bg-white/5 text-[10px] font-black uppercase tracking-widest text-slate-300">
+                                                    {assessment.difficulty || 'intermediate'}
+                                                </span>
+                                            </div>
                                         <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 shadow-lg group-hover:bg-cyan-500/10 group-hover:border-cyan-500/30 transition-all">
                                             <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -179,9 +245,12 @@ export default function AssessmentsPage() {
                                     </div>
                                 </div>
                             </Card>
+                                    ))}
+                                </div>
+                            </section>
                         ))
                     ) : (
-                        <div className="col-span-full py-32 text-center bg-slate-900/20 backdrop-blur-sm rounded-[2.5rem] border-2 border-dashed border-white/5 flex flex-col items-center">
+                        <div className="py-32 text-center bg-slate-900/20 backdrop-blur-sm rounded-[2.5rem] border-2 border-dashed border-white/5 flex flex-col items-center">
                             <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mb-6 text-slate-600">
                                 <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
@@ -189,6 +258,7 @@ export default function AssessmentsPage() {
                             </div>
                             <h3 className="text-3xl font-black text-white mb-2 uppercase tracking-tighter">No Units Found</h3>
                             <p className="text-slate-500 font-medium mb-10 max-w-sm">The assessment database for this track is currently offline or empty.</p>
+                            {seedError && <p className="text-rose-400 text-sm font-medium mb-6">{seedError}</p>}
                             <Button
                                 variant="primary"
                                 size="lg"
@@ -226,6 +296,9 @@ export default function AssessmentsPage() {
                         <div className="text-center">
                             <div className="inline-block px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[10px] font-black uppercase tracking-[0.2em] rounded-lg mb-6">
                                 {selectedAssessment.category?.name || selectedAssessment.category}
+                            </div>
+                            <div className="inline-block ml-2 px-3 py-1 bg-white/5 border border-white/10 text-slate-300 text-[10px] font-black uppercase tracking-[0.2em] rounded-lg mb-6">
+                                {selectedAssessment.difficulty || 'intermediate'}
                             </div>
                             <h2 className="text-4xl font-black text-white mb-4 uppercase tracking-tighter leading-none">{selectedAssessment.title}</h2>
                             <p className="text-slate-400 font-medium leading-relaxed max-w-md mx-auto font-inter">

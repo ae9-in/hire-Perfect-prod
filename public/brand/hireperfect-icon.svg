@@ -1,0 +1,11 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="hp_icon_only_grad" x1="32" y1="32" x2="224" y2="224" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="24" y="24" width="208" height="208" rx="44" fill="url(#hp_icon_only_grad)"/>
+  <text x="128" y="159" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="124" font-weight="800" fill="#FFFFFF">H</text>
+</svg>

@@ -9,7 +9,7 @@ export interface IAssessment extends Document {
     price: number;
     totalQuestions: number;
     passingScore: number;
-    difficulty: 'easy' | 'medium' | 'hard';
+    difficulty: 'beginner' | 'intermediate' | 'advanced';
     tags: string[];
     isActive: boolean;
     createdAt: Date;
@@ -57,8 +57,15 @@ const AssessmentSchema = new Schema<IAssessment>(
         },
         difficulty: {
             type: String,
-            enum: ['easy', 'medium', 'hard'],
-            default: 'medium',
+            enum: ['beginner', 'intermediate', 'advanced'],
+            default: 'intermediate',
+            set: (value: string) => {
+                const normalized = value?.toLowerCase();
+                if (normalized === 'easy') return 'beginner';
+                if (normalized === 'medium') return 'intermediate';
+                if (normalized === 'hard') return 'advanced';
+                return normalized;
+            },
         },
         tags: [String],
         isActive: {
@@ -73,7 +80,6 @@ const AssessmentSchema = new Schema<IAssessment>(
 
 // Index for faster queries
 AssessmentSchema.index({ category: 1, isActive: 1 });
-AssessmentSchema.index({ slug: 1 });
 
 const Assessment: Model<IAssessment> = mongoose.models.Assessment || mongoose.model<IAssessment>('Assessment', AssessmentSchema);
 

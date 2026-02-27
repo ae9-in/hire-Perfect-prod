@@ -1,0 +1,16 @@
+<svg width="820" height="180" viewBox="0 0 820 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="hp_icon_grad" x1="20" y1="20" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="20" y="20" width="80" height="80" rx="18" fill="url(#hp_icon_grad)"/>
+  <text x="60" y="76" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="44" font-weight="800" fill="#FFFFFF">H</text>
+
+  <text x="120" y="78" font-family="Segoe UI, Arial, sans-serif" font-size="54" font-weight="800" letter-spacing="-1.2" fill="#FFFFFF">HIRE</text>
+  <text x="265" y="78" font-family="Segoe UI, Arial, sans-serif" font-size="54" font-weight="800" letter-spacing="-1.2" fill="#22D3EE">PERFECT</text>
+
+  <text x="121" y="114" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" letter-spacing="3.6" fill="#94A3B8">AI PROCTORED ASSESSMENTS</text>
+</svg>

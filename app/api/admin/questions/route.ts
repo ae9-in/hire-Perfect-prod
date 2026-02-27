@@ -4,6 +4,7 @@ import { authMiddleware } from '@/middleware/auth';
 import Question from '@/models/Question';
 import Assessment from '@/models/Assessment';
 import { USER_ROLES } from '@/lib/constants';
+import { isValidObjectId, validateQuestionPayload } from '@/lib/questionValidation';
 
 export async function GET(request: NextRequest) {
     try {
@@ -19,6 +20,10 @@ export async function GET(request: NextRequest) {
 
         if (!assessmentId) {
             return NextResponse.json({ error: 'Assessment ID is required' }, { status: 400 });
+        }
+
+        if (!isValidObjectId(assessmentId)) {
+            return NextResponse.json({ error: 'Invalid assessment ID' }, { status: 400 });
         }
 
         const questions = await Question.find({ assessment: assessmentId }).sort({ createdAt: 1 });
@@ -52,9 +57,35 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Assessment ID is required' }, { status: 400 });
         }
 
-        const question = await Question.create({
+        if (!isValidObjectId(assessmentId)) {
+            return NextResponse.json({ error: 'Invalid assessment ID' }, { status: 400 });
+        }
+
+        const assessment = await Assessment.findById(assessmentId).select('_id');
+        if (!assessment) {
+            return NextResponse.json({ error: 'Assessment not found' }, { status: 404 });
+        }
+
+        const { value, errors } = validateQuestionPayload({
             ...questionData,
-            assessment: assessmentId
+            assessmentId,
+        });
+        if (errors.length > 0 || !value) {
+            return NextResponse.json({ error: 'Validation failed', details: errors }, { status: 400 });
+        }
+
+        const duplicate = await Question.findOne({
+            assessment: assessmentId,
+            normalizedQuestion: value.normalizedQuestion,
+        }).select('_id');
+
+        if (duplicate) {
+            return NextResponse.json({ error: 'Duplicate question exists for this assessment' }, { status: 409 });
+        }
+
+        const question = await Question.create({
+            ...value,
+            assessment: assessmentId,
         });
 
         // Update totalQuestions in Assessment
@@ -90,7 +121,41 @@ export async function PATCH(request: NextRequest) {
             return NextResponse.json({ error: 'Question ID is required' }, { status: 400 });
         }
 
-        const question = await Question.findByIdAndUpdate(id, updateData, { new: true });
+        if (!isValidObjectId(id)) {
+            return NextResponse.json({ error: 'Invalid question ID' }, { status: 400 });
+        }
+
+        const existingQuestion = await Question.findById(id).select('assessment type');
+        if (!existingQuestion) {
+            return NextResponse.json({ error: 'Question not found' }, { status: 404 });
+        }
+
+        const { value, errors } = validateQuestionPayload({
+            ...existingQuestion.toObject(),
+            ...updateData,
+            assessmentId: existingQuestion.assessment.toString(),
+        });
+        if (errors.length > 0 || !value) {
+            return NextResponse.json({ error: 'Validation failed', details: errors }, { status: 400 });
+        }
+
+        const duplicate = await Question.findOne({
+            assessment: existingQuestion.assessment,
+            normalizedQuestion: value.normalizedQuestion,
+            _id: { $ne: id },
+        }).select('_id');
+        if (duplicate) {
+            return NextResponse.json({ error: 'Duplicate question exists for this assessment' }, { status: 409 });
+        }
+
+        const question = await Question.findByIdAndUpdate(
+            id,
+            {
+                ...value,
+                assessment: existingQuestion.assessment,
+            },
+            { new: true, runValidators: true, context: 'query' }
+        );
 
         if (!question) {
             return NextResponse.json({ error: 'Question not found' }, { status: 404 });
