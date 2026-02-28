@@ -1,0 +1,413 @@
+{
+  "timestamp": "2026-02-28T10:12:00.320Z",
+  "fileName": "15_HR_ANALYTICS.json",
+  "mode": "preview",
+  "totalRows": 1799,
+  "validRows": 1638,
+  "invalidRows": 100,
+  "duplicateRowsInFile": 61,
+  "duplicateRowsInDb": 0,
+  "insertedRows": 0,
+  "errors": [
+    {
+      "row": 351,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 352,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 353,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 354,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 355,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 356,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 357,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 358,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 359,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 360,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 361,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 362,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 363,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 364,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 365,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 366,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 367,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 368,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 369,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 370,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 371,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 372,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 373,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 374,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 375,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 376,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 377,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 378,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 379,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 380,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 381,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 382,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 383,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 384,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 385,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 386,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 387,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 388,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 389,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 390,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 391,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 392,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 393,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 394,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 395,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 396,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 397,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 398,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 399,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 400,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 401,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 402,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 403,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 404,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 405,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 406,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 407,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 408,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 409,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 410,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 411,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 412,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 413,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 414,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 415,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 416,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 417,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 418,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 419,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 420,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 421,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 422,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 423,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 424,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 425,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 426,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 427,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 428,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 429,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 430,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 431,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 432,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 433,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 434,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 435,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 436,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 437,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 438,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 439,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 440,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 441,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 442,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 443,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 444,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 445,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 446,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 447,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 448,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 449,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    },
+    {
+      "row": 450,
+      "message": "Could not map assessment for subtopic \"”\" in category hr-analytics-people-strategy"
+    }
+  ]
+}

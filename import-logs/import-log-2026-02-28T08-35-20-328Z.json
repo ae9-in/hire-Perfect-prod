@@ -1,0 +1,3893 @@
+{
+  "timestamp": "2026-02-28T08:35:20.322Z",
+  "fileName": "7_Cybersecurity.json",
+  "mode": "preview",
+  "totalRows": 970,
+  "validRows": 0,
+  "invalidRows": 970,
+  "duplicateRowsInFile": 0,
+  "duplicateRowsInDb": 0,
+  "insertedRows": 0,
+  "errors": [
+    {
+      "row": 1,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 2,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 3,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 4,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 5,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 6,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 7,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 8,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 9,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 10,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 11,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 12,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 13,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 14,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 15,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 16,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 17,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 18,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 19,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 20,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 21,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 22,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 23,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 24,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 25,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 26,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 27,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 28,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 29,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 30,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 31,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 32,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 33,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 34,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 35,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 36,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 37,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 38,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 39,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 40,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 41,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 42,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 43,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 44,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 45,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 46,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 47,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 48,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 49,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 50,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 51,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 52,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 53,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 54,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 55,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 56,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 57,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 58,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 59,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 60,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 61,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 62,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 63,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 64,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 65,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 66,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 67,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 68,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 69,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 70,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 71,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 72,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 73,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 74,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 75,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 76,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 77,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 78,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 79,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 80,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 81,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 82,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 83,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 84,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 85,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 86,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 87,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 88,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 89,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 90,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 91,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 92,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 93,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 94,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 95,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 96,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 97,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 98,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 99,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 100,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 101,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 102,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 103,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 104,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 105,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 106,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 107,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 108,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 109,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 110,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 111,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 112,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 113,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 114,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 115,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 116,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 117,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 118,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 119,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 120,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 121,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 122,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 123,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 124,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 125,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 126,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 127,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 128,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 129,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 130,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 131,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 132,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 133,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 134,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 135,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 136,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 137,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 138,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 139,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 140,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 141,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 142,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 143,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 144,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 145,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 146,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 147,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 148,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 149,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 150,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 151,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 152,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 153,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 154,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 155,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 156,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 157,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 158,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 159,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 160,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 161,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 162,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 163,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 164,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 165,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 166,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 167,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 168,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 169,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 170,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 171,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 172,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 173,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 174,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 175,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 176,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 177,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 178,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 179,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 180,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 181,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 182,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 183,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 184,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 185,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 186,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 187,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 188,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 189,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 190,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 191,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 192,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 193,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 194,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 195,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 196,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 197,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 198,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 199,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 200,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 201,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 202,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 203,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 204,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 205,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 206,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 207,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 208,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 209,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 210,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 211,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 212,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 213,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 214,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 215,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 216,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 217,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 218,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 219,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 220,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 221,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 222,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 223,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 224,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 225,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 226,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 227,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 228,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 229,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 230,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 231,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 232,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 233,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 234,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 235,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 236,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 237,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 238,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 239,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 240,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 241,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 242,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 243,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 244,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 245,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 246,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 247,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 248,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 249,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 250,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 251,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 252,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 253,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 254,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 255,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 256,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 257,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 258,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 259,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 260,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 261,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 262,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 263,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 264,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 265,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 266,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 267,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 268,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 269,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 270,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 271,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 272,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 273,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 274,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 275,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 276,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 277,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 278,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 279,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 280,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 281,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 282,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 283,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 284,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 285,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 286,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 287,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 288,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 289,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 290,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 291,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 292,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 293,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 294,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 295,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 296,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 297,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 298,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 299,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 300,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 301,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 302,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 303,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 304,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 305,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 306,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 307,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 308,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 309,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 310,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 311,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 312,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 313,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 314,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 315,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 316,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 317,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 318,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 319,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 320,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 321,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 322,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 323,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 324,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 325,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 326,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 327,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 328,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 329,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 330,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 331,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 332,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 333,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 334,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 335,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 336,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 337,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 338,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 339,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 340,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 341,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 342,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 343,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 344,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 345,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 346,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 347,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 348,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 349,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 350,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 351,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 352,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 353,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 354,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 355,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 356,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 357,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 358,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 359,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 360,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 361,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 362,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 363,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 364,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 365,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 366,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 367,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 368,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 369,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 370,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 371,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 372,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 373,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 374,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 375,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 376,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 377,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 378,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 379,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 380,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 381,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 382,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 383,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 384,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 385,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 386,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 387,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 388,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 389,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 390,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 391,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 392,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 393,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 394,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 395,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 396,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 397,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 398,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 399,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 400,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 401,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 402,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 403,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 404,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 405,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 406,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 407,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 408,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 409,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 410,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 411,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 412,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 413,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 414,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 415,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 416,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 417,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 418,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 419,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 420,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 421,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 422,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 423,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 424,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 425,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 426,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 427,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 428,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 429,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 430,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 431,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 432,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 433,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 434,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 435,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 436,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 437,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 438,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 439,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 440,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 441,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 442,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 443,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 444,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 445,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 446,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 447,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 448,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 449,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 450,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 451,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 452,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 453,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 454,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 455,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 456,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 457,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 458,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 459,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 460,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 461,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 462,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 463,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 464,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 465,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 466,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 467,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 468,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 469,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 470,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 471,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 472,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 473,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 474,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 475,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 476,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 477,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 478,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 479,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 480,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 481,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 482,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 483,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 484,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 485,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 486,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 487,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 488,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 489,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 490,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 491,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 492,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 493,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 494,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 495,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 496,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 497,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 498,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 499,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 500,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 501,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 502,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 503,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 504,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 505,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 506,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 507,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 508,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 509,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 510,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 511,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 512,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 513,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 514,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 515,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 516,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 517,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 518,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 519,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 520,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 521,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 522,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 523,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 524,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 525,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 526,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 527,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 528,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 529,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 530,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 531,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 532,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 533,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 534,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 535,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 536,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 537,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 538,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 539,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 540,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 541,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 542,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 543,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 544,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 545,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 546,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 547,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 548,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 549,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 550,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 551,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 552,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 553,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 554,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 555,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 556,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 557,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 558,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 559,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 560,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 561,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 562,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 563,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 564,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 565,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 566,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 567,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 568,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 569,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 570,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 571,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 572,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 573,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 574,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 575,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 576,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 577,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 578,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 579,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 580,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 581,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 582,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 583,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 584,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 585,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 586,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 587,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 588,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 589,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 590,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 591,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 592,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 593,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 594,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 595,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 596,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 597,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 598,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 599,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 600,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 601,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 602,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 603,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 604,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 605,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 606,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 607,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 608,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 609,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 610,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 611,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 612,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 613,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 614,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 615,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 616,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 617,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 618,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 619,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 620,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 621,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 622,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 623,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 624,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 625,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 626,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 627,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 628,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 629,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 630,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 631,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 632,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 633,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 634,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 635,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 636,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 637,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 638,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 639,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 640,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 641,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 642,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 643,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 644,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 645,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 646,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 647,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 648,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 649,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 650,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 651,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 652,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 653,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 654,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 655,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 656,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 657,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 658,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 659,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 660,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 661,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 662,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 663,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 664,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 665,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 666,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 667,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 668,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 669,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 670,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 671,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 672,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 673,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 674,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 675,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 676,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 677,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 678,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 679,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 680,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 681,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 682,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 683,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 684,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 685,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 686,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 687,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 688,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 689,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 690,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 691,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 692,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 693,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 694,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 695,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 696,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 697,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 698,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 699,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 700,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 701,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 702,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 703,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 704,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 705,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 706,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 707,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 708,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 709,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 710,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 711,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 712,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 713,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 714,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 715,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 716,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 717,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 718,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 719,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 720,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 721,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 722,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 723,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 724,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 725,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 726,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 727,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 728,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 729,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 730,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 731,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 732,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 733,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 734,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 735,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 736,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 737,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 738,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 739,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 740,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 741,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 742,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 743,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 744,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 745,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 746,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 747,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 748,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 749,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 750,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 751,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 752,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 753,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 754,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 755,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 756,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 757,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 758,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 759,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 760,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 761,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 762,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 763,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 764,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 765,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 766,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 767,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 768,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 769,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 770,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 771,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 772,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 773,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 774,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 775,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 776,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 777,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 778,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 779,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 780,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 781,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 782,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 783,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 784,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 785,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 786,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 787,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 788,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 789,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 790,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 791,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 792,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 793,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 794,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 795,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 796,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 797,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 798,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 799,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 800,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 801,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 802,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 803,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 804,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 805,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 806,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 807,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 808,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 809,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 810,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 811,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 812,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 813,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 814,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 815,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 816,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 817,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 818,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 819,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 820,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 821,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 822,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 823,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 824,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 825,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 826,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 827,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 828,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 829,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 830,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 831,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 832,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 833,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 834,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 835,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 836,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 837,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 838,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 839,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 840,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 841,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 842,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 843,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 844,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 845,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 846,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 847,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 848,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 849,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 850,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 851,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 852,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 853,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 854,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 855,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 856,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 857,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 858,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 859,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 860,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 861,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 862,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 863,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 864,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 865,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 866,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 867,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 868,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 869,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 870,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 871,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 872,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 873,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 874,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 875,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 876,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 877,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 878,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 879,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 880,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 881,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 882,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 883,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 884,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 885,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 886,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 887,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 888,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 889,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 890,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 891,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 892,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 893,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 894,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 895,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 896,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 897,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 898,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 899,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 900,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 901,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 902,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 903,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 904,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 905,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 906,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 907,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 908,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 909,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 910,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 911,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 912,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 913,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 914,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 915,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 916,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 917,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 918,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 919,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 920,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 921,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 922,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 923,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 924,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 925,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 926,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 927,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 928,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 929,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 930,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 931,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 932,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 933,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 934,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 935,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 936,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 937,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 938,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 939,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 940,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 941,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 942,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 943,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 944,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 945,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 946,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 947,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 948,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 949,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 950,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 951,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 952,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 953,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 954,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 955,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 956,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 957,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 958,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 959,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 960,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 961,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 962,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 963,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 964,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 965,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 966,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 967,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 968,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 969,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 970,
+      "message": "Could not map assessment for subtopic \"unknown\" in category cybersecurity-ethical-ai-security"
+    }
+  ]
+}

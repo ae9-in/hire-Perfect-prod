@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-02-28T11:02:58.240Z",
+  "fileName": "17_AI_in_Healthcare.json",
+  "mode": "import",
+  "totalRows": 937,
+  "validRows": 925,
+  "invalidRows": 0,
+  "duplicateRowsInFile": 12,
+  "duplicateRowsInDb": 0,
+  "insertedRows": 925,
+  "errors": []
+}

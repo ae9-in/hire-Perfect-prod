@@ -1,0 +1,613 @@
+{
+  "timestamp": "2026-02-28T05:50:21.418Z",
+  "fileName": "2_Prompt_Engineering.json",
+  "mode": "preview",
+  "totalRows": 1800,
+  "validRows": 1611,
+  "invalidRows": 150,
+  "duplicateRowsInFile": 39,
+  "duplicateRowsInDb": 0,
+  "insertedRows": 0,
+  "errors": [
+    {
+      "row": 901,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 902,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 903,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 904,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 905,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 906,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 907,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 908,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 909,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 910,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 911,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 912,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 913,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 914,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 915,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 916,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 917,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 918,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 919,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 920,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 921,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 922,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 923,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 924,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 925,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 926,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 927,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 928,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 929,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 930,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 931,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 932,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 933,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 934,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 935,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 936,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 937,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 938,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 939,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 940,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 941,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 942,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 943,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 944,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 945,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 946,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 947,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 948,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 949,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 950,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 951,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 952,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 953,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 954,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 955,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 956,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 957,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 958,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 959,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 960,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 961,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 962,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 963,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 964,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 965,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 966,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 967,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 968,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 969,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 970,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 971,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 972,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 973,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 974,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 975,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 976,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 977,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 978,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 979,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 980,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 981,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 982,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 983,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 984,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 985,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 986,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 987,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 988,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 989,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 990,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 991,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 992,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 993,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 994,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 995,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 996,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 997,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 998,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 999,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1000,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1001,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1002,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1003,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1004,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1005,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1006,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1007,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1008,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1009,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1010,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1011,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1012,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1013,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1014,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1015,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1016,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1017,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1018,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1019,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1020,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1021,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1022,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1023,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1024,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1025,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1026,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1027,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1028,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1029,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1030,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1031,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1032,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1033,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1034,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1035,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1036,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1037,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1038,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1039,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1040,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1041,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1042,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1043,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1044,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1045,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1046,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1047,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1048,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1049,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    },
+    {
+      "row": 1050,
+      "message": "Could not map assessment for subtopic \"AI + Zapier automation\" in category prompt-engineering-ai-automation"
+    }
+  ]
+}

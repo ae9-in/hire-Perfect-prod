@@ -32,6 +32,11 @@ type ParsedArgs = {
     categorySlug?: string;
 };
 
+type AssessmentLookupEntry = {
+    normalizedTitle: string;
+    assessmentId: string;
+};
+
 type ImportLog = {
     timestamp: string;
     fileName: string;
@@ -87,15 +92,42 @@ function parseArgs(args: string[]): ParsedArgs {
 function normalizeLookupName(value: string): string {
     return value
         .toLowerCase()
+        .replace(/\bprotyping\b/g, 'prototyping')
+        .replace(/\([^)]*\)/g, ' ')
         .replace(/&/g, ' and ')
+        .replace(/\+/g, ' plus ')
         .replace(/[^a-z0-9]+/g, ' ')
         .replace(/\band\b/g, ' ')
+        .replace(/\bplus\b/g, ' ')
         .trim()
         .replace(/\s+/g, ' ');
 }
 
 async function ensureDir(dirPath: string): Promise<void> {
     await fs.mkdir(dirPath, { recursive: true });
+}
+
+function resolveAssessmentIdByLabel(
+    label: string | undefined,
+    entries: AssessmentLookupEntry[]
+): string | undefined {
+    if (!label) return undefined;
+    const normalized = normalizeLookupName(label);
+    if (!normalized) return undefined;
+
+    // Exact normalized match
+    const exact = entries.find((entry) => entry.normalizedTitle === normalized);
+    if (exact) return exact.assessmentId;
+
+    // Unique partial match fallback (e.g. "soc operations" -> "soc operations overview")
+    const partialMatches = entries.filter((entry) =>
+        entry.normalizedTitle.includes(normalized) || normalized.includes(entry.normalizedTitle)
+    );
+    if (partialMatches.length === 1) {
+        return partialMatches[0].assessmentId;
+    }
+
+    return undefined;
 }
 
 export async function runImportQuestions(argsInput?: string[]): Promise<void> {
@@ -125,6 +157,7 @@ export async function runImportQuestions(argsInput?: string[]): Promise<void> {
     }
 
     const subtopicAssessmentMap = new Map<string, string>();
+    const subtopicAssessmentEntries: AssessmentLookupEntry[] = [];
     if (!forcedAssessmentId && categorySlug) {
         const category = await Category.findOne({ slug: categorySlug }).select('_id name slug');
         if (!category) {
@@ -133,7 +166,10 @@ export async function runImportQuestions(argsInput?: string[]): Promise<void> {
 
         const assessmentsInCategory = await Assessment.find({ category: category._id }).select('_id title');
         for (const assessment of assessmentsInCategory) {
-            subtopicAssessmentMap.set(normalizeLookupName(assessment.title), String(assessment._id));
+            const normalizedTitle = normalizeLookupName(assessment.title);
+            const assessmentId = String(assessment._id);
+            subtopicAssessmentMap.set(normalizedTitle, assessmentId);
+            subtopicAssessmentEntries.push({ normalizedTitle, assessmentId });
         }
     }
 
@@ -155,8 +191,14 @@ export async function runImportQuestions(argsInput?: string[]): Promise<void> {
 
     for (let i = 0; i < rawData.length; i++) {
         const row = rawData[i] as RawQuestion;
-        const mappedBySubtopic = row.subtopic ? subtopicAssessmentMap.get(normalizeLookupName(row.subtopic)) : undefined;
-        const mappedByTitle = row.assessmentTitle ? subtopicAssessmentMap.get(normalizeLookupName(row.assessmentTitle)) : undefined;
+        const mappedBySubtopic = row.subtopic
+            ? (subtopicAssessmentMap.get(normalizeLookupName(row.subtopic))
+                || resolveAssessmentIdByLabel(row.subtopic, subtopicAssessmentEntries))
+            : undefined;
+        const mappedByTitle = row.assessmentTitle
+            ? (subtopicAssessmentMap.get(normalizeLookupName(row.assessmentTitle))
+                || resolveAssessmentIdByLabel(row.assessmentTitle, subtopicAssessmentEntries))
+            : undefined;
         const assessmentId = forcedAssessmentId || row.assessmentId || mappedBySubtopic || mappedByTitle;
 
         if (!assessmentId) {

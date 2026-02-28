@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-02-28T10:08:36.250Z",
+  "fileName": "14_AR_VR.json",
+  "mode": "import",
+  "totalRows": 1749,
+  "validRows": 1724,
+  "invalidRows": 0,
+  "duplicateRowsInFile": 25,
+  "duplicateRowsInDb": 0,
+  "insertedRows": 1724,
+  "errors": []
+}

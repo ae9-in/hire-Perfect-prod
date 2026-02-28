@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-02-28T06:19:46.314Z",
+  "fileName": "3_data_engineering.json",
+  "mode": "import",
+  "totalRows": 1711,
+  "validRows": 1641,
+  "invalidRows": 0,
+  "duplicateRowsInFile": 70,
+  "duplicateRowsInDb": 0,
+  "insertedRows": 1641,
+  "errors": []
+}

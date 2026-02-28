@@ -1,0 +1,797 @@
+{
+  "timestamp": "2026-02-28T11:12:07.666Z",
+  "fileName": "19_Emotional_Intelligence_for_Leaders.json",
+  "mode": "preview",
+  "totalRows": 230,
+  "validRows": 34,
+  "invalidRows": 196,
+  "duplicateRowsInFile": 0,
+  "duplicateRowsInDb": 0,
+  "insertedRows": 0,
+  "errors": [
+    {
+      "row": 1,
+      "message": "Could not map assessment for subtopic \"Self-awareness means\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 2,
+      "message": "Could not map assessment for subtopic \"Big Five model describes\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 3,
+      "message": "Could not map assessment for subtopic \"Recognizing emotions is part of\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 4,
+      "message": "Could not map assessment for subtopic \"Self-analysis means\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 5,
+      "message": "Could not map assessment for subtopic \"Expanding the Open Area improves\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 6,
+      "message": "Could not map assessment for subtopic \"Practicing mindfulness mainly improves\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 8,
+      "message": "Could not map assessment for subtopic \"Discovering resilience during a crisis reflects movement from\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 9,
+      "message": "Could not map assessment for subtopic \"Expanding comfort zones mainly explores\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 11,
+      "message": "Could not map assessment for subtopic \"Recognizing your emotions is the first step in\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 13,
+      "message": "Could not map assessment for subtopic \"Overreacting is a sign of\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 16,
+      "message": "Could not map assessment for subtopic \"Responding calmly instead of reacting impulsively shows strong\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 17,
+      "message": "Could not map assessment for subtopic \"Chronic emotional suppression may lead to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 18,
+      "message": "Could not map assessment for subtopic \"Chronic emotional suppression may lead to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 23,
+      "message": "Could not map assessment for subtopic \"A manager who pauses before responding in conflict demonstrates\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 26,
+      "message": "Could not map assessment for subtopic \"Emotional balance is achieved through\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 27,
+      "message": "Could not map assessment for subtopic \"Staying calm during conflict helps to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 28,
+      "message": "Could not map assessment for subtopic \"A mediator is\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 29,
+      "message": "Could not map assessment for subtopic \"Cooperation means\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 30,
+      "message": "Could not map assessment for subtopic \"Conflict escalation often occurs when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 31,
+      "message": "Could not map assessment for subtopic \"Emotional triggers during conflict can\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 32,
+      "message": "Could not map assessment for subtopic \"Active listening includes\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 33,
+      "message": "Could not map assessment for subtopic \"The purpose of negotiation is to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 34,
+      "message": "Could not map assessment for subtopic \"“Cooling-off” period helps to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 35,
+      "message": "Could not map assessment for subtopic \"A leader using collaboration in high-stakes conflict prioritizes\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 36,
+      "message": "Could not map assessment for subtopic \"A leader using collaboration in high-stakes conflict prioritizes\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 37,
+      "message": "Could not map assessment for subtopic \"Psychological safety during disagreement promotes\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 38,
+      "message": "Could not map assessment for subtopic \"Interest-based conflict resolution focuses on\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 39,
+      "message": "Could not map assessment for subtopic \"Escalation prevention begins with\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 40,
+      "message": "Could not map assessment for subtopic \"Empathy in leadership builds\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 41,
+      "message": "Could not map assessment for subtopic \"Empathy improves\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 42,
+      "message": "Could not map assessment for subtopic \"Active listening strengthens empathy because it\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 43,
+      "message": "Could not map assessment for subtopic \"Perspective-taking helps individuals\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 44,
+      "message": "Could not map assessment for subtopic \"Responding with “That sounds really difficult” demonstrates\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 45,
+      "message": "Could not map assessment for subtopic \"Emotional detachment may reduce\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 46,
+      "message": "Could not map assessment for subtopic \"Emotional contagion differs from empathy because it\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 47,
+      "message": "Could not map assessment for subtopic \"Active constructive responding strengthens\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 48,
+      "message": "Could not map assessment for subtopic \"Empathy increases prosocial behavior because it\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 49,
+      "message": "Could not map assessment for subtopic \"Persuasion means\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 50,
+      "message": "Could not map assessment for subtopic \"Persuasion means\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 51,
+      "message": "Could not map assessment for subtopic \"First impressions are\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 52,
+      "message": "Could not map assessment for subtopic \"Strong eye contact shows\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 53,
+      "message": "Could not map assessment for subtopic \"Mirroring body language builds\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 54,
+      "message": "Could not map assessment for subtopic \"Consistency principle means\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 57,
+      "message": "Could not map assessment for subtopic \"Emotional appeals are powerful because they\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 58,
+      "message": "Could not map assessment for subtopic \"Ethical persuasion requires\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 59,
+      "message": "Could not map assessment for subtopic \"Repeated exposure to a message often leads to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 60,
+      "message": "Could not map assessment for subtopic \"People are more persuaded when the message\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 61,
+      "message": "Could not map assessment for subtopic \"Credible communication requires\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 64,
+      "message": "Could not map assessment for subtopic \"The “foot-in-the-door” technique works primarily because of\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 65,
+      "message": "Could not map assessment for subtopic \"A celebrity endorsing a product mainly uses\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 66,
+      "message": "Could not map assessment for subtopic \"If a message works better because it aligns with a person’s identity, this reflects\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 67,
+      "message": "Could not map assessment for subtopic \"Narrative persuasion is effective because it\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 69,
+      "message": "Could not map assessment for subtopic \"Good feedback is\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 70,
+      "message": "Could not map assessment for subtopic \"When someone becomes defensive, you should\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 71,
+      "message": "Could not map assessment for subtopic \"Feedback works best in\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 74,
+      "message": "Could not map assessment for subtopic \"Clarifying questions during feedback\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 75,
+      "message": "Could not map assessment for subtopic \"Strategic feedback culture primarily depends on\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 76,
+      "message": "Could not map assessment for subtopic \"Performance feedback is most effective when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 77,
+      "message": "Could not map assessment for subtopic \"Feedback intelligence refers to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 81,
+      "message": "Could not map assessment for subtopic \"Tone of voice affects\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 82,
+      "message": "Could not map assessment for subtopic \"A mismatch between verbal and nonverbal signals reduces\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 83,
+      "message": "Could not map assessment for subtopic \"Strong leaders project optimism without\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 84,
+      "message": "Could not map assessment for subtopic \"Keeping commitments shows\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 85,
+      "message": "Could not map assessment for subtopic \"Leaders show trustworthiness by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 86,
+      "message": "Could not map assessment for subtopic \"Trust in teams primarily improves\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 88,
+      "message": "Could not map assessment for subtopic \"Employees trust leaders who\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 89,
+      "message": "Could not map assessment for subtopic \"Trust accelerates decision-making because\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 90,
+      "message": "Could not map assessment for subtopic \"High-trust cultures typically show\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 91,
+      "message": "Could not map assessment for subtopic \"The “speed of trust” principle states that\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 92,
+      "message": "Could not map assessment for subtopic \"Spokesperson in a crisis should be\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 93,
+      "message": "Could not map assessment for subtopic \"Key stakeholders during crisis include\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 94,
+      "message": "Could not map assessment for subtopic \"After crisis, organizations should\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 95,
+      "message": "Could not map assessment for subtopic \"Consistent messaging during crisis prevents\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 96,
+      "message": "Could not map assessment for subtopic \"Real-time monitoring during crisis helps to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 97,
+      "message": "Could not map assessment for subtopic \"Clear action steps in communication help stakeholders\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 100,
+      "message": "Could not map assessment for subtopic \"Trust erosion in crisis is accelerated by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 101,
+      "message": "Could not map assessment for subtopic \"Extrinsic motivation includes\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 102,
+      "message": "Could not map assessment for subtopic \"Teamwork improves when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 103,
+      "message": "Could not map assessment for subtopic \"According to Maslow’s theory, belongingness needs relate to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 104,
+      "message": "Could not map assessment for subtopic \"Fair workload distribution\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 105,
+      "message": "Could not map assessment for subtopic \"Continuous learning culture promotes\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 106,
+      "message": "Could not map assessment for subtopic \"A high-performing team shows intrinsic motivation when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 107,
+      "message": "Could not map assessment for subtopic \"Stretch goals motivate when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 108,
+      "message": "Could not map assessment for subtopic \"Recognition programs are most effective when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 110,
+      "message": "Could not map assessment for subtopic \"Availability bias is when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 111,
+      "message": "Could not map assessment for subtopic \"Framing effect example\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 113,
+      "message": "Could not map assessment for subtopic \"You continue investing in a failing project because of previous costs. This is\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 114,
+      "message": "Could not map assessment for subtopic \"You continue investing in a failing project because of previous costs. This is\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 115,
+      "message": "Could not map assessment for subtopic \"Overconfidence bias leads to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 116,
+      "message": "Could not map assessment for subtopic \"Overconfidence bias leads to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 117,
+      "message": "Could not map assessment for subtopic \"Relying on gut feeling is most effective when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 118,
+      "message": "Could not map assessment for subtopic \"Relying on gut feeling is most effective when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 119,
+      "message": "Could not map assessment for subtopic \"Relying on gut feeling is most effective when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 120,
+      "message": "Could not map assessment for subtopic \"Heuristic shortcuts are\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 121,
+      "message": "Could not map assessment for subtopic \"Satisficing differs from maximizing because\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 122,
+      "message": "Could not map assessment for subtopic \"Intuitive decision-making relies on\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 123,
+      "message": "Could not map assessment for subtopic \"Intuitive decision-making relies on\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 124,
+      "message": "Could not map assessment for subtopic \"Risk perception is influenced by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 125,
+      "message": "Could not map assessment for subtopic \"Availability heuristic can lead to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 126,
+      "message": "Could not map assessment for subtopic \"Availability heuristic can lead to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 127,
+      "message": "Could not map assessment for subtopic \"Choice overload can cause\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 128,
+      "message": "Could not map assessment for subtopic \"Decision fatigue occurs when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 129,
+      "message": "Could not map assessment for subtopic \"Decision fatigue occurs when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 130,
+      "message": "Could not map assessment for subtopic \"Group decisions often suffer from\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 131,
+      "message": "Could not map assessment for subtopic \"Stress and fatigue increase\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 132,
+      "message": "Could not map assessment for subtopic \"Stress and fatigue increase\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 133,
+      "message": "Could not map assessment for subtopic \"Overconfidence bias affects\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 134,
+      "message": "Could not map assessment for subtopic \"Risk-seeking occurs when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 135,
+      "message": "Could not map assessment for subtopic \"Risk-seeking occurs when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 136,
+      "message": "Could not map assessment for subtopic \"Risk-seeking occurs when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 137,
+      "message": "Could not map assessment for subtopic \"Risk-seeking occurs when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 138,
+      "message": "Could not map assessment for subtopic \"Risk-seeking occurs when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 139,
+      "message": "Could not map assessment for subtopic \"Risk-seeking occurs when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 140,
+      "message": "Could not map assessment for subtopic \"Decision fatigue most likely occurs when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 141,
+      "message": "Could not map assessment for subtopic \"Satisficing is\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 142,
+      "message": "Could not map assessment for subtopic \"Satisficing is\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 143,
+      "message": "Could not map assessment for subtopic \"Default effect occurs when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 144,
+      "message": "Could not map assessment for subtopic \"Confirmation bias can lead to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 145,
+      "message": "Could not map assessment for subtopic \"Confirmation bias can lead to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 146,
+      "message": "Could not map assessment for subtopic \"Intuition works best when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 147,
+      "message": "Could not map assessment for subtopic \"Choice overload leads to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 148,
+      "message": "Could not map assessment for subtopic \"Groupthink is more likely when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 149,
+      "message": "Could not map assessment for subtopic \"Decision trees are used for\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 150,
+      "message": "Could not map assessment for subtopic \"Anchoring bias is strongest when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 151,
+      "message": "Could not map assessment for subtopic \"Risk perception is influenced by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 152,
+      "message": "Could not map assessment for subtopic \"Decision fatigue can be reduced by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 153,
+      "message": "Could not map assessment for subtopic \"Framing bias is mitigated by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 154,
+      "message": "Could not map assessment for subtopic \"Confirmation bias can be reduced by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 155,
+      "message": "Could not map assessment for subtopic \"Decision heuristics save time but can\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 156,
+      "message": "Could not map assessment for subtopic \"Cognitive load affects decisions by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 157,
+      "message": "Could not map assessment for subtopic \"Stress management is important for\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 158,
+      "message": "Could not map assessment for subtopic \"Optimism is\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 159,
+      "message": "Could not map assessment for subtopic \"Journaling helps resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 160,
+      "message": "Could not map assessment for subtopic \"Resilience is\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 161,
+      "message": "Could not map assessment for subtopic \"Positive self-talk\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 162,
+      "message": "Could not map assessment for subtopic \"Meditation contributes to resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 163,
+      "message": "Could not map assessment for subtopic \"Meditation contributes to resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 164,
+      "message": "Could not map assessment for subtopic \"Resilience helps individuals to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 165,
+      "message": "Could not map assessment for subtopic \"Resilience helps individuals to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 166,
+      "message": "Could not map assessment for subtopic \"Self-care contributes to resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 167,
+      "message": "Could not map assessment for subtopic \"Resilience is strengthened by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 168,
+      "message": "Could not map assessment for subtopic \"Self-awareness in resilience\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 174,
+      "message": "Could not map assessment for subtopic \"Cognitive flexibility helps resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 175,
+      "message": "Could not map assessment for subtopic \"Social support enhances resilience because\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 176,
+      "message": "Could not map assessment for subtopic \"Resilience in the workplace is important because\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 177,
+      "message": "Could not map assessment for subtopic \"Practicing optimism in challenging situations\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 178,
+      "message": "Could not map assessment for subtopic \"Self-awareness contributes to resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 179,
+      "message": "Could not map assessment for subtopic \"Stress inoculation training in resilience involves\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 180,
+      "message": "Could not map assessment for subtopic \"Cognitive reframing strengthens resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 181,
+      "message": "Could not map assessment for subtopic \"Mindfulness contributes to resilience because it\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 182,
+      "message": "Could not map assessment for subtopic \"Mindfulness contributes to resilience because it\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 183,
+      "message": "Could not map assessment for subtopic \"Resilient individuals tend to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 185,
+      "message": "Could not map assessment for subtopic \"Positive coping strategies in resilience include\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 186,
+      "message": "Could not map assessment for subtopic \"Physical fitness contributes to resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 187,
+      "message": "Could not map assessment for subtopic \"Resilient leaders\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 188,
+      "message": "Could not map assessment for subtopic \"Emotional intelligence supports resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 189,
+      "message": "Could not map assessment for subtopic \"Self-efficacy contributes to resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 191,
+      "message": "Could not map assessment for subtopic \"Social connectedness contributes to resilience because\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 192,
+      "message": "Could not map assessment for subtopic \"Social connectedness contributes to resilience because\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 193,
+      "message": "Could not map assessment for subtopic \"Adaptive resilience involves\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 194,
+      "message": "Could not map assessment for subtopic \"Mindset flexibility allows resilient individuals to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 195,
+      "message": "Could not map assessment for subtopic \"Reflection and learning from failures\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 196,
+      "message": "Could not map assessment for subtopic \"Resilient individuals approach challenges with\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 198,
+      "message": "Could not map assessment for subtopic \"Research shows that cognitive reappraisal strengthens resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 199,
+      "message": "Could not map assessment for subtopic \"Research shows that cognitive reappraisal strengthens resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 200,
+      "message": "Could not map assessment for subtopic \"Research shows that cognitive reappraisal strengthens resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 201,
+      "message": "Could not map assessment for subtopic \"Emotional agility contributes to resilience because it allows individuals to\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 202,
+      "message": "Could not map assessment for subtopic \"Cognitive flexibility in resilience enables\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 203,
+      "message": "Could not map assessment for subtopic \"The broaden-and-build theory of positive emotions suggests\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 204,
+      "message": "Could not map assessment for subtopic \"Self-efficacy enhances resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 205,
+      "message": "Could not map assessment for subtopic \"Self-efficacy enhances resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 206,
+      "message": "Could not map assessment for subtopic \"Self-efficacy enhances resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 207,
+      "message": "Could not map assessment for subtopic \"Self-efficacy enhances resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 208,
+      "message": "Could not map assessment for subtopic \"Adaptive coping strategies in resilience include\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 209,
+      "message": "Could not map assessment for subtopic \"Research shows that mindfulness training enhances resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 210,
+      "message": "Could not map assessment for subtopic \"Psychological capital (PsyCap) enhances resilience through\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 211,
+      "message": "Could not map assessment for subtopic \"Stress inoculation involves\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 212,
+      "message": "Could not map assessment for subtopic \"Cognitive reappraisal differs from suppression because it\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 213,
+      "message": "Could not map assessment for subtopic \"Social and team-based resilience is strengthened when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 214,
+      "message": "Could not map assessment for subtopic \"Social and team-based resilience is strengthened when\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 215,
+      "message": "Could not map assessment for subtopic \"Post-failure reflection enhances resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 216,
+      "message": "Could not map assessment for subtopic \"Emotional agility enables resilience by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 217,
+      "message": "Could not map assessment for subtopic \"Resilience is enhanced when individuals\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 218,
+      "message": "Could not map assessment for subtopic \"Resilience is enhanced when individuals\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 219,
+      "message": "Could not map assessment for subtopic \"Resilience is enhanced when individuals\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 220,
+      "message": "Could not map assessment for subtopic \"Growth-oriented resilience is characterized by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 221,
+      "message": "Could not map assessment for subtopic \"Growth-oriented resilience is characterized by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 222,
+      "message": "Could not map assessment for subtopic \"Growth-oriented resilience is characterized by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 223,
+      "message": "Could not map assessment for subtopic \"Growth-oriented resilience is characterized by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 224,
+      "message": "Could not map assessment for subtopic \"Growth-oriented resilience is characterized by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 225,
+      "message": "Could not map assessment for subtopic \"Growth-oriented resilience is characterized by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 226,
+      "message": "Could not map assessment for subtopic \"Growth-oriented resilience is characterized by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 227,
+      "message": "Could not map assessment for subtopic \"Growth-oriented resilience is characterized by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 228,
+      "message": "Could not map assessment for subtopic \"Growth-oriented resilience is characterized by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 229,
+      "message": "Could not map assessment for subtopic \"Growth-oriented resilience is characterized by\" in category emotional-intelligence-leaders"
+    },
+    {
+      "row": 230,
+      "message": "Could not map assessment for subtopic \"Growth-oriented resilience is characterized by\" in category emotional-intelligence-leaders"
+    }
+  ]
+}

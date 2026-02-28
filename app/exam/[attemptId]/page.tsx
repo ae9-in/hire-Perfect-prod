@@ -11,6 +11,15 @@ interface ExamQuestion {
     options: string[];
 }
 
+interface DisplayOption {
+    text: string;
+    originalIndex: number;
+}
+
+interface DisplayQuestion extends ExamQuestion {
+    displayOptions: DisplayOption[];
+}
+
 type CameraStatus = 'idle' | 'requesting' | 'ready' | 'error';
 
 interface WarningState {
@@ -32,6 +41,29 @@ const VIOLATION_COOLDOWN_MS: Record<string, number> = {
     [VIOLATION_TYPES.MULTIPLE_FACES]: 1000,
 };
 const PROCTORING_WARMUP_MS = 3000;
+
+function hashString(value: string): number {
+    let hash = 0;
+    for (let i = 0; i < value.length; i += 1) {
+        hash = ((hash << 5) - hash + value.charCodeAt(i)) | 0;
+    }
+    return Math.abs(hash);
+}
+
+function seededShuffleIndices(length: number, seed: number): number[] {
+    const indices = Array.from({ length }, (_, idx) => idx);
+    let state = seed || 1;
+
+    for (let i = indices.length - 1; i > 0; i -= 1) {
+        state = (state * 1664525 + 1013904223) >>> 0;
+        const j = state % (i + 1);
+        const temp = indices[i];
+        indices[i] = indices[j];
+        indices[j] = temp;
+    }
+
+    return indices;
+}
 
 export default function ExamPage() {
     const params = useParams<{ attemptId: string }>();
@@ -88,7 +120,23 @@ export default function ExamPage() {
     const [aiLastFaceCount, setAiLastFaceCount] = useState(0);
     const [aiFps, setAiFps] = useState(0);
 
-    const activeQuestion = questions[currentQuestion];
+    const displayQuestions = useMemo<DisplayQuestion[]>(() => {
+        return questions.map((question) => {
+            const options = question.options || [];
+            const seed = hashString(`${attemptId || ''}:${question._id}`);
+            const shuffledIndices = seededShuffleIndices(options.length, seed);
+
+            return {
+                ...question,
+                displayOptions: shuffledIndices.map((originalIndex) => ({
+                    text: options[originalIndex],
+                    originalIndex,
+                })),
+            };
+        });
+    }, [attemptId, questions]);
+
+    const activeQuestion = displayQuestions[currentQuestion];
     const progress = useMemo(() => (
         questions.length ? ((currentQuestion + 1) / questions.length) * 100 : 0
     ), [currentQuestion, questions.length]);
@@ -915,19 +963,19 @@ export default function ExamPage() {
                         </h1>
 
                         <div className="grid gap-4">
-                            {(activeQuestion.options || []).map((option, idx) => {
-                                const isSelected = answers[activeQuestion._id] === idx;
+                            {(activeQuestion.displayOptions || []).map((option, idx) => {
+                                const isSelected = answers[activeQuestion._id] === option.originalIndex;
                                 return (
                                     <button
                                         key={idx}
-                                        onClick={() => handleAnswerChange(activeQuestion._id, idx)}
+                                        onClick={() => handleAnswerChange(activeQuestion._id, option.originalIndex)}
                                         className={`text-left rounded-2xl p-5 border transition-all duration-300 ${isSelected
                                             ? 'bg-cyan-500/10 border-cyan-500/40 text-cyan-50 shadow-[0_0_30px_rgba(0,242,255,0.08)]'
                                             : 'bg-white/[0.02] border-white/[0.06] text-cyan-100/80 hover:border-cyan-500/30'
                                             }`}
                                     >
                                         <span className="font-black text-cyan-400 mr-2">{String.fromCharCode(65 + idx)}.</span>
-                                        {option}
+                                        {option.text}
                                     </button>
                                 );
                             })}

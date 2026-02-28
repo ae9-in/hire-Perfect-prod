@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-02-28T11:34:45.852Z",
+  "fileName": "5_Product_Management_in_the_AI_Era.json",
+  "mode": "import",
+  "totalRows": 1800,
+  "validRows": 1722,
+  "invalidRows": 0,
+  "duplicateRowsInFile": 78,
+  "duplicateRowsInDb": 0,
+  "insertedRows": 1722,
+  "errors": []
+}

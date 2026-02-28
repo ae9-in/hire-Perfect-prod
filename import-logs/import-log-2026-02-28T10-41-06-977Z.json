@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-02-28T10:41:05.964Z",
+  "fileName": "16_Startup_Incubation.json",
+  "mode": "import",
+  "totalRows": 1500,
+  "validRows": 1464,
+  "invalidRows": 0,
+  "duplicateRowsInFile": 36,
+  "duplicateRowsInDb": 0,
+  "insertedRows": 1464,
+  "errors": []
+}

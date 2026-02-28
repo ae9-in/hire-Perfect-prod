@@ -1,0 +1,413 @@
+{
+  "timestamp": "2026-02-28T08:52:31.500Z",
+  "fileName": "7_Cybersecurity.json",
+  "mode": "preview",
+  "totalRows": 970,
+  "validRows": 861,
+  "invalidRows": 100,
+  "duplicateRowsInFile": 9,
+  "duplicateRowsInDb": 0,
+  "insertedRows": 0,
+  "errors": [
+    {
+      "row": 201,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 202,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 203,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 204,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 205,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 206,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 207,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 208,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 209,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 210,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 211,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 212,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 213,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 214,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 215,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 216,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 217,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 218,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 219,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 220,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 221,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 222,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 223,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 224,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 225,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 226,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 227,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 228,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 229,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 230,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 231,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 232,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 233,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 234,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 235,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 236,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 237,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 238,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 239,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 240,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 241,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 242,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 243,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 244,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 245,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 246,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 247,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 248,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 249,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 250,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 251,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 252,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 253,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 254,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 255,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 256,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 257,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 258,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 259,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 260,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 261,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 262,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 263,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 264,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 265,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 266,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 267,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 268,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 269,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 270,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 271,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 272,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 273,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 274,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 275,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 276,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 277,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 278,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 279,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 280,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 281,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 282,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 283,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 284,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 285,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 286,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 287,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 288,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 289,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 290,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 291,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 292,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 293,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 294,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 295,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 296,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 297,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 298,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 299,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    },
+    {
+      "row": 300,
+      "message": "Could not map assessment for subtopic \"SOC OPERATIONS\" in category cybersecurity-ethical-ai-security"
+    }
+  ]
+}

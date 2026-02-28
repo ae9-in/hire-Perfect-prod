@@ -1,0 +1,613 @@
+{
+  "timestamp": "2026-02-28T09:57:44.939Z",
+  "fileName": "12_No_code_Low_code_app_development.json",
+  "mode": "preview",
+  "totalRows": 1600,
+  "validRows": 1416,
+  "invalidRows": 150,
+  "duplicateRowsInFile": 34,
+  "duplicateRowsInDb": 0,
+  "insertedRows": 0,
+  "errors": [
+    {
+      "row": 1,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 2,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 3,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 4,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 5,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 6,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 7,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 8,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 9,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 10,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 11,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 12,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 13,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 14,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 15,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 16,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 17,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 18,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 19,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 20,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 21,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 22,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 23,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 24,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 25,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 26,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 27,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 28,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 29,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 30,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 31,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 32,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 33,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 34,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 35,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 36,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 37,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 38,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 39,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 40,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 41,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 42,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 43,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 44,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 45,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 46,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 47,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 48,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 49,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 50,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 51,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 52,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 53,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 54,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 55,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 56,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 57,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 58,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 59,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 60,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 61,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 62,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 63,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 64,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 65,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 66,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 67,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 68,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 69,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 70,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 71,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 72,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 73,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 74,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 75,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 76,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 77,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 78,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 79,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 80,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 81,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 82,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 83,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 84,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 85,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 86,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 87,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 88,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 89,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 90,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 91,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 92,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 93,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 94,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 95,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 96,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 97,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 98,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 99,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 100,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 101,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 102,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 103,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 104,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 105,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 106,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 107,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 108,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 109,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 110,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 111,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 112,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 113,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 114,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 115,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 116,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 117,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 118,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 119,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 120,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 121,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 122,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 123,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 124,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 125,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 126,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 127,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 128,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 129,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 130,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 131,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 132,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 133,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 134,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 135,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 136,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 137,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 138,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 139,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 140,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 141,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 142,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 143,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 144,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 145,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 146,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 147,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 148,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 149,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    },
+    {
+      "row": 150,
+      "message": "Could not map assessment for subtopic \"App protyping tools\" in category no-code-low-code-app-development"
+    }
+  ]
+}
