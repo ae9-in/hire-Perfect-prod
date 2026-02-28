@@ -85,7 +85,13 @@ function parseArgs(args: string[]): ParsedArgs {
 }
 
 function normalizeLookupName(value: string): string {
-    return value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
+    return value
+        .toLowerCase()
+        .replace(/&/g, ' and ')
+        .replace(/[^a-z0-9]+/g, ' ')
+        .replace(/\band\b/g, ' ')
+        .trim()
+        .replace(/\s+/g, ' ');
 }
 
 async function ensureDir(dirPath: string): Promise<void> {

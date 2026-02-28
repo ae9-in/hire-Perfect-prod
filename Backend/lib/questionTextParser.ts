@@ -29,6 +29,30 @@ function parseQuestionLine(line: string): { number?: number; text: string } | nu
     return { number: Number(match[1]), text: match[2].trim() };
 }
 
+function parseSubtopicHeading(line: string): string | null {
+    // Example: "• AI transformation frameworks"
+    const bulletMatch = line.match(/^[\u2022\-\*]\s+(.+)$/);
+    if (bulletMatch) return bulletMatch[1].trim();
+    return null;
+}
+
+function parseLevelHeading(line: string): string | null {
+    // Examples: "EASY LEVEL (1-50)", "MEDIUM LEVEL (50 MCQs)", "MASTER LEVEL (101-150)"
+    const normalized = line
+        .replace(/[–—]/g, '-') // normalize dashes
+        .toLowerCase()
+        .trim();
+
+    const match = normalized.match(/^(easy|medium|hard|master)\s+level(?:\s*\(.+\))?$/i);
+    if (!match) return null;
+
+    const raw = match[1].toLowerCase();
+    if (raw === 'easy') return 'easy';
+    if (raw === 'medium') return 'medium';
+    if (raw === 'hard' || raw === 'master') return 'hard';
+    return null;
+}
+
 function parseCorrectAnswer(line: string): number | null {
     const match = line.match(/^(?:Correct\s*Answer|Answer|Ans)\s*[:\-]\s*(.+)$/i);
     if (!match) return null;
@@ -94,9 +118,23 @@ export function parseQuestionsFromRawText(rawText: string): ParsedQuestion[] {
     };
 
     for (const line of lines) {
+        const subtopicHeading = parseSubtopicHeading(line);
+        if (subtopicHeading) {
+            finalizeCurrent();
+            state.subtopic = subtopicHeading;
+            continue;
+        }
+
         if (/^subtopic\s*[:\-]/i.test(line)) {
             finalizeCurrent();
             state.subtopic = line.replace(/^subtopic\s*[:\-]\s*/i, '').trim();
+            continue;
+        }
+
+        const levelHeading = parseLevelHeading(line);
+        if (levelHeading) {
+            finalizeCurrent();
+            state.level = levelHeading;
             continue;
         }
 

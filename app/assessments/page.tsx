@@ -79,7 +79,7 @@ export default function AssessmentsPage() {
     };
 
     const handleStartTest = (assessmentId: string) => {
-        router.push(`/exam/pre/${assessmentId}`);
+        router.push(`/assessments/${assessmentId}`);
     };
 
     const derivedGroups = categoryGroups.length > 0
@@ -239,7 +239,7 @@ export default function AssessmentsPage() {
                                                 className="flex-1 text-[10px] font-black uppercase tracking-widest py-4 shadow-2xl shadow-cyan-900/20"
                                                 onClick={() => handleStartTest(assessment._id)}
                                             >
-                                                Launch Exam
+                                                View Levels
                                             </Button>
                                         </div>
                                     </div>

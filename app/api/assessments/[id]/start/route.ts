@@ -5,6 +5,22 @@ import Assessment from '@/models/Assessment';
 import Question from '@/models/Question';
 import Attempt from '@/models/Attempt';
 
+type AssessmentLevel = 'beginner' | 'intermediate' | 'advanced';
+
+function normalizeLevel(value: unknown): AssessmentLevel | null {
+    const normalized = String(value || '').toLowerCase().trim();
+    if (normalized === 'beginner' || normalized === 'easy') return 'beginner';
+    if (normalized === 'advanced' || normalized === 'hard') return 'advanced';
+    if (normalized === 'intermediate' || normalized === 'medium') return 'intermediate';
+    return null;
+}
+
+function toQuestionDifficulty(level: AssessmentLevel): 'easy' | 'medium' | 'hard' {
+    if (level === 'beginner') return 'easy';
+    if (level === 'advanced') return 'hard';
+    return 'medium';
+}
+
 export async function POST(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
@@ -20,6 +36,14 @@ export async function POST(
         await connectDB();
 
         const assessmentId = id;
+        let requestedLevel: AssessmentLevel | null = null;
+
+        try {
+            const body = await request.json();
+            requestedLevel = normalizeLevel(body?.level || body?.selectedLevel);
+        } catch {
+            requestedLevel = null;
+        }
 
         // Get assessment
         const assessment = await Assessment.findById(assessmentId);
@@ -45,11 +69,19 @@ export async function POST(
             }
         );
 
-        // Get random questions
-        const allQuestions = await Question.find({ assessment: assessmentId });
+        const defaultLevel = normalizeLevel(assessment.difficulty) || 'intermediate';
+        const selectedLevel = requestedLevel || defaultLevel;
+        const selectedDifficulty = toQuestionDifficulty(selectedLevel);
+
+        // Get random questions for selected level
+        const allQuestions = await Question.find({
+            assessment: assessmentId,
+            difficulty: selectedDifficulty,
+        });
+
         if (allQuestions.length === 0) {
             return NextResponse.json(
-                { error: 'No questions are available for this assessment yet.' },
+                { error: `No ${selectedLevel} level questions are available for this assessment yet.` },
                 { status: 409 }
             );
         }
@@ -67,6 +99,7 @@ export async function POST(
         const attempt = await Attempt.create({
             user: authResult.user.userId,
             assessment: assessmentId,
+            selectedLevel,
             status: 'in_progress',
             totalQuestions: selectedQuestions.length,
             questions: selectedQuestions.map(q => q._id), // Store the randomized set
@@ -93,6 +126,7 @@ export async function POST(
                 _id: assessment._id,
                 title: assessment.title,
                 duration: assessment.duration,
+                selectedLevel,
             },
             attempt: {
                 id: attempt._id,
@@ -101,10 +135,11 @@ export async function POST(
             },
             questions: questionsForExam,
         });
-    } catch (error: any) {
+    } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : 'Internal server error';
         console.error('Start assessment error:', error);
         return NextResponse.json(
-            { error: error.message || 'Internal server error' },
+            { error: message },
             { status: 500 }
         );
     }

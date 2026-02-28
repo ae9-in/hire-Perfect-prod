@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { CameraManager } from '@/lib/cameraManager';
 
 type CameraStatus = 'idle' | 'requesting' | 'ready' | 'error';
@@ -9,13 +9,16 @@ type CameraStatus = 'idle' | 'requesting' | 'ready' | 'error';
 interface AssessmentStartData {
     title?: string;
     duration?: number;
+    selectedLevel?: 'beginner' | 'intermediate' | 'advanced';
     attemptId: string;
 }
 
 export default function PreAssessmentPage() {
     const params = useParams<{ id: string }>();
     const router = useRouter();
+    const searchParams = useSearchParams();
     const assessmentId = Array.isArray(params?.id) ? params.id[0] : params?.id;
+    const selectedLevel = searchParams.get('level');
 
     const isMountedRef = useRef(true);
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -57,7 +60,13 @@ export default function PreAssessmentPage() {
             const token = localStorage.getItem('token');
             const res = await fetch(`/api/assessments/${assessmentId}/start`, {
                 method: 'POST',
-                headers: { Authorization: `Bearer ${token}` },
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    level: selectedLevel || undefined,
+                }),
             });
             const data = await res.json();
 
@@ -73,7 +82,7 @@ export default function PreAssessmentPage() {
         } finally {
             if (isMountedRef.current) setLoading(false);
         }
-    }, [assessmentId]);
+    }, [assessmentId, selectedLevel]);
 
     const initCamera = useCallback(async () => {
         setCameraError(null);
@@ -173,6 +182,9 @@ export default function PreAssessmentPage() {
                         </h1>
                         <p className="text-sm text-slate-400 mb-8">
                             Duration: <span className="text-cyan-300 font-bold">{assessment?.duration || 0} minutes</span>
+                        </p>
+                        <p className="text-sm text-slate-400 mb-8">
+                            Level: <span className="text-cyan-300 font-bold uppercase">{assessment?.selectedLevel || 'intermediate'}</span>
                         </p>
 
                         <div className="space-y-3 text-xs text-cyan-100/80 mb-8">

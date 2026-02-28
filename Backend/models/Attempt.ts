@@ -3,6 +3,7 @@ import mongoose, { Schema, Document, Model } from 'mongoose';
 export interface IAttempt extends Document {
     user: mongoose.Types.ObjectId;
     assessment: mongoose.Types.ObjectId;
+    selectedLevel?: 'beginner' | 'intermediate' | 'advanced';
     status: 'in_progress' | 'completed' | 'terminated';
     answers: Array<{
         question: mongoose.Types.ObjectId;
@@ -38,6 +39,11 @@ const AttemptSchema = new Schema<IAttempt>(
             type: Schema.Types.ObjectId,
             ref: 'Assessment',
             required: [true, 'Assessment reference is required'],
+        },
+        selectedLevel: {
+            type: String,
+            enum: ['beginner', 'intermediate', 'advanced'],
+            default: 'intermediate',
         },
         status: {
             type: String,
