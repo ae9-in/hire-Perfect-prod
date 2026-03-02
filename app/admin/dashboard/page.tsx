@@ -7,6 +7,7 @@ import Navbar from '@/components/ui/Navbar';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Loading from '@/components/ui/Loading';
+import { checkAndClearExpiredSession } from '@/lib/sessionUtils';
 
 export default function AdminDashboard() {
     const router = useRouter();
@@ -18,6 +19,7 @@ export default function AdminDashboard() {
     const [isLogsOpen, setIsLogsOpen] = useState(false);
 
     useEffect(() => {
+        if (!checkAndClearExpiredSession(router)) return;
         const user = JSON.parse(localStorage.getItem('user') || '{}');
         if (user.role !== 'admin') {
             router.push('/dashboard');
@@ -46,6 +48,7 @@ export default function AdminDashboard() {
             setLoading(false);
         }
     };
+
 
     const fetchLogs = async () => {
         try {
@@ -254,15 +257,15 @@ export default function AdminDashboard() {
                             <div className="flex-1 overflow-y-auto p-8 space-y-4 font-mono">
                                 {logs.map((log, i) => (
                                     <div key={log._id || i} className={`p-4 rounded-xl border flex items-start gap-6 transition-all hover:bg-white/5 ${log.severity === 'critical' ? 'bg-rose-500/5 border-rose-500/20' :
-                                            log.severity === 'warning' ? 'bg-amber-500/5 border-amber-500/20' :
-                                                'bg-white/[0.02] border-white/5'
+                                        log.severity === 'warning' ? 'bg-amber-500/5 border-amber-500/20' :
+                                            'bg-white/[0.02] border-white/5'
                                         }`}>
                                         <span className="text-[10px] font-black text-slate-500 shrink-0 mt-1">[{new Date(log.timestamp).toLocaleTimeString()}]</span>
                                         <div>
                                             <div className="flex items-center gap-3 mb-1">
                                                 <span className={`text-[10px] font-black uppercase tracking-widest ${log.severity === 'critical' ? 'text-rose-500' :
-                                                        log.severity === 'warning' ? 'text-amber-500' :
-                                                            'text-emerald-500'
+                                                    log.severity === 'warning' ? 'text-amber-500' :
+                                                        'text-emerald-500'
                                                     }`}>{log.action}</span>
                                                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">BY {log.actor.name} ({log.actor.role})</span>
                                             </div>

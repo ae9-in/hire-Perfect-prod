@@ -36,9 +36,10 @@ export default function AssessmentDetailPage() {
     const [assessment, setAssessment] = useState<AssessmentDetails | null>(null);
     const [levels, setLevels] = useState<LevelInfo[]>([]);
     const [selectedLevel, setSelectedLevel] = useState<LevelKey>('intermediate');
+    const [userPurchases, setUserPurchases] = useState<string[]>([]);
 
     useEffect(() => {
-        const loadAssessment = async () => {
+        const loadPageData = async () => {
             if (!assessmentId) {
                 setError('Invalid assessment id.');
                 setLoading(false);
@@ -46,20 +47,41 @@ export default function AssessmentDetailPage() {
             }
 
             try {
-                const res = await fetch(`/api/assessments/${assessmentId}`);
-                const data = await res.json();
+                const token = localStorage.getItem('token');
 
-                if (!data.success) {
-                    setError(data.error || 'Failed to load assessment.');
+                // Fetch assessment details and user purchases in parallel
+                const fetchAssessment = fetch(`/api/assessments/${assessmentId}`);
+                const fetchPurchases = token
+                    ? fetch('/api/payment/purchases', { headers: { Authorization: `Bearer ${token}` } })
+                    : Promise.resolve(null);
+
+                const [assessmentRes, purchasesRes] = await Promise.all([fetchAssessment, fetchPurchases]);
+
+                const assessmentData = await assessmentRes.json();
+                if (!assessmentData.success) {
+                    setError(assessmentData.error || 'Failed to load assessment.');
                     return;
                 }
 
-                setAssessment(data.assessment);
-                setLevels(data.levels || []);
+                setAssessment(assessmentData.assessment);
+                setLevels(assessmentData.levels || []);
 
-                const firstAvailable = (data.levels || []).find((level: LevelInfo) => level.isAvailable);
+                const firstAvailable = (assessmentData.levels || []).find((level: LevelInfo) => level.isAvailable);
                 if (firstAvailable?.level) {
                     setSelectedLevel(firstAvailable.level);
+                }
+
+                if (purchasesRes) {
+                    const purchasesData = await purchasesRes.json();
+                    if (purchasesData.success) {
+                        const ids = (purchasesData.purchases || []).map((p: any) => {
+                            if (p.purchaseType === 'individual') return p.assessment?._id || p.assessment;
+                            if (p.purchaseType === 'category') return p.category?._id || p.category;
+                            if (p.purchaseType === 'bundle') return 'FULL_BUNDLE';
+                            return null;
+                        }).filter(Boolean);
+                        setUserPurchases(ids);
+                    }
                 }
             } catch (fetchError) {
                 console.error('Assessment detail load error:', fetchError);
@@ -69,8 +91,17 @@ export default function AssessmentDetailPage() {
             }
         };
 
-        void loadAssessment();
+        void loadPageData();
     }, [assessmentId]);
+
+    const isPurchased = (assessment: any): boolean => {
+        if (!assessment) return false;
+        if (userPurchases.includes('FULL_BUNDLE')) return true;
+
+        const id = assessment._id?.toString();
+        const catId = assessment.category?._id?.toString() || assessment.category?.toString();
+        return userPurchases.some((p) => p === id || p === catId);
+    };
 
     const selectedLevelInfo = useMemo(
         () => levels.find((level) => level.level === selectedLevel),
@@ -123,11 +154,10 @@ export default function AssessmentDetailPage() {
                                 type="button"
                                 disabled={!level.isAvailable}
                                 onClick={() => setSelectedLevel(level.level)}
-                                className={`text-left rounded-2xl border p-5 transition-all ${
-                                    selectedLevel === level.level
+                                className={`text-left rounded-2xl border p-5 transition-all ${selectedLevel === level.level
                                         ? 'border-cyan-500/60 bg-cyan-500/10'
                                         : 'border-white/10 bg-white/5'
-                                } ${!level.isAvailable ? 'opacity-40 cursor-not-allowed' : ''}`}
+                                    } ${!level.isAvailable ? 'opacity-40 cursor-not-allowed' : ''}`}
                             >
                                 <p className="text-[10px] font-black uppercase tracking-[0.22em] text-cyan-400">
                                     {level.level}
@@ -143,9 +173,18 @@ export default function AssessmentDetailPage() {
                             <p className="text-slate-300 text-sm">
                                 Duration: <span className="text-cyan-300 font-semibold">{assessment.duration} minutes</span>
                             </p>
-                            <p className="text-slate-300 text-sm mt-2">
-                                Price: <span className="text-cyan-300 font-semibold">Rs. {assessment.price}</span>
-                            </p>
+                            {isPurchased(assessment) ? (
+                                <p className="mt-2 flex items-center gap-2">
+                                    <span className="text-slate-300 text-sm italic">Price:</span>
+                                    <span className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-black uppercase tracking-widest rounded-lg">
+                                        ✓ Access Unlocked
+                                    </span>
+                                </p>
+                            ) : (
+                                <p className="text-slate-300 text-sm mt-2">
+                                    Price: <span className="text-cyan-300 font-semibold">Rs. {assessment.price}</span>
+                                </p>
+                            )}
                             <p className="text-slate-400 text-sm mt-2">
                                 Selected level: <span className="text-white font-semibold uppercase">{selectedLevel}</span>
                                 {selectedLevelInfo ? ` (${selectedLevelInfo.questionCount} questions)` : ''}

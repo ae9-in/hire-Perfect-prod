@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import Assessment from '@/models/Assessment';
+import Category from '@/models/Category';
 
 type AssessmentResponseItem = Record<string, unknown> & {
     _id: string | { toString(): string };
@@ -22,10 +23,20 @@ export async function GET(request: NextRequest) {
 
         const { searchParams } = new URL(request.url);
         const categoryId = searchParams.get('category');
+        const categorySlug = searchParams.get('categorySlug');
 
-        const query: Record<string, string | boolean> = { isActive: true };
+        const query: Record<string, string | boolean | object> = { isActive: true };
         if (categoryId) {
             query.category = categoryId;
+        } else if (categorySlug) {
+            // Resolve slug to ObjectId
+            const cat = await Category.findOne({ slug: categorySlug }).select('_id');
+            if (cat) {
+                query.category = cat._id;
+            } else {
+                // No matching category → return empty
+                return NextResponse.json({ success: true, assessments: [], categories: [] });
+            }
         }
 
         const assessments = await Assessment.find(query)

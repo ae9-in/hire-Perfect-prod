@@ -7,6 +7,7 @@ import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Loading from '@/components/ui/Loading';
 import Badge from '@/components/ui/Badge';
+import { checkAndClearExpiredSession } from '@/lib/sessionUtils';
 
 export default function QuestionManagement({ params }: { params: any }) {
     const router = useRouter();
@@ -32,6 +33,7 @@ export default function QuestionManagement({ params }: { params: any }) {
     });
 
     useEffect(() => {
+        if (!checkAndClearExpiredSession(router)) return;
         const user = JSON.parse(localStorage.getItem('user') || '{}');
         if (user.role !== 'admin') {
             router.push('/dashboard');

@@ -15,7 +15,10 @@ export async function GET(request: NextRequest) {
         const purchases = await Purchase.find({
             user: authResult.user.userId,
             status: 'completed',
-        });
+        })
+            .populate('assessment', 'title description duration totalQuestions difficulty price category')
+            .populate('category', 'name slug')
+            .sort({ purchasedAt: -1 });
 
         return NextResponse.json({
             success: true,

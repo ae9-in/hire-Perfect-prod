@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation';
 import { CameraManager } from '@/lib/cameraManager';
 import { EXAM_CONFIG, VIOLATION_TYPES } from '@/lib/constants';
+import { checkAndClearExpiredSession } from '@/lib/sessionUtils';
 
 interface ExamQuestion {
     _id: string;
@@ -730,6 +731,7 @@ export default function ExamPage() {
     }, [showWarning]);
 
     useEffect(() => {
+        if (!checkAndClearExpiredSession(router)) return;
         isMountedRef.current = true;
         installConsoleFilter();
         void loadExam();

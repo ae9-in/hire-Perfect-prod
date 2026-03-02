@@ -52,3 +52,13 @@ next-env.d.ts
 Thumbs.db
 
 /lib/generated/prisma
+
+# Data processing
+import-logs/
+processed-json/
+validated-json/
+raw-pdf/
+raw-docx/
+
+# TypeScript build info
+tsconfig.tsbuildinfo

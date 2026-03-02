@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { storeLoginTimestamp } from '@/lib/sessionUtils';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
@@ -10,6 +11,7 @@ import Input from '@/components/ui/Input';
 export default function LoginPage() {
     const router = useRouter();
     const [formData, setFormData] = useState({ email: '', password: '' });
+    const [rememberMe, setRememberMe] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -33,6 +35,7 @@ export default function LoginPage() {
 
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
+            storeLoginTimestamp();
 
             if (data.user.role === 'admin') {
                 router.push('/admin/dashboard');
@@ -135,12 +138,15 @@ export default function LoginPage() {
                             />
 
                             <div className="flex items-center justify-between">
-                                <label className="flex items-center gap-3 cursor-pointer group">
-                                    <div className={`w-5 h-5 rounded border-2 transition-all flex items-center justify-center border-white/20 group-hover:border-cyan-500/50`}>
-                                        <input type="checkbox" className="hidden" />
-                                        <div className="w-2 h-2 bg-cyan-500 rounded-sm opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                                <label className="flex items-center gap-3 cursor-pointer group" onClick={() => setRememberMe(!rememberMe)}>
+                                    <div className={`w-5 h-5 rounded border-2 transition-all flex items-center justify-center flex-shrink-0 ${rememberMe ? 'border-cyan-500 bg-cyan-500/20' : 'border-white/20 group-hover:border-cyan-500/50'}`}>
+                                        {rememberMe && (
+                                            <svg className="w-3 h-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                            </svg>
+                                        )}
                                     </div>
-                                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest transition-colors group-hover:text-slate-300">Remember Session</span>
+                                    <span className={`text-[10px] font-black uppercase tracking-widest transition-colors ${rememberMe ? 'text-cyan-400' : 'text-slate-500 group-hover:text-slate-300'}`}>Remember Session</span>
                                 </label>
                                 <Link href="#" className="text-[10px] font-black text-cyan-400 hover:text-cyan-300 uppercase tracking-widest transition-colors">
                                     Forgot Password?

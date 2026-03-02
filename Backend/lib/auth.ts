@@ -12,7 +12,7 @@ export interface TokenPayload {
 // Generate JWT token
 export function generateToken(payload: TokenPayload): string {
     return jwt.sign(payload, JWT_SECRET, {
-        expiresIn: '7d', // Token expires in 7 days
+        expiresIn: '3d', // Token expires in 3 days
     });
 }
 

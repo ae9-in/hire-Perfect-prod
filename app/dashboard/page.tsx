@@ -7,6 +7,7 @@ import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Loading from '@/components/ui/Loading';
 import Navbar from '@/components/ui/Navbar';
+import { checkAndClearExpiredSession } from '@/lib/sessionUtils';
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -16,6 +17,7 @@ export default function DashboardPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (!checkAndClearExpiredSession(router)) return;
         const userData = localStorage.getItem('user');
         if (!userData) {
             router.push('/login');
@@ -65,13 +67,14 @@ export default function DashboardPage() {
         return <Loading variant="spinner" fullScreen text="Syncing Dashboard..." />;
     }
 
-    const completedAttempts = attempts.filter(a => a.status === 'completed');
+    const completedAttempts = attempts.filter((a: any) => a.status === 'completed');
     const avgScore = completedAttempts.length > 0
-        ? Math.round(completedAttempts.reduce((acc, curr) => acc + curr.percentage, 0) / completedAttempts.length)
+        ? Math.round(completedAttempts.reduce((acc: any, curr: any) => acc + curr.percentage, 0) / completedAttempts.length)
         : 0;
 
     return (
         <div className="min-h-screen bg-[#020205] text-white bg-grid selection:bg-cyan-500/30 selection:text-cyan-200">
+
             <Navbar />
 
             {/* Floating Gradient Orbs */}

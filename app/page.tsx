@@ -392,7 +392,7 @@ export default function HomePage() {
               <div>
                 <span className="text-[10px] font-black text-cyan-500 uppercase tracking-[0.4em] mb-4 block">Deployment Libraries</span>
                 <h2 className="text-5xl md:text-6xl font-black text-white mb-6 tracking-tighter uppercase leading-[0.8]">Curated <br /><span className="text-gradient">Excellence.</span></h2>
-                <p className="text-xl text-slate-400 font-medium mt-6">36+ Professional assessments across 6 core industries.</p>
+                <p className="text-xl text-slate-400 font-medium mt-6">240+ Professional assessments across 20 core categories.</p>
               </div>
               <Link href="/assessments">
                 <Button variant="outline" className="px-10 py-5 uppercase tracking-widest text-[10px] font-black border-white/10 hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all text-white">View All Tracks</Button>
@@ -481,7 +481,7 @@ export default function HomePage() {
                     <span className="text-4xl font-black text-white">₹{PRICING.CATEGORY_COMBO}</span>
                     <span className="text-slate-500 ml-2 font-bold uppercase text-xs tracking-widest">/cat</span>
                   </div>
-                  <p className="text-slate-400 font-medium mb-12 text-sm leading-relaxed">6 assessments in one category. Best for targeted team evaluation.</p>
+                  <p className="text-slate-400 font-medium mb-12 text-sm leading-relaxed">12 assessments in one category. Best for targeted team evaluation.</p>
                   <div className="mt-auto w-full">
                     <Link href="/signup">
                       <Button variant="primary" className="w-full py-5 rounded-2xl bg-gradient-to-r from-purple-600 to-cyan-600 border-0 shadow-2xl shadow-purple-500/20 text-white font-black uppercase tracking-widest text-[10px]">Get Started</Button>
@@ -497,7 +497,7 @@ export default function HomePage() {
                   <span className="text-4xl font-black text-white">₹{PRICING.FULL_BUNDLE}</span>
                   <span className="text-slate-500 ml-2 font-bold uppercase text-xs tracking-widest">/all</span>
                 </div>
-                <p className="text-slate-400 font-medium mb-12 text-sm leading-relaxed">All 36 assessments included. The complete hiring infrastructure.</p>
+                <p className="text-slate-400 font-medium mb-12 text-sm leading-relaxed">All 240 assessments across 20 categories. The complete hiring infrastructure.</p>
                 <div className="mt-auto w-full">
                   <Link href="/signup">
                     <Button variant="outline" className="w-full py-5 rounded-2xl glass border-white/10 hover:border-purple-500/50 text-white font-black uppercase tracking-widest text-[10px]">Choose Plan</Button>

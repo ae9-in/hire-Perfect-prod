@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { storeLoginTimestamp } from '@/lib/sessionUtils';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
@@ -70,6 +71,7 @@ export default function SignupPage() {
 
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
+            storeLoginTimestamp();
 
             if (data.user.role === 'admin') {
                 router.push('/admin/dashboard');

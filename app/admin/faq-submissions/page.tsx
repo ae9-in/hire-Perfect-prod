@@ -6,6 +6,7 @@ import Navbar from '@/components/ui/Navbar';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Loading from '@/components/ui/Loading';
+import { checkAndClearExpiredSession } from '@/lib/sessionUtils';
 
 export default function FAQSubmissionsPage() {
     const router = useRouter();
@@ -15,6 +16,7 @@ export default function FAQSubmissionsPage() {
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
+        if (!checkAndClearExpiredSession(router)) return;
         const user = JSON.parse(localStorage.getItem('user') || '{}');
         if (user.role !== 'admin') {
             router.push('/dashboard');

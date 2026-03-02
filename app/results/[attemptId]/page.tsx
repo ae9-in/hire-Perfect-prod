@@ -8,6 +8,7 @@ import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Loading from '@/components/ui/Loading';
 import CertificateModal from '@/components/ui/CertificateModal';
+import { checkAndClearExpiredSession } from '@/lib/sessionUtils';
 
 export default function ResultsPage({ params: paramsPromise }: { params: Promise<{ attemptId: string }> }) {
     const params = React.use(paramsPromise);
@@ -18,6 +19,7 @@ export default function ResultsPage({ params: paramsPromise }: { params: Promise
     const [showCertificate, setShowCertificate] = useState(false);
 
     useEffect(() => {
+        if (!checkAndClearExpiredSession(router)) return;
         loadResult();
     }, []);
 

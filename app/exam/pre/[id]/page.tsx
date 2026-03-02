@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { CameraManager } from '@/lib/cameraManager';
+import { checkAndClearExpiredSession } from '@/lib/sessionUtils';
 
 type CameraStatus = 'idle' | 'requesting' | 'ready' | 'error';
 
@@ -118,6 +119,7 @@ export default function PreAssessmentPage() {
     }, [attachVideo]);
 
     useEffect(() => {
+        if (!checkAndClearExpiredSession(router)) return;
         isMountedRef.current = true;
         void loadAssessment();
 

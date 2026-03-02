@@ -7,6 +7,7 @@ import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Loading from '@/components/ui/Loading';
 import Badge from '@/components/ui/Badge';
+import { checkAndClearExpiredSession } from '@/lib/sessionUtils';
 
 export default function UserManagement() {
     const router = useRouter();
@@ -16,6 +17,7 @@ export default function UserManagement() {
     const [roleFilter, setRoleFilter] = useState('');
 
     useEffect(() => {
+        if (!checkAndClearExpiredSession(router)) return;
         const user = JSON.parse(localStorage.getItem('user') || '{}');
         if (user.role !== 'admin') {
             router.push('/dashboard');
@@ -173,8 +175,8 @@ export default function UserManagement() {
                                                 value={u.role}
                                                 onChange={(e) => handleUpdateUser(u._id, { role: e.target.value })}
                                                 className={`bg-transparent text-[9px] font-black uppercase tracking-widest border py-1 px-3 rounded-lg outline-none cursor-pointer transition-all ${u.role === 'admin'
-                                                        ? 'text-purple-400 border-purple-500/30 bg-purple-500/5'
-                                                        : 'text-cyan-400 border-cyan-500/30 bg-cyan-500/5'
+                                                    ? 'text-purple-400 border-purple-500/30 bg-purple-500/5'
+                                                    : 'text-cyan-400 border-cyan-500/30 bg-cyan-500/5'
                                                     }`}
                                             >
                                                 <option value="candidate" className="bg-[#020205]">CANDIDATE</option>

@@ -7,6 +7,7 @@ import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Loading from '@/components/ui/Loading';
 import Badge from '@/components/ui/Badge';
+import { checkAndClearExpiredSession } from '@/lib/sessionUtils';
 
 export default function AssessmentManagement() {
     const router = useRouter();
@@ -31,6 +32,7 @@ export default function AssessmentManagement() {
     });
 
     useEffect(() => {
+        if (!checkAndClearExpiredSession(router)) return;
         const user = JSON.parse(localStorage.getItem('user') || '{}');
         if (user.role !== 'admin') {
             router.push('/dashboard');
@@ -59,6 +61,7 @@ export default function AssessmentManagement() {
             setLoading(false);
         }
     };
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

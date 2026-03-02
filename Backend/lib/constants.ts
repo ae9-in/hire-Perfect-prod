@@ -2,8 +2,8 @@
 
 export const PRICING = {
     INDIVIDUAL_ASSESSMENT: 500,
-    CATEGORY_COMBO: 1000,
-    FULL_BUNDLE: 4000,
+    CATEGORY_COMBO: 2000,
+    FULL_BUNDLE: 8000,
 } as const;
 
 export const EXAM_CONFIG = {

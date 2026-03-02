@@ -7,7 +7,9 @@ import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Loading from '@/components/ui/Loading';
 import Modal from '@/components/ui/Modal';
+import PaymentModal from '@/components/ui/PaymentModal';
 import { CATEGORIES } from '@/lib/constants';
+import { checkAndClearExpiredSession } from '@/lib/sessionUtils';
 
 export default function AssessmentsPage() {
     const router = useRouter();
@@ -19,9 +21,11 @@ export default function AssessmentsPage() {
     const [userPurchases, setUserPurchases] = useState<string[]>([]);
     const [selectedAssessment, setSelectedAssessment] = useState<any>(null);
     const [showPurchaseModal, setShowPurchaseModal] = useState(false);
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
     const [seedError, setSeedError] = useState<string | null>(null);
 
     useEffect(() => {
+        if (!checkAndClearExpiredSession(router)) return;
         const categoryFromQuery = searchParams.get('category');
         if (categoryFromQuery) {
             setSelectedCategory(categoryFromQuery);
@@ -82,6 +86,12 @@ export default function AssessmentsPage() {
         router.push(`/assessments/${assessmentId}`);
     };
 
+    const isPurchased = (assessment: any): boolean => {
+        const id = assessment._id?.toString();
+        const catId = assessment.category?._id?.toString() || assessment.category?.toString();
+        return userPurchases.some((p) => p === id || p === catId);
+    };
+
     const derivedGroups = categoryGroups.length > 0
         ? categoryGroups
         : Object.values(
@@ -132,8 +142,7 @@ export default function AssessmentsPage() {
                         VALIDATE YOUR <br /><span className="text-gradient">LEGACY.</span>
                     </h1>
                     <p className="text-xl text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed">
-                        Industry-standard assessments across 36 specialized domains.
-                        AI-monitored. Global recognition.
+                        240+ assessments across 20 categories. AI-monitored. Global recognition.
                     </p>
                 </div>
 
@@ -182,69 +191,89 @@ export default function AssessmentsPage() {
                                 </div>
                                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                                     {(group.subjects || []).map((assessment: any) => (
-                            <Card key={assessment._id} className="group p-1 border-white/5 bg-slate-900/40 backdrop-blur-md hover:border-cyan-500/30 transition-all duration-500">
-                                <div className="bg-transparent rounded-[14px] p-8 h-full flex flex-col relative overflow-hidden">
-                                    <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-full translate-x-8 -translate-y-8 blur-2xl group-hover:bg-cyan-500/10 transition-colors"></div>
+                                        <Card key={assessment._id} className="group p-1 border-white/5 bg-slate-900/40 backdrop-blur-md hover:border-cyan-500/30 transition-all duration-500">
+                                            <div className="bg-transparent rounded-[14px] p-8 h-full flex flex-col relative overflow-hidden">
+                                                <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-full translate-x-8 -translate-y-8 blur-2xl group-hover:bg-cyan-500/10 transition-colors"></div>
 
-                                        <div className="flex items-start justify-between mb-8 relative z-10">
-                                            <div className="flex flex-col">
-                                                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-cyan-500 mb-1 opacity-80">Subject</span>
-                                                <h3 className="text-2xl font-black text-white leading-tight group-hover:text-cyan-400 transition-colors uppercase tracking-tight">
-                                                    {assessment.title}
-                                                </h3>
-                                                <span className="mt-3 inline-flex w-fit px-2.5 py-1 rounded-lg border border-white/10 bg-white/5 text-[10px] font-black uppercase tracking-widest text-slate-300">
-                                                    {assessment.difficulty || 'intermediate'}
-                                                </span>
-                                            </div>
-                                        <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 shadow-lg group-hover:bg-cyan-500/10 group-hover:border-cyan-500/30 transition-all">
-                                            <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                        </div>
-                                    </div>
+                                                <div className="flex items-start justify-between mb-8 relative z-10">
+                                                    <div className="flex flex-col">
+                                                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-cyan-500 mb-1 opacity-80">Subject</span>
+                                                        <h3 className="text-2xl font-black text-white leading-tight group-hover:text-cyan-400 transition-colors uppercase tracking-tight">
+                                                            {assessment.title}
+                                                        </h3>
+                                                        <span className="mt-3 inline-flex w-fit px-2.5 py-1 rounded-lg border border-white/10 bg-white/5 text-[10px] font-black uppercase tracking-widest text-slate-300">
+                                                            {assessment.difficulty || 'intermediate'}
+                                                        </span>
+                                                    </div>
+                                                    <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 shadow-lg group-hover:bg-cyan-500/10 group-hover:border-cyan-500/30 transition-all">
+                                                        <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
 
-                                    <p className="text-slate-400 mb-10 flex-grow text-sm font-medium leading-relaxed line-clamp-3 relative z-10 font-inter">
-                                        {assessment.description}
-                                    </p>
+                                                <p className="text-slate-400 mb-10 flex-grow text-sm font-medium leading-relaxed line-clamp-3 relative z-10 font-inter">
+                                                    {assessment.description}
+                                                </p>
 
-                                    <div className="pt-8 border-t border-white/5 relative z-10">
-                                        <div className="flex items-center justify-between mb-8">
-                                            <div className="flex flex-col">
-                                                <span className="text-[10px] uppercase font-black text-slate-500 tracking-widest mb-1">Standard Price</span>
-                                                <div className="text-3xl font-black text-white leading-none">
-                                                    ₹{assessment.price}
+                                                <div className="pt-8 border-t border-white/5 relative z-10">
+                                                    <div className="flex items-center justify-between mb-8">
+                                                        {isPurchased(assessment) ? (
+                                                            <span className="px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-[10px] font-black uppercase tracking-widest rounded-xl">
+                                                                ✓ Access Unlocked
+                                                            </span>
+                                                        ) : (
+                                                            <div className="flex flex-col">
+                                                                <span className="text-[10px] uppercase font-black text-slate-500 tracking-widest mb-1">Standard Price</span>
+                                                                <div className="text-3xl font-black text-white leading-none">
+                                                                    ₹{assessment.price}
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                        <div className="flex flex-col items-end">
+                                                            <span className="px-2 py-1 bg-cyan-500/10 text-cyan-400 text-[10px] font-black uppercase tracking-widest rounded border border-cyan-500/20">Verified MCQ</span>
+                                                            <span className="text-[10px] text-slate-500 font-bold mt-1 uppercase tracking-tighter">{assessment.duration}m Duration</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="flex gap-3">
+                                                        <Button
+                                                            variant="outline"
+                                                            size="sm"
+                                                            className="flex-1 border-white/10 text-[10px] font-black uppercase tracking-widest py-4 group-hover:border-cyan-500/30 group-hover:text-cyan-400"
+                                                            onClick={() => {
+                                                                setSelectedAssessment(assessment);
+                                                                setShowPurchaseModal(true);
+                                                            }}
+                                                        >
+                                                            Details
+                                                        </Button>
+                                                        {isPurchased(assessment) ? (
+                                                            <Button
+                                                                variant="primary"
+                                                                size="sm"
+                                                                className="flex-1 text-[10px] font-black uppercase tracking-widest py-4 shadow-2xl shadow-cyan-900/20"
+                                                                onClick={() => handleStartTest(assessment._id)}
+                                                            >
+                                                                View Levels
+                                                            </Button>
+                                                        ) : (
+                                                            <Button
+                                                                variant="outline"
+                                                                size="sm"
+                                                                className="flex-1 border-amber-500/30 text-amber-400 text-[10px] font-black uppercase tracking-widest py-4 hover:bg-amber-500/10"
+                                                                onClick={() => {
+                                                                    setSelectedAssessment(assessment);
+                                                                    setShowPaymentModal(true);
+                                                                }}
+                                                            >
+                                                                🔒 Buy Access
+                                                            </Button>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="flex flex-col items-end">
-                                                <span className="px-2 py-1 bg-cyan-500/10 text-cyan-400 text-[10px] font-black uppercase tracking-widest rounded border border-cyan-500/20">Verified MCQ</span>
-                                                <span className="text-[10px] text-slate-500 font-bold mt-1 uppercase tracking-tighter">{assessment.duration}m Duration</span>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex gap-3">
-                                            <Button
-                                                variant="outline"
-                                                size="sm"
-                                                className="flex-1 border-white/10 text-[10px] font-black uppercase tracking-widest py-4 group-hover:border-cyan-500/30 group-hover:text-cyan-400"
-                                                onClick={() => {
-                                                    setSelectedAssessment(assessment);
-                                                    setShowPurchaseModal(true);
-                                                }}
-                                            >
-                                                Details
-                                            </Button>
-                                            <Button
-                                                variant="primary"
-                                                size="sm"
-                                                className="flex-1 text-[10px] font-black uppercase tracking-widest py-4 shadow-2xl shadow-cyan-900/20"
-                                                onClick={() => handleStartTest(assessment._id)}
-                                            >
-                                                View Levels
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Card>
+                                        </Card>
                                     ))}
                                 </div>
                             </section>
@@ -328,7 +357,14 @@ export default function AssessmentsPage() {
 
                         <div className="flex gap-4">
                             <Button variant="outline" className="flex-1 py-5 font-black uppercase tracking-widest border-white/10 text-slate-400 hover:border-cyan-500/30 hover:text-cyan-400" onClick={() => setShowPurchaseModal(false)}>Retract</Button>
-                            <Button variant="primary" className="flex-1 py-5 font-black uppercase tracking-widest shadow-2xl shadow-cyan-900/30">Commit Order</Button>
+                            <Button
+                                variant="primary"
+                                className="flex-1 py-5 font-black uppercase tracking-widest shadow-2xl shadow-cyan-900/30"
+                                onClick={() => {
+                                    setShowPurchaseModal(false);
+                                    setShowPaymentModal(true);
+                                }}
+                            >Pay Now</Button>
                         </div>
 
                         <p className="text-center text-[10px] text-slate-600 font-black uppercase tracking-[0.2em] opacity-50">
@@ -337,6 +373,17 @@ export default function AssessmentsPage() {
                     </div>
                 )}
             </Modal>
+
+            {/* Razorpay Payment Modal */}
+            <PaymentModal
+                isOpen={showPaymentModal}
+                onClose={() => setShowPaymentModal(false)}
+                assessment={selectedAssessment}
+                defaultPlan="individual"
+                onSuccess={() => {
+                    loadData(); // refresh purchases
+                }}
+            />
         </div>
     );
 }

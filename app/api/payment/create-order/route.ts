@@ -4,6 +4,8 @@ import { createOrder } from '@/lib/razorpay';
 import { authMiddleware } from '@/middleware/auth';
 import Purchase from '@/models/Purchase';
 import Transaction from '@/models/Transaction';
+import Category from '@/models/Category';
+import Assessment from '@/models/Assessment';
 import { PRICING } from '@/lib/constants';
 
 export async function POST(request: NextRequest) {
@@ -17,7 +19,7 @@ export async function POST(request: NextRequest) {
         await connectDB();
 
         const body = await request.json();
-        const { purchaseType, assessmentId, categoryId } = body;
+        const { purchaseType, assessmentId, categoryId, categorySlug } = body;
 
         // Determine amount based on purchase type
         let amount = 0;
@@ -34,12 +36,22 @@ export async function POST(request: NextRequest) {
             );
         }
 
+        // Resolve category: accept either an ObjectId or a slug
+        let resolvedCategoryId = categoryId;
+        if (!resolvedCategoryId && categorySlug) {
+            const cat = await Category.findOne({ slug: categorySlug }).select('_id');
+            if (!cat) {
+                return NextResponse.json({ error: `Category '${categorySlug}' not found` }, { status: 400 });
+            }
+            resolvedCategoryId = cat._id;
+        }
+
         // Create purchase record
         const purchase = await Purchase.create({
             user: authResult.user.userId,
             purchaseType,
-            assessment: assessmentId,
-            category: categoryId,
+            assessment: assessmentId || undefined,
+            category: resolvedCategoryId || undefined,
             amount,
             currency: 'INR',
             paymentId: 'pending',
