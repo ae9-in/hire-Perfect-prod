@@ -7,7 +7,11 @@ async function run(): Promise<void> {
 
     const { default: connectDB } = await import('../lib/db');
     await connectDB();
-    const collection = mongoose.connection.db.collection('assessments');
+    const db = mongoose.connection.db;
+    if (!db) {
+        throw new Error('Database connection not initialized');
+    }
+    const collection = db.collection('assessments');
 
     const beforeCounts = {
         easy: await collection.countDocuments({ difficulty: 'easy' }),

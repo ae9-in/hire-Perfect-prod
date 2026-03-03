@@ -32,7 +32,9 @@ async function seed() {
 
         for (let i = 0; i < CATEGORIES.length; i++) {
             const categoryData = CATEGORIES[i];
-            const subjectTitles = categoryData.subjects || categoryData.assessments || [];
+            const subjectTitles: string[] = [
+                ...(categoryData.subjects || categoryData.assessments || []),
+            ];
 
             const category = await Category.create({
                 name: categoryData.name,

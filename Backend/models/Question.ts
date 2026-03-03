@@ -55,13 +55,15 @@ const QuestionSchema = new Schema<IQuestion>(
             type: Schema.Types.Mixed,
             required: [true, 'Correct answer is required'],
             validate: {
-                validator: function (value: unknown) {
-                    if (this.type === 'mcq') {
+                validator: function (this: any, value: unknown) {
+                    const doc = this as IQuestion;
+
+                    if (doc.type === 'mcq') {
                         const numericValue = Number(value);
                         return Number.isInteger(numericValue) && numericValue >= 0 && numericValue <= 3;
                     }
 
-                    if (this.type === 'scenario') {
+                    if (doc.type === 'scenario') {
                         return typeof value === 'string' && value.trim().length > 0;
                     }
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Navbar from '@/components/ui/Navbar';
 import Card from '@/components/ui/Card';
@@ -11,7 +11,7 @@ import PaymentModal from '@/components/ui/PaymentModal';
 import { CATEGORIES } from '@/lib/constants';
 import { checkAndClearExpiredSession } from '@/lib/sessionUtils';
 
-export default function AssessmentsPage() {
+function AssessmentsPageContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -385,5 +385,13 @@ export default function AssessmentsPage() {
                 }}
             />
         </div>
+    );
+}
+
+export default function AssessmentsPage() {
+    return (
+        <Suspense fallback={<Loading variant="spinner" fullScreen text="Preparing Assessments..." />}>
+            <AssessmentsPageContent />
+        </Suspense>
     );
 }
