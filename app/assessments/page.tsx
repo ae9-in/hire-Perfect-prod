@@ -25,7 +25,13 @@ function AssessmentsPageContent() {
     const [seedError, setSeedError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (!checkAndClearExpiredSession(router)) return;
+        // Allow unauthenticated users to view assessments
+        // Only check session expiry if user is actually logged in
+        const token = localStorage.getItem('token');
+        if (token) {
+            checkAndClearExpiredSession(router);
+        }
+        
         const categoryFromQuery = searchParams.get('category');
         if (categoryFromQuery) {
             setSelectedCategory(categoryFromQuery);
