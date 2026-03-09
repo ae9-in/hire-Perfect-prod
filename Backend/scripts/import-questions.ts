@@ -93,6 +93,11 @@ function normalizeLookupName(value: string): string {
     return value
         .toLowerCase()
         .replace(/\bprotyping\b/g, 'prototyping')
+        .replace(/\bai based\b/g, 'ai-based')
+        .replace(/\bsoc operations\b/g, 'soc operations overview')
+        .replace(/\bcontent repurposing system\b/g, 'content repurposing systems')
+        .replace(/\bclinical decision support cds\b/g, 'clinical decision support')
+        .replace(/\binvestor pitch decks?\b/g, 'investor pitch decks')
         .replace(/\([^)]*\)/g, ' ')
         .replace(/&/g, ' and ')
         .replace(/\+/g, ' plus ')

@@ -7,7 +7,7 @@ export const PRICING = {
 } as const;
 
 export const EXAM_CONFIG = {
-    DURATION_MINUTES: 30,
+    DURATION_MINUTES: 50,
     MAX_VIOLATIONS: 5,
     AUTO_SAVE_INTERVAL: 10000, // 10 seconds
 } as const;

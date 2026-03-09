@@ -23,9 +23,9 @@ export default function AssessmentManagement() {
         slug: '',
         description: '',
         category: '',
-        duration: 30,
+        duration: 50,
         price: 500,
-        totalQuestions: 20,
+        totalQuestions: 50,
         passingScore: 60,
         difficulty: 'intermediate',
         isActive: true
@@ -85,7 +85,7 @@ export default function AssessmentManagement() {
                 setEditingAssessment(null);
                 setFormData({
                     title: '', slug: '', description: '', category: '',
-                    duration: 30, price: 500, totalQuestions: 20,
+                    duration: 50, price: 500, totalQuestions: 50,
                     passingScore: 60, difficulty: 'intermediate', isActive: true
                 });
             }

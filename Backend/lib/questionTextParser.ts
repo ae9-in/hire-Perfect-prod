@@ -28,6 +28,14 @@ function isMeaningfulHeading(value: string): boolean {
     return true;
 }
 
+function normalizeHeadingText(value: string): string {
+    return value
+        .replace(/^[^\p{L}\p{N}]+/u, '')
+        .replace(/^(?:topic|subtopic)\s*[:\-]?\s*/i, '')
+        .replace(/^\d+\s*[\).\:\-]?\s*/, '')
+        .trim();
+}
+
 function cleanupLine(line: string): string {
     return line.replace(/\t/g, ' ').replace(/\s+/g, ' ').trim();
 }
@@ -124,30 +132,30 @@ function parseSubtopicHeading(line: string): string | null {
     // Example: "• AI transformation frameworks"
     const bulletMatch = line.match(/^[\u2022\-\*]\s+(.+)$/);
     if (bulletMatch) {
-        const heading = bulletMatch[1].trim();
+        const heading = normalizeHeadingText(bulletMatch[1]);
         if (isMeaningfulHeading(heading)) return heading;
     }
 
     // Example: "Subtopic 1: Conversational Interface Design"
     const numberedSubtopicMatch = line.match(/^subtopic\s*\d*\s*[:\-]\s*(.+)$/i);
     if (numberedSubtopicMatch) {
-        const heading = numberedSubtopicMatch[1].trim();
+        const heading = normalizeHeadingText(numberedSubtopicMatch[1]);
         if (isMeaningfulHeading(heading)) return heading;
     }
 
     // Example: "Topic 2: Zero-Trust Architecture (ZTA)"
     // NOTE: bare "Topic: Title" (no number) is intentionally excluded — it is
     // typically a document-level title, not an assessment subtopic.
-    const topicMatch = line.match(/^topic\s*\d+\s*[:\-]\s*(.+)$/i);
+    const topicMatch = line.match(/^topic\s*[:\-]?\s*\d*\s*[:\-]?\s*(.+)$/i);
     if (topicMatch) {
-        const heading = topicMatch[1].trim();
+        const heading = normalizeHeadingText(topicMatch[1]);
         if (isMeaningfulHeading(heading)) return heading;
     }
 
     // Example: "1)Conversion funnel engineering"
     const numberedParenHeading = line.match(/^\d+\)\s*(.+)$/);
     if (numberedParenHeading) {
-        const heading = numberedParenHeading[1].trim();
+        const heading = normalizeHeadingText(numberedParenHeading[1]);
         if (isMeaningfulHeading(heading)) return heading;
     }
 
@@ -160,6 +168,14 @@ function parseSubtopicHeading(line: string): string | null {
         const heading = numberedDotAllCapsHeading[1].trim();
         // Convert from ALL CAPS to Title Case for cleaner matching against constants
         const titleCase = heading
+            .toLowerCase()
+            .replace(/\b\w/g, c => c.toUpperCase());
+        if (isMeaningfulHeading(titleCase)) return titleCase;
+    }
+
+    const cleaned = normalizeHeadingText(line);
+    if (cleaned && cleaned !== line) {
+        const titleCase = cleaned
             .toLowerCase()
             .replace(/\b\w/g, c => c.toUpperCase());
         if (isMeaningfulHeading(titleCase)) return titleCase;
@@ -315,16 +331,15 @@ export function parseQuestionsFromRawText(rawText: string): ParsedQuestion[] {
         // Heuristic for files where a subtopic line is immediately followed by level heading.
         if (
             !current &&
-            !state.level &&
             !!nextLine &&
             !!parseLevelHeading(nextLine) &&
-            isMeaningfulHeading(line) &&
+            isMeaningfulHeading(normalizeHeadingText(line)) &&
             !parseOption(line) &&
             !parseQuestionLine(line) &&
             !/^answer\s*[:\-]/i.test(line)
         ) {
             finalizeCurrent();
-            state.subtopic = line;
+            state.subtopic = normalizeHeadingText(line);
             continue;
         }
 
