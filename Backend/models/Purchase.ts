@@ -6,6 +6,16 @@ export interface IPurchase extends Document {
     purchaseType: 'individual' | 'category' | 'bundle';
     assessment?: mongoose.Types.ObjectId; // For individual purchase
     category?: mongoose.Types.ObjectId; // For category combo
+    assessmentSnapshot?: {
+        title: string;
+        slug?: string;
+        categoryName?: string;
+        categorySlug?: string;
+    };
+    categorySnapshot?: {
+        name: string;
+        slug?: string;
+    };
     amount: number;
     currency: string;
     paymentId: string;
@@ -36,6 +46,16 @@ const PurchaseSchema = new Schema<IPurchase>(
         category: {
             type: Schema.Types.ObjectId,
             ref: 'Category',
+        },
+        assessmentSnapshot: {
+            title: { type: String },
+            slug: { type: String },
+            categoryName: { type: String },
+            categorySlug: { type: String },
+        },
+        categorySnapshot: {
+            name: { type: String },
+            slug: { type: String },
         },
         amount: {
             type: Number,

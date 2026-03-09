@@ -8,6 +8,19 @@ import Category from '@/models/Category';
 import Assessment from '@/models/Assessment';
 import { PRICING } from '@/lib/constants';
 
+type SelectedCategory = {
+    _id: { toString(): string };
+    name: string;
+    slug?: string;
+};
+
+type SelectedAssessment = {
+    _id: { toString(): string };
+    title: string;
+    slug?: string;
+    category?: SelectedCategory | null;
+};
+
 export async function POST(request: NextRequest) {
     try {
         // Authenticate user
@@ -38,20 +51,66 @@ export async function POST(request: NextRequest) {
 
         // Resolve category: accept either an ObjectId or a slug
         let resolvedCategoryId = categoryId;
+        let selectedCategory: SelectedCategory | null = null;
+        let selectedAssessment: SelectedAssessment | null = null;
+
         if (!resolvedCategoryId && categorySlug) {
-            const cat = await Category.findOne({ slug: categorySlug }).select('_id');
+            const cat = await Category.findOne({ slug: categorySlug }).select('_id name slug');
             if (!cat) {
                 return NextResponse.json({ error: `Category '${categorySlug}' not found` }, { status: 400 });
             }
             resolvedCategoryId = cat._id;
+            selectedCategory = cat;
+        }
+
+        if (purchaseType === 'individual') {
+            if (!assessmentId) {
+                return NextResponse.json({ error: 'Assessment is required for an individual purchase' }, { status: 400 });
+            }
+
+            selectedAssessment = await Assessment.findById(assessmentId)
+                .populate('category', 'name slug')
+                .select('_id title slug category');
+
+            if (!selectedAssessment) {
+                return NextResponse.json({ error: 'Selected assessment was not found' }, { status: 404 });
+            }
+        }
+
+        if (purchaseType === 'category') {
+            if (!resolvedCategoryId) {
+                return NextResponse.json({ error: 'Category is required for a category purchase' }, { status: 400 });
+            }
+
+            if (!selectedCategory) {
+                selectedCategory = await Category.findById(resolvedCategoryId).select('_id name slug');
+            }
+
+            if (!selectedCategory) {
+                return NextResponse.json({ error: 'Selected category was not found' }, { status: 404 });
+            }
         }
 
         // Create purchase record
         const purchase = await Purchase.create({
             user: authResult.user.userId,
             purchaseType,
-            assessment: assessmentId || undefined,
+            assessment: selectedAssessment?._id || undefined,
             category: resolvedCategoryId || undefined,
+            assessmentSnapshot: selectedAssessment
+                ? {
+                    title: selectedAssessment.title,
+                    slug: selectedAssessment.slug,
+                    categoryName: selectedAssessment.category?.name,
+                    categorySlug: selectedAssessment.category?.slug,
+                }
+                : undefined,
+            categorySnapshot: selectedCategory
+                ? {
+                    name: selectedCategory.name,
+                    slug: selectedCategory.slug,
+                }
+                : undefined,
             amount,
             currency: 'INR',
             paymentId: 'pending',
@@ -99,10 +158,11 @@ export async function POST(request: NextRequest) {
             currency: 'INR',
             keyId: process.env.RAZORPAY_KEY_ID,
         });
-    } catch (error: any) {
+    } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : 'Internal server error';
         console.error('Create order error:', error);
         return NextResponse.json(
-            { error: error.message || 'Internal server error' },
+            { error: message },
             { status: 500 }
         );
     }

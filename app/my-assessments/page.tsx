@@ -10,18 +10,21 @@ import { checkAndClearExpiredSession } from '@/lib/sessionUtils';
 interface AssessmentInfo {
     _id: string;
     title: string;
+    slug?: string;
     description?: string;
     duration?: number;
     totalQuestions?: number;
     difficulty?: string;
     price?: number;
     category?: { _id: string; name: string; slug: string };
+    isArchived?: boolean;
 }
 
 interface CategoryInfo {
     _id: string;
     name: string;
     slug: string;
+    isArchived?: boolean;
 }
 
 interface Purchase {
@@ -31,6 +34,10 @@ interface Purchase {
     amount: number;
     assessment?: AssessmentInfo;
     category?: CategoryInfo;
+    referenceStatus?: {
+        missingAssessment?: boolean;
+        missingCategory?: boolean;
+    };
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -56,6 +63,10 @@ export default function MyAssessmentsPage() {
             const res = await fetch('/api/payment/purchases', {
                 headers: { Authorization: `Bearer ${token}` },
             });
+            if (!res.ok) {
+                const failure = await res.json().catch(() => ({}));
+                throw new Error(failure.error || 'Failed to load purchases');
+            }
             const data = await res.json();
             if (!data.success) throw new Error(data.error || 'Failed to load purchases');
             setPurchases(data.purchases || []);
@@ -107,6 +118,9 @@ export default function MyAssessmentsPage() {
     if (loading) return <Loading variant="spinner" fullScreen text="Loading Your Library..." />;
 
     const hasPurchases = purchases.length > 0;
+    const hasBrokenPurchases = purchases.some((purchase) =>
+        purchase.referenceStatus?.missingAssessment || purchase.referenceStatus?.missingCategory
+    );
 
     return (
         <div className="min-h-screen bg-[#020205] text-white bg-grid selection:bg-cyan-500/30 selection:text-cyan-200">
@@ -140,6 +154,12 @@ export default function MyAssessmentsPage() {
                     </div>
                 )}
 
+                {hasBrokenPurchases && !error && (
+                    <div className="mb-8 p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-sm font-medium text-center">
+                        Some older purchases point to assessments or categories that no longer exist in the catalog, so they cannot be opened.
+                    </div>
+                )}
+
                 {/* ── Empty state ── */}
                 {!hasPurchases && !error && (
                     <div className="py-28 text-center border-2 border-dashed border-white/5 rounded-[2rem] flex flex-col items-center">
@@ -169,8 +189,8 @@ export default function MyAssessmentsPage() {
                         if (p.purchaseType === 'individual') {
                             const a = p.assessment;
                             if (!a) return (
-                                <div key={p._id} className="p-6 rounded-2xl border border-white/8 bg-slate-900/40 text-slate-500 text-sm font-medium text-center">
-                                    Assessment data not available.
+                                <div key={p._id} className="p-6 rounded-2xl border border-amber-500/20 bg-amber-500/5 text-amber-200 text-sm font-medium text-center">
+                                    This purchase points to an assessment that no longer exists in the catalog.
                                 </div>
                             );
                             return (
@@ -187,6 +207,11 @@ export default function MyAssessmentsPage() {
                                             <h3 className="text-xl font-black text-white uppercase tracking-tight leading-tight group-hover:text-cyan-400 transition-colors">
                                                 {a.title}
                                             </h3>
+                                            {a.isArchived && (
+                                                <p className="text-amber-300 text-xs mt-2 font-black uppercase tracking-widest">
+                                                    Legacy purchase: this assessment is no longer in the active catalog.
+                                                </p>
+                                            )}
                                             {a.description && (
                                                 <p className="text-slate-500 text-sm mt-1 line-clamp-2">{a.description}</p>
                                             )}
@@ -198,7 +223,8 @@ export default function MyAssessmentsPage() {
                                         </div>
                                         <button
                                             onClick={() => startTest(a._id)}
-                                            className="flex-shrink-0 px-7 py-3 rounded-2xl bg-gradient-to-r from-cyan-600 to-cyan-500 text-black font-black uppercase tracking-widest text-xs shadow-lg shadow-cyan-500/15 hover:from-cyan-500 hover:to-cyan-400 transition-all"
+                                            disabled={a.isArchived || !a._id}
+                                            className="flex-shrink-0 px-7 py-3 rounded-2xl bg-gradient-to-r from-cyan-600 to-cyan-500 text-black font-black uppercase tracking-widest text-xs shadow-lg shadow-cyan-500/15 hover:from-cyan-500 hover:to-cyan-400 transition-all disabled:cursor-not-allowed disabled:opacity-50"
                                         >
                                             Start Test →
                                         </button>
@@ -210,6 +236,13 @@ export default function MyAssessmentsPage() {
                         /* ────── Category Combo ────── */
                         if (p.purchaseType === 'category') {
                             const cat = p.category;
+                            if (!cat) {
+                                return (
+                                    <div key={p._id} className="p-6 rounded-2xl border border-amber-500/20 bg-amber-500/5 text-amber-200 text-sm font-medium text-center">
+                                        This purchase points to a category that no longer exists in the catalog.
+                                    </div>
+                                );
+                            }
                             const catName = cat?.name || 'Category';
                             const catSlug = cat?.slug || '';
                             const catId = cat?._id || '';
@@ -230,6 +263,11 @@ export default function MyAssessmentsPage() {
                                                 <span className="px-2 py-0.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-[9px] text-emerald-400 font-black uppercase">✓ Purchased</span>
                                             </div>
                                             <h3 className="text-xl font-black text-white uppercase tracking-tight">{catName}</h3>
+                                            {cat?.isArchived && (
+                                                <p className="text-amber-300 text-[10px] font-black uppercase tracking-widest mt-2">
+                                                    Legacy purchase: this category is no longer in the active catalog.
+                                                </p>
+                                            )}
                                             <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mt-1">
                                                 {isOpen ? 'Click to collapse' : 'Click to view assessments'}
                                             </p>
