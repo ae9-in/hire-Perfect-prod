@@ -14,20 +14,11 @@ if (!mongoUri) {
     process.exit(1);
 }
 
-interface IAssessment extends mongoose.Document {
-    title: string;
-    duration: number;
-    _id: string;
-}
-
-interface IQuestion extends mongoose.Document {
-    assessment: string;
-    difficulty: 'easy' | 'medium' | 'hard';
-}
+const resolvedMongoUri = mongoUri;
 
 async function checkAssessments() {
     try {
-        await mongoose.connect(mongoUri);
+        await mongoose.connect(resolvedMongoUri);
         console.log('Connected to MongoDB\n');
 
         const db = mongoose.connection.db;
@@ -53,7 +44,7 @@ async function checkAssessments() {
         for (const assessment of assessments) {
             const counts = await questionCollection
                 .aggregate([
-                    { $match: { assessment: new mongoose.Types.ObjectId(assessment._id) } },
+                    { $match: { assessment: new mongoose.Types.ObjectId(String(assessment._id)) } },
                     { $group: { _id: '$difficulty', count: { $sum: 1 } } },
                 ])
                 .toArray();

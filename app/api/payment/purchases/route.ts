@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
             .sort({ purchasedAt: -1 })
             .lean();
 
-        const normalizedPurchases = (purchases as PurchaseRecord[]).map((purchase) => {
+        const normalizedPurchases = (purchases as unknown as PurchaseRecord[]).map((purchase) => {
             const populatedAssessment =
                 purchase.assessment &&
                 typeof purchase.assessment === 'object' &&
