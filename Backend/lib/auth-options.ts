@@ -4,17 +4,28 @@ import GitHubProvider from 'next-auth/providers/github';
 import connectDB from './db';
 import User from '../models/User';
 
-export const authOptions: NextAuthOptions = {
-    providers: [
+const providers = [];
+
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+    providers.push(
         GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID || '',
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-        }),
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        })
+    );
+}
+
+if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
+    providers.push(
         GitHubProvider({
-            clientId: process.env.GITHUB_CLIENT_ID || '',
-            clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
-        }),
-    ],
+            clientId: process.env.GITHUB_CLIENT_ID,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        })
+    );
+}
+
+export const authOptions: NextAuthOptions = {
+    providers,
     callbacks: {
         async signIn({ user, account }) {
             if (!user.email) return false;

@@ -5,9 +5,22 @@ import Assessment from '@/models/Assessment';
 import Question from '@/models/Question';
 import { CATEGORIES } from '@/lib/constants';
 import { toSlug } from '@/lib/slug';
+import { adminMiddleware } from '@/middleware/auth';
 
-export async function GET(_request: NextRequest) {
+export async function POST(request: NextRequest) {
     try {
+        if (process.env.NODE_ENV === 'production') {
+            return NextResponse.json(
+                { success: false, error: 'Maintenance seed is disabled in production.' },
+                { status: 403 }
+            );
+        }
+
+        const authResult = await adminMiddleware(request);
+        if (!authResult.authorized) {
+            return authResult.response!;
+        }
+
         await connectDB();
 
         let seededAssessments = 0;

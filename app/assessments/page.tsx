@@ -56,33 +56,15 @@ function AssessmentsPageContent() {
             if (assessmentsData.success) {
                 setAssessments(assessmentsData.assessments || []);
                 setCategoryGroups(assessmentsData.categories || []);
-
-                const hasAnyAssessments = (assessmentsData.assessments || []).length > 0 || (assessmentsData.categories || []).length > 0;
-                if (!hasAnyAssessments) {
-                    const seedRes = await fetch('/api/maintenance/seed');
-                    const seedData = await seedRes.json();
-
-                    if (seedData.success) {
-                        const retryRes = await fetch('/api/assessments', {
-                            headers: token ? { Authorization: `Bearer ${token}` } : {}
-                        });
-                        const retryData = await retryRes.json();
-                        if (retryData.success) {
-                            setAssessments(retryData.assessments || []);
-                            setCategoryGroups(retryData.categories || []);
-                        } else {
-                            setSeedError('Auto-initialization completed, but assessments could not be loaded.');
-                        }
-                    } else {
-                        setSeedError(seedData.error || 'Unable to initialize assessments.');
-                    }
-                }
+            } else {
+                setSeedError(assessmentsData.error || 'Unable to load assessments.');
             }
             if (purchasesData.success) {
                 setUserPurchases(purchasesData.purchases?.map((p: any) => p.assessment?.toString() || p.category?.toString()) || []);
             }
         } catch (error) {
             console.error('Failed to load data:', error);
+            setSeedError('Unable to load assessments right now.');
         } finally {
             setLoading(false);
         }
@@ -294,27 +276,6 @@ function AssessmentsPageContent() {
                             <h3 className="text-3xl font-black text-white mb-2 uppercase tracking-tighter">No Units Found</h3>
                             <p className="text-slate-500 font-medium mb-10 max-w-sm">The assessment database for this track is currently offline or empty.</p>
                             {seedError && <p className="text-rose-400 text-sm font-medium mb-6">{seedError}</p>}
-                            <Button
-                                variant="primary"
-                                size="lg"
-                                className="shadow-2xl shadow-cyan-900/30 px-12 py-5 font-black uppercase tracking-widest"
-                                onClick={async () => {
-                                    setLoading(true);
-                                    try {
-                                        const res = await fetch('/api/maintenance/seed');
-                                        const data = await res.json();
-                                        if (data.success) {
-                                            window.location.reload();
-                                        }
-                                    } catch (err: any) {
-                                        console.error(err);
-                                    } finally {
-                                        setLoading(false);
-                                    }
-                                }}
-                            >
-                                Initialize Protocol
-                            </Button>
                         </div>
                     )}
                 </div>

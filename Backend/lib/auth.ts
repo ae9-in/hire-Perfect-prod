@@ -1,7 +1,13 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+function getJwtSecret(): string {
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+        throw new Error('JWT_SECRET is not configured');
+    }
+    return secret;
+}
 
 export interface TokenPayload {
     userId: string;
@@ -11,7 +17,7 @@ export interface TokenPayload {
 
 // Generate JWT token
 export function generateToken(payload: TokenPayload): string {
-    return jwt.sign(payload, JWT_SECRET, {
+    return jwt.sign(payload, getJwtSecret(), {
         expiresIn: '3d', // Token expires in 3 days
     });
 }
@@ -19,7 +25,7 @@ export function generateToken(payload: TokenPayload): string {
 // Verify JWT token
 export function verifyToken(token: string): TokenPayload | null {
     try {
-        const decoded = jwt.verify(token, JWT_SECRET) as TokenPayload;
+        const decoded = jwt.verify(token, getJwtSecret()) as TokenPayload;
         return decoded;
     } catch (error) {
         return null;
