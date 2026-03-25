@@ -11,6 +11,7 @@
     "migrate:assessment-levels": "tsx Backend/scripts/migrate-assessment-levels.ts",
     "seed:dummy": "tsx Backend/scripts/add-dummy-questions.ts",
     "seed:dummy:remove": "tsx Backend/scripts/remove-dummy-questions.ts",
+    "questions:rebuild": "tsx Backend/scripts/rebuild-question-bank.ts",
     "import:questions:validate": "tsx Backend/scripts/import-questions.ts --mode=validate",
     "import:questions:preview": "tsx Backend/scripts/import-questions.ts --mode=preview",
     "import:questions": "tsx Backend/scripts/import-questions.ts --mode=import",

@@ -14,6 +14,11 @@ import '../models/Purchase';
 import '../models/Category';
 import '../models/Transaction';
 import '../models/FAQSubmission';
+import '../models/CodingChallenge';
+import '../models/CodingSubmission';
+import '../models/Skill';
+import '../models/UserSkill';
+import '../models/Project';
 
 // Force IPv4 DNS resolution to reduce Windows IPv6/SRV issues.
 dns.setDefaultResultOrder('ipv4first');

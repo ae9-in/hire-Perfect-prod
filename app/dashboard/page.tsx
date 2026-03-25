@@ -229,17 +229,31 @@ export default function DashboardPage() {
 
                         <Card className="p-8 bg-gradient-to-br from-cyan-600 to-purple-700 text-white relative overflow-hidden group border-0 shadow-2xl shadow-cyan-900/30">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full translate-x-12 -translate-y-12 animate-float"></div>
-                            <h3 className="text-xl font-black uppercase tracking-tight mb-4 relative z-10">Certification</h3>
-                            <p className="text-cyan-100/80 text-sm font-medium mb-8 relative z-10 leading-relaxed font-inter">View and share your verified achievement certificates.</p>
-                            <Link href="/dashboard" className="relative z-10">
-                                <Button className="bg-white text-cyan-900 hover:bg-cyan-50 w-full py-4 text-xs uppercase tracking-[0.2em] font-black shadow-xl">Archive Access</Button>
+                            <h3 className="text-xl font-black uppercase tracking-tight mb-4 relative z-10">Unified Profile</h3>
+                            <p className="text-cyan-100/80 text-sm font-medium mb-8 relative z-10 leading-relaxed font-inter">View your overall score, coding evaluations, and projects in one place.</p>
+                            <Link href={`/profile/${user?.id || user?._id || ''}`} className="relative z-10">
+                                <Button className="bg-white text-cyan-900 hover:bg-cyan-50 w-full py-4 text-xs uppercase tracking-[0.2em] font-black shadow-xl">View Profile</Button>
                             </Link>
                         </Card>
 
-                        <Card className="p-8 bg-slate-900/40 border-white/5 hover:border-cyan-500/30 transition-all group">
-                            <h3 className="text-xl font-black text-white uppercase tracking-tight mb-4">Support Ops</h3>
-                            <p className="text-slate-400 text-sm font-medium mb-8 leading-relaxed font-inter">Need assistance with an assessment or your results?</p>
-                            <Button variant="outline" className="w-full py-4 text-xs uppercase tracking-widest font-black border-white/10 group-hover:border-cyan-500/50 group-hover:text-cyan-400">Open Ticket</Button>
+                        <Card className="p-8 bg-slate-900/40 border-white/5 hover:border-emerald-500/30 transition-all group">
+                            <h3 className="text-xl font-black text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+                                <span className="text-emerald-500">{"</>"}</span> Code Arena
+                            </h3>
+                            <p className="text-slate-400 text-sm font-medium mb-8 leading-relaxed font-inter">Solve technical challenges and get expert feedback.</p>
+                            <Link href="/coding">
+                                <Button variant="outline" className="w-full py-4 text-xs uppercase tracking-widest font-black border-white/10 group-hover:border-emerald-500/50 group-hover:text-emerald-400">Solve Challenges</Button>
+                            </Link>
+                        </Card>
+
+                        <Card className="p-8 bg-slate-900/40 border-white/5 hover:border-purple-500/30 transition-all group">
+                            <h3 className="text-xl font-black text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+                                <span className="text-purple-500">🗂️</span> Portfolio
+                            </h3>
+                            <p className="text-slate-400 text-sm font-medium mb-8 leading-relaxed font-inter">Submit real-world projects to be reviewed by admins.</p>
+                            <Link href="/projects">
+                                <Button variant="outline" className="w-full py-4 text-xs uppercase tracking-widest font-black border-white/10 group-hover:border-purple-500/50 group-hover:text-purple-400">Submit Project</Button>
+                            </Link>
                         </Card>
                     </div>
                 </div>

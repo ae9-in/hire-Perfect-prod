@@ -91,13 +91,33 @@ export default function AdminDashboard() {
                         </p>
                     </div>
 
-                    <div className="flex items-center gap-6">
-                        <Link href="/admin/faq-submissions">
-                            <Button variant="outline" className="px-8 py-4 uppercase tracking-widest text-[10px] font-black border-white/10 hover:border-cyan-500/40 text-white">
-                                FAQ Inbox
+                    <div className="flex flex-wrap items-center gap-4 justify-end">
+                        <Link href="/admin/candidates">
+                            <Button variant="outline" className="px-4 py-3 uppercase tracking-widest text-[10px] font-black border-cyan-500/20 hover:border-cyan-500/50 text-cyan-400 bg-cyan-500/5">
+                                Profiles
                             </Button>
                         </Link>
-                        <Button variant="primary" className="px-8 py-4 uppercase tracking-widest text-[10px] font-black shadow-xl shadow-cyan-500/20 bg-cyan-500 hover:bg-cyan-400 border-none" onClick={loadData}>Refresh Link</Button>
+                        <Link href="/admin/challenges">
+                            <Button variant="outline" className="px-4 py-3 uppercase tracking-widest text-[10px] font-black border-emerald-500/20 hover:border-emerald-500/50 text-emerald-400 bg-emerald-500/5">
+                                Challenges
+                            </Button>
+                        </Link>
+                        <Link href="/admin/submissions">
+                            <Button variant="outline" className="px-4 py-3 uppercase tracking-widest text-[10px] font-black border-emerald-500/20 hover:border-emerald-500/50 text-emerald-400 bg-emerald-500/5">
+                                Code
+                            </Button>
+                        </Link>
+                        <Link href="/admin/projects">
+                            <Button variant="outline" className="px-4 py-3 uppercase tracking-widest text-[10px] font-black border-purple-500/20 hover:border-purple-500/50 text-purple-400 bg-purple-500/5">
+                                Projects
+                            </Button>
+                        </Link>
+                        <Link href="/admin/skills">
+                            <Button variant="outline" className="px-4 py-3 uppercase tracking-widest text-[10px] font-black border-rose-500/20 hover:border-rose-500/50 text-rose-400 bg-rose-500/5">
+                                Skills
+                            </Button>
+                        </Link>
+                        <Button variant="primary" className="px-6 py-3 uppercase tracking-widest text-[10px] font-black shadow-xl shadow-cyan-500/20 bg-cyan-500 hover:bg-cyan-400 border-none ml-2 rounded-xl" onClick={loadData}>Refresh</Button>
                     </div>
                 </div>
 

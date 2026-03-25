@@ -7,6 +7,7 @@ import Assessment from '../models/Assessment';
 import Category from '../models/Category';
 import Question from '../models/Question';
 import { isValidObjectId, normalizeQuestionText, validateQuestionPayload } from '../lib/questionValidation';
+import { evaluateQuestionQuality, normalizeSourceQuestion } from '../lib/questionQuality';
 
 type ImportMode = 'validate' | 'preview' | 'import';
 
@@ -225,17 +226,30 @@ export async function runImportQuestions(argsInput?: string[]): Promise<void> {
 
         const tags = [...(row.tags || [])];
         if (row.subtopic) tags.push(row.subtopic);
+        const normalizedSource = normalizeSourceQuestion(row);
+        const quality = evaluateQuestionQuality({
+            ...row,
+            question: normalizedSource.question,
+            options: normalizedSource.options,
+            tags,
+        });
+
+        if (!quality.isUsable) {
+            log.invalidRows += 1;
+            log.errors.push({ row: i + 1, message: quality.reasons.join('; ') });
+            continue;
+        }
 
         const payload = validateQuestionPayload({
             assessmentId,
             type: row.type || 'mcq',
-            question: row.question,
-            options: row.options,
+            question: normalizedSource.question,
+            options: normalizedSource.options,
             correctAnswer: row.correctAnswer,
             explanation: row.explanation,
             points: row.points ?? 1,
             difficulty: resolveDifficulty(row),
-            tags,
+            tags: [...normalizedSource.tags, ...tags],
         });
 
         if (!payload.value) {

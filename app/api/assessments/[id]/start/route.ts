@@ -4,6 +4,7 @@ import { authMiddleware } from '@/middleware/auth';
 import Assessment from '@/models/Assessment';
 import Question from '@/models/Question';
 import Attempt from '@/models/Attempt';
+import { evaluateQuestionQuality } from '@/Backend/lib/questionQuality';
 
 type AssessmentLevel = 'beginner' | 'intermediate' | 'advanced';
 
@@ -79,7 +80,15 @@ export async function POST(
             difficulty: selectedDifficulty,
         });
 
-        if (allQuestions.length === 0) {
+        const usableQuestions = allQuestions.filter((question) =>
+            evaluateQuestionQuality({
+                question: question.question,
+                options: question.options,
+                tags: question.tags,
+            }).isUsable
+        );
+
+        if (usableQuestions.length === 0) {
             return NextResponse.json(
                 { error: `No ${selectedLevel} level questions are available for this assessment yet.` },
                 { status: 409 }
@@ -89,10 +98,10 @@ export async function POST(
         // If assessment.totalQuestions is 0 or invalid, fall back to all available questions.
         const requestedCount = typeof assessment.totalQuestions === 'number' && assessment.totalQuestions > 0
             ? assessment.totalQuestions
-            : allQuestions.length;
-        const finalQuestionCount = Math.min(requestedCount, allQuestions.length);
+            : usableQuestions.length;
+        const finalQuestionCount = Math.min(requestedCount, usableQuestions.length);
 
-        const shuffled = allQuestions.sort(() => 0.5 - Math.random());
+        const shuffled = usableQuestions.sort(() => 0.5 - Math.random());
         const selectedQuestions = shuffled.slice(0, finalQuestionCount);
 
         // Create attempt
