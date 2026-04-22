@@ -7,6 +7,7 @@ import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Loading from '@/components/ui/Loading';
 import Navbar from '@/components/ui/Navbar';
+import CertificateModal from '@/components/ui/CertificateModal';
 import { checkAndClearExpiredSession } from '@/lib/sessionUtils';
 
 export default function DashboardPage() {
@@ -15,6 +16,8 @@ export default function DashboardPage() {
     const [assessments, setAssessments] = useState<any[]>([]);
     const [attempts, setAttempts] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [selectedAttempt, setSelectedAttempt] = useState<any>(null);
+    const [isCertificateOpen, setIsCertificateOpen] = useState(false);
 
     useEffect(() => {
         if (!checkAndClearExpiredSession(router)) return;
@@ -71,6 +74,11 @@ export default function DashboardPage() {
     const avgScore = completedAttempts.length > 0
         ? Math.round(completedAttempts.reduce((acc: any, curr: any) => acc + curr.percentage, 0) / completedAttempts.length)
         : 0;
+
+    const handleViewCertificate = (attempt: any) => {
+        setSelectedAttempt(attempt);
+        setIsCertificateOpen(true);
+    };
 
     return (
         <div className="min-h-screen bg-[#020205] text-white bg-grid selection:bg-cyan-500/30 selection:text-cyan-200">
@@ -170,7 +178,7 @@ export default function DashboardPage() {
                                             <tr className="bg-white/5 border-b border-white/5">
                                                 <th className="px-8 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Assessment Detail</th>
                                                 <th className="px-8 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Metric</th>
-                                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest text-right">Operation</th>
+                                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest text-right">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-white/5">
@@ -204,15 +212,29 @@ export default function DashboardPage() {
                                                         )}
                                                     </td>
                                                     <td className="px-8 py-6 text-right">
-                                                        {attempt.status === 'completed' ? (
-                                                            <Link href={`/results/${attempt._id}`}>
-                                                                <Button variant="ghost" size="sm" className="text-[10px] uppercase font-black tracking-widest text-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/5">Report</Button>
-                                                            </Link>
-                                                        ) : attempt.status === 'terminated' ? (
-                                                            <Button variant="outline" size="sm" disabled className="text-[10px] uppercase font-black tracking-widest text-rose-900 border-rose-950 bg-transparent opacity-40 cursor-not-allowed">Terminated</Button>
-                                                        ) : (
-                                                            <Button variant="outline" size="sm" disabled className="text-[10px] uppercase font-black tracking-widest text-slate-500 border-slate-700 bg-transparent opacity-60 cursor-not-allowed">No Resume</Button>
-                                                        )}
+                                                        <div className="flex items-center justify-end gap-2">
+                                                            {attempt.status === 'completed' ? (
+                                                                <>
+                                                                    {attempt.percentage >= 60 && (
+                                                                        <Button 
+                                                                            variant="ghost" 
+                                                                            size="sm" 
+                                                                            onClick={() => handleViewCertificate(attempt)}
+                                                                            className="text-[10px] uppercase font-black tracking-widest text-emerald-400 hover:text-emerald-300 hover:bg-emerald-400/5"
+                                                                        >
+                                                                            Certificate
+                                                                        </Button>
+                                                                    )}
+                                                                    <Link href={`/results/${attempt._id}`}>
+                                                                        <Button variant="ghost" size="sm" className="text-[10px] uppercase font-black tracking-widest text-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/5">Report</Button>
+                                                                    </Link>
+                                                                </>
+                                                            ) : attempt.status === 'terminated' ? (
+                                                                <Button variant="outline" size="sm" disabled className="text-[10px] uppercase font-black tracking-widest text-rose-900 border-rose-950 bg-transparent opacity-40 cursor-not-allowed">Terminated</Button>
+                                                            ) : (
+                                                                <Button variant="outline" size="sm" disabled className="text-[10px] uppercase font-black tracking-widest text-slate-500 border-slate-700 bg-transparent opacity-60 cursor-not-allowed">No Resume</Button>
+                                                            )}
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             ))}
@@ -255,9 +277,34 @@ export default function DashboardPage() {
                                 <Button variant="outline" className="w-full py-4 text-xs uppercase tracking-widest font-black border-white/10 group-hover:border-purple-500/50 group-hover:text-purple-400">Submit Project</Button>
                             </Link>
                         </Card>
+
+                        <Card className="p-8 bg-slate-900/40 border-white/5 hover:border-cyan-500/30 transition-all group">
+                            <h3 className="text-xl font-black text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+                                <span className="text-cyan-400">🎧</span> Support Ops
+                            </h3>
+                            <p className="text-slate-400 text-sm font-medium mb-8 leading-relaxed font-inter">Need help? Connect with our support terminal.</p>
+                            <Link href="/#faq-submission-form">
+                                <Button variant="outline" className="w-full py-4 text-xs uppercase tracking-widest font-black border-white/10 group-hover:border-cyan-500/50 group-hover:text-cyan-400">Contact Support</Button>
+                            </Link>
+                        </Card>
                     </div>
                 </div>
             </main>
+
+            {selectedAttempt && (
+                <CertificateModal
+                    isOpen={isCertificateOpen}
+                    onClose={() => setIsCertificateOpen(false)}
+                    candidateName={user?.name || 'Candidate'}
+                    assessmentTitle={selectedAttempt.assessment?.title || 'Professional Assessment'}
+                    completionDate={new Date(selectedAttempt.completedAt || Date.now()).toLocaleDateString('en-US', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                    })}
+                    certificateId={selectedAttempt._id.slice(-8).toUpperCase()}
+                />
+            )}
         </div>
     );
 }

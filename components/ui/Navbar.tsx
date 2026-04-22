@@ -48,6 +48,7 @@ const Navbar = () => {
         { name: 'Challenges', href: '/coding' },
         { name: 'Projects', href: '/projects' },
         { name: 'Dashboard', href: '/dashboard' },
+        { name: 'Support', href: '/#faq-submission-form' },
     ];
 
     // Admin-only quick links
