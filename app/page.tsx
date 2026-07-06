@@ -63,13 +63,6 @@ export default function HomePage() {
         {/* Hero Section */}
         <section className="relative pt-32 pb-20 px-6 lg:pt-48 lg:pb-32 overflow-hidden">
           <div className="container mx-auto text-center max-w-5xl relative z-10">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-950/30 border border-cyan-500/30 mb-8 animate-fade-in shadow-[0_0_15px_rgba(6,182,212,0.1)]">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-              </span>
-              <span className="text-xs font-black text-cyan-400 tracking-widest uppercase">AI-Powered Proctoring Live</span>
-            </div>
 
             <h1 className="text-6xl md:text-8xl font-black text-white tracking-tighter leading-[0.9] mb-8 animate-fade-in-up">
               HIRE THE <span className="text-gradient">PERFECT</span>
@@ -105,12 +98,6 @@ export default function HomePage() {
 
                   <div className="relative z-10">
                     <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-                      <div className="glass-cyan px-4 py-2 rounded-xl border border-cyan-500/30">
-                        <div className="flex items-center space-x-2">
-                          <div className="w-2.5 h-2.5 bg-cyan-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(6,182,212,0.8)]"></div>
-                          <span className="text-[10px] font-black text-white uppercase tracking-widest">AI Monitoring Active</span>
-                        </div>
-                      </div>
                       <span className="text-[10px] font-black text-slate-300 uppercase tracking-[0.3em]">Live Platform Snapshot</span>
                     </div>
 
@@ -630,13 +617,6 @@ export default function HomePage() {
             <p className="text-slate-500 font-bold text-sm uppercase tracking-widest">
               (C) 2026 HirePerfect Platform. Built for Excellence.
             </p>
-            <div className="flex gap-4">
-              {[1, 2, 3].map((s) => (
-                <div key={s} className="w-10 h-10 rounded-full bg-slate-900 border border-white/5 flex items-center justify-center hover:bg-cyan-600 transition-colors cursor-pointer group hover:shadow-[0_0_15px_rgba(6,182,212,0.4)]">
-                  <div className="w-4 h-4 bg-slate-500 group-hover:bg-white transition-colors rounded-sm"></div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </footer>
